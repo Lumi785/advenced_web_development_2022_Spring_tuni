@@ -1,0 +1,22 @@
+{
+  "name": "elm-crud2",
+  "version": "1.0.0",
+  "description": "",
+  "directories": {
+    "test": "tests"
+  },
+  "scripts": {
+    "dev": "chokidar '**/*.elm' -c 'npm run compile' --initial",
+    "compile": "elm make src/Main.elm --optimize --output=index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "chokidar-cli": "^2.1.0"
+  },
+  "dependencies": {
+    "elm": "^0.19.1-5",
+    "elm-test": "^0.19.1-revision7"
+  }
+}
