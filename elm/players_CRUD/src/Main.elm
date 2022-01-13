@@ -42,9 +42,11 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         SetName name ->
+            -- Player (model.newPlayer.id + 1) name False
             model
 
         AddPlayer ->
+            -- model.players.append model.newPlayer
             model
 
         DeletePlayer id ->
@@ -56,7 +58,10 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    p [] [ text "Elm Exercise: Players CRUD" ]
+    Html.form [ id "submit-player" ]
+        [ input [ type_ "text", id "input-player" ] []
+        , button [ onClick AddPlayer, id "btn-add" ] [ text "Add" ]
+        ]
 
 
 main : Program () Model Msg
