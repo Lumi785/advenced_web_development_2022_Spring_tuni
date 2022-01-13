@@ -1,6 +1,7 @@
 module Main exposing (..)
 
 import Browser
+import Debug
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onCheck, onClick, onInput, onSubmit)
@@ -42,8 +43,11 @@ update : Msg -> Model -> Model
 update msg model =
     case msg of
         SetName name ->
-            -- Player (model.newPlayer.id + 1) name False
-            model
+            let
+                updatedPlayer =
+                    Player 1 name False
+            in
+            { model | newPlayer = updatedPlayer }
 
         AddPlayer ->
             -- model.players.append model.newPlayer
@@ -59,8 +63,8 @@ update msg model =
 view : Model -> Html Msg
 view model =
     Html.form [ id "submit-player" ]
-        [ input [ type_ "text", id "input-player" ] []
-        , button [ onClick AddPlayer, id "btn-add" ] [ text "Add" ]
+        [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
+        , button [ onSubmit AddPlayer, id "btn-add" ] [ text "Add" ]
         ]
 
 
