@@ -45,7 +45,7 @@ update msg model =
         SetName name ->
             let
                 updatedPlayer =
-                    Player 1 name False
+                    Player (model.newPlayer.id + 1) name False
             in
             { model | newPlayer = updatedPlayer }
 
