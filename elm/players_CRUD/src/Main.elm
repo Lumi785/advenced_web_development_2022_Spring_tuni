@@ -73,9 +73,14 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    Html.form [ id "submit-player" ]
-        [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
-        , button [ onClick AddPlayer, id "btn-add" ] [ text "Add" ]
+    div []
+        [ h1 [] [ text "Players CRUD" ]
+        , h2 [] [ text "Manage hockey players with Elm" ]
+        , h3 [] [ text "Add Player" ]
+        , Html.form [ id "submit-player" ]
+            [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
+            , button [ onClick AddPlayer, id "btn-add" ] [ text "Add" ]
+            ]
         ]
 
 
