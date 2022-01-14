@@ -1,5 +1,6 @@
 module Main exposing (..)
 
+import Array
 import Browser
 import Debug
 import Html exposing (..)
@@ -73,6 +74,14 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
+    -- let
+    --     aName =
+    --         (Array.get (List.length model.players - 1) (Array.fromList model.players)).name
+    -- in
+    -- let
+    --     aName =
+    --         Array.get 0 (Array.fromList (List.filter (\player -> player.id == id) model.players))
+    -- in
     div []
         [ h1 [] [ text "Players CRUD" ]
         , h2 [] [ text "Manage hockey players with Elm" ]
@@ -83,9 +92,9 @@ view model =
             ]
         , h3 [] [ text "Players List" ]
         , ol [ id "players-list" ]
-            [ li [ id "player-1" ]
+            [ li [ id ("player-" ++ String.fromInt model.newPlayer.id) ]
                 [ div [ class "player-name" ] [ text model.newPlayer.name ]
-                , input [ type_ "checkbox" ] []
+                , input [ type_ "checkbox" ] [ text "active" ]
                 ]
             ]
         ]
