@@ -99,20 +99,26 @@ view model =
             , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
             ]
         , h3 [] [ text "Players List" ]
-        , -- , ol [ id "players-list" ]
-          --     (List.map (\player -> li [] [ text player.name ]) model.players)
-          ol []
-            [ [ List.map
-                    (\player ->
-                        li []
-                            [ div [] [ text player.name ]
-                            , input [ value player.isActive, onCheck (ModifyPlayer player.id) ] []
-                            , button [ type_ "button", onClick (DeletePlayer player.id) ] [ text "Delete" ]
-                            ]
-                    )
-                    model.players
-              ]
+        , ol [ id "players-list" ]
+            -- (List.map (\player -> li [] [ text player.name ]) model.players)
+            [ li []
+                [ div [] [ text "dive" ]
+                , input [ type_ "checkbox" ] [ text "hh" ]
+                , button [] [ text "Delete" ]
+                ]
             ]
+
+        --   ol []
+        --     [ List.map
+        --         (\player ->
+        --             li []
+        --                 [ div [] [ text player.name ]
+        --                 , input [ value player.isActive, onCheck (ModifyPlayer player.id) ] []
+        --                 , button [ type_ "button", onClick (DeletePlayer player.id) ] [ text "Delete" ]
+        --                 ]
+        --         )
+        --         model.players
+        --     ]
         ]
 
 
