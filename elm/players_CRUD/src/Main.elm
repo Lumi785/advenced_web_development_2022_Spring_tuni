@@ -84,7 +84,7 @@ view model =
         , h3 [] [ text "Players List" ]
         , ol [ id "players-list" ]
             [ li [ id "player-1" ]
-                [ div [ class "player-name" ] []
+                [ div [ class "player-name" ] [ text model.newPlayer.name ]
                 , input [ type_ "checkbox" ] []
                 ]
             ]
