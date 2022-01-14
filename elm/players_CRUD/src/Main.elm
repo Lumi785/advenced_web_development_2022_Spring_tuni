@@ -44,7 +44,10 @@ update : Msg -> Model -> Model
 update msg model =
     let
         _ =
-            Debug.log "message " msg
+            Debug.log "new message = " msg
+
+        _ =
+            Debug.log "new model = " model
     in
     case msg of
         SetName name ->
@@ -92,11 +95,13 @@ view model =
             ]
         , h3 [] [ text "Players List" ]
         , ol [ id "players-list" ]
-            [ li [ id ("player-" ++ String.fromInt model.newPlayer.id) ]
-                [ div [ class "player-name" ] [ text model.newPlayer.name ]
-                , input [ type_ "checkbox" ] [ text "active" ]
-                ]
-            ]
+            (List.map (\player -> li [] [ text player.name ]) model.players)
+
+        -- [ li [ id ("player-" ++ String.fromInt model.newPlayer.id) ]
+        --     [ div [ class "player-name" ] [ text model.newPlayer.name ]
+        --     , input [ type_ "checkbox" ] [ text "active" ]
+        --     ]
+        -- ]
         ]
 
 
