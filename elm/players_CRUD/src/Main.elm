@@ -103,7 +103,8 @@ view model =
             -- (List.map (\player -> li [] [ text player.name ]) model.players)
             [ li []
                 [ div [] [ text "dive" ]
-                , input [ type_ "checkbox" ] [ text "hh" ]
+                , input [ type_ "checkbox" ] []
+                , text "hh"
                 , br [] []
                 , button [] [ text "Delete" ]
                 ]
