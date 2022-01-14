@@ -71,7 +71,7 @@ update msg model =
             in
             { model | players = afterDelPlayers }
 
-        ModifyPlayer id status ->
+        ModifyPlayer id isActive ->
             -- let
             --     afterModifyPlayers =
             --         List.map (\fPlayer -> fPlayer.status /= fPlayer.status) model.players
@@ -99,15 +99,29 @@ view model =
             , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
             ]
         , h3 [] [ text "Players List" ]
-        , ol [ id "players-list" ]
-            (List.map (\player -> li [] [ text player.name ]) model.players)
-
-        -- [ li [ id ("player-" ++ String.fromInt model.newPlayer.id) ]
-        --     [ div [ class "player-name" ] [ text model.newPlayer.name ]
-        --     , input [ type_ "checkbox" ] [ text "active" ]
-        --     ]
-        -- ]
+        , -- , ol [ id "players-list" ]
+          --     (List.map (\player -> li [] [ text player.name ]) model.players)
+          ol []
+            [ [ List.map
+                    (\player ->
+                        li []
+                            [ div [] [ text player.name ]
+                            , input [ value player.isActive, onCheck (ModifyPlayer player.id) ] []
+                            , button [ type_ "button", onClick (DeletePlayer player.id) ] [ text "Delete" ]
+                            ]
+                    )
+                    model.players
+              ]
+            ]
         ]
+
+
+
+-- [ li [ id ("player-" ++ String.fromInt model.newPlayer.id) ]
+--     [ div [ class "player-name" ] [ text model.newPlayer.name ]
+--     , input [ type_ "checkbox" ] [ text "active" ]
+--     ]
+-- ]
 
 
 main : Program () Model Msg
