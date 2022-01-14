@@ -41,6 +41,10 @@ init =
 
 update : Msg -> Model -> Model
 update msg model =
+    let
+        _ =
+            Debug.log "message " msg
+    in
     case msg of
         SetName name ->
             let
@@ -57,7 +61,11 @@ update msg model =
             { model | players = updatedPlayers }
 
         DeletePlayer id ->
-            model
+            let
+                afterDelPlayers =
+                    List.filter (\player -> player.id /= id) model.players
+            in
+            { model | players = afterDelPlayers }
 
         ModifyPlayer id status ->
             model
