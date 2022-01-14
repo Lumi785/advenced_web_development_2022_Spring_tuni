@@ -75,7 +75,7 @@ view : Model -> Html Msg
 view model =
     Html.form [ id "submit-player" ]
         [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
-        , button [ onSubmit AddPlayer, id "btn-add" ] [ text "Add" ]
+        , button [ onClick AddPlayer, id "btn-add" ] [ text "Add" ]
         ]
 
 
