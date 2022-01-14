@@ -50,8 +50,11 @@ update msg model =
             { model | newPlayer = updatedPlayer }
 
         AddPlayer ->
-            -- model.players.append model.newPlayer
-            model
+            let
+                updatedPlayers =
+                    model.players ++ [ model.newPlayer ]
+            in
+            { model | players = updatedPlayers }
 
         DeletePlayer id ->
             model
