@@ -81,6 +81,13 @@ view model =
             [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
             , button [ onClick AddPlayer, id "btn-add" ] [ text "Add" ]
             ]
+        , h3 [] [ text "Players List" ]
+        , ol [ id "players-list" ]
+            [ li [ id "player-1" ]
+                [ div [ class "player-name" ] []
+                , input [ type_ "checkbox" ] []
+                ]
+            ]
         ]
 
 
