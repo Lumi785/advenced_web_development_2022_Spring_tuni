@@ -72,6 +72,11 @@ update msg model =
             { model | players = afterDelPlayers }
 
         ModifyPlayer id status ->
+            -- let
+            --     afterModifyPlayers =
+            --         List.map (\fPlayer -> fPlayer.status /= fPlayer.status) model.players
+            -- in
+            -- { model | players = afterModifyPlayers }
             model
 
 
@@ -89,9 +94,9 @@ view model =
         [ h1 [] [ text "Players CRUD" ]
         , h2 [] [ text "Manage hockey players with Elm" ]
         , h3 [] [ text "Add Player" ]
-        , Html.form [ id "submit-player" ]
+        , Html.form [ id "submit-player", onSubmit AddPlayer ]
             [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
-            , button [ onClick AddPlayer, id "btn-add" ] [ text "Add" ]
+            , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
             ]
         , h3 [] [ text "Players List" ]
         , ol [ id "players-list" ]
