@@ -104,6 +104,7 @@ view model =
             [ li []
                 [ div [] [ text "dive" ]
                 , input [ type_ "checkbox" ] [ text "hh" ]
+                , br [] []
                 , button [] [ text "Delete" ]
                 ]
             ]
