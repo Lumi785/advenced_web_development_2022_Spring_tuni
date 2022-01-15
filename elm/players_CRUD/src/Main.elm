@@ -101,7 +101,7 @@ view model =
             [ id "players-list" ]
             (List.map
                 (\player ->
-                    li []
+                    li [ id ("player-" ++ String.fromInt player.id) ]
                         [ div [] [ text player.name ]
                         , input
                             [ type_ "checkbox"
