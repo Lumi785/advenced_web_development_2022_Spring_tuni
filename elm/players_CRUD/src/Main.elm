@@ -102,32 +102,21 @@ view model =
             (List.map
                 (\player ->
                     li [ id ("player-" ++ String.fromInt player.id) ]
-                        [ div [] [ text player.name ]
+                        [ div [ class "player-name" ] [ text player.name ]
                         , input
                             [ type_ "checkbox"
+                            , class "player-status"
                             , checked player.isActive
                             , onCheck (ModifyPlayer player.id)
                             ]
                             []
                         , label [] [ text "Active" ]
                         , br [] []
-                        , button [ type_ "button", onClick (DeletePlayer player.id) ] [ text "Delete" ]
+                        , button [ type_ "button", class "btn-delete", onClick (DeletePlayer player.id) ] [ text "Delete" ]
                         ]
                 )
                 model.players
             )
-
-        -- [ List.map
-        --     ( \player ->
-        --         li []
-        --             [ div [] [ text player.name ] ]
-        --     , input [ type_ "checkbox", onCheck (ModifyPlayer id), value status ] []
-        --     , text "active"
-        --     , br [] []
-        --     , button [ type_ "button", onClick (DeletePlayer id) ] [ text "Delete" ]
-        --     )
-        --     model.players
-        -- ]
         ]
 
 
