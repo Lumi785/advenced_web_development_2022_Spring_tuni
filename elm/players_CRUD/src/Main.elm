@@ -1,6 +1,5 @@
 module Main exposing (..)
 
-import Array
 import Browser
 import Debug
 import Html exposing (..)
@@ -71,25 +70,23 @@ update msg model =
             in
             { model | players = afterDelPlayers }
 
-        ModifyPlayer id isActive ->
-            -- let
-            --     afterModifyPlayers =
-            --         List.map (\fPlayer -> fPlayer.status /= fPlayer.status) model.players
-            -- in
-            -- { model | players = afterModifyPlayers }
-            model
+        ModifyPlayer id status ->
+            let
+                updateStatus player =
+                    if player.id == id then
+                        { player | isActive = status }
+
+                    else
+                        player
+
+                afterModifyPlayers =
+                    List.map updateStatus model.players
+            in
+            { model | players = afterModifyPlayers }
 
 
 view : Model -> Html Msg
 view model =
-    -- let
-    --     aName =
-    --         (Array.get (List.length model.players - 1) (Array.fromList model.players)).name
-    -- in
-    -- let
-    --     aName =
-    --         Array.get 0 (Array.fromList (List.filter (\player -> player.id == id) model.players))
-    -- in
     div []
         [ h1 [] [ text "Players CRUD" ]
         , h2 [] [ text "Manage hockey players with Elm" ]
@@ -98,38 +95,40 @@ view model =
             [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
             , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
             ]
-        , h3 [] [ text "Players List" ]
-        , ol [ id "players-list" ]
-            -- (List.map (\player -> li [] [ text player.name ]) model.players)
-            [ li []
-                [ div [] [ text "dive" ]
-                , input [ type_ "checkbox" ] []
-                , text "hh"
-                , br [] []
-                , button [] [ text "Delete" ]
-                ]
-            ]
+        , h3 []
+            [ text "Players List" ]
+        , ol
+            [ id "players-list" ]
+            (List.map
+                (\player ->
+                    li []
+                        [ div [] [ text player.name ]
+                        , input
+                            [ type_ "checkbox"
+                            , checked player.isActive
+                            , onCheck (ModifyPlayer player.id)
+                            ]
+                            []
+                        , label [] [ text "Active" ]
+                        , br [] []
+                        , button [ type_ "button", onClick (DeletePlayer player.id) ] [ text "Delete" ]
+                        ]
+                )
+                model.players
+            )
 
-        --   ol []
-        --     [ List.map
-        --         (\player ->
-        --             li []
-        --                 [ div [] [ text player.name ]
-        --                 , input [ value player.isActive, onCheck (ModifyPlayer player.id) ] []
-        --                 , button [ type_ "button", onClick (DeletePlayer player.id) ] [ text "Delete" ]
-        --                 ]
-        --         )
-        --         model.players
-        --     ]
+        -- [ List.map
+        --     ( \player ->
+        --         li []
+        --             [ div [] [ text player.name ] ]
+        --     , input [ type_ "checkbox", onCheck (ModifyPlayer id), value status ] []
+        --     , text "active"
+        --     , br [] []
+        --     , button [ type_ "button", onClick (DeletePlayer id) ] [ text "Delete" ]
+        --     )
+        --     model.players
+        -- ]
         ]
-
-
-
--- [ li [ id ("player-" ++ String.fromInt model.newPlayer.id) ]
---     [ div [ class "player-name" ] [ text model.newPlayer.name ]
---     , input [ type_ "checkbox" ] [ text "active" ]
---     ]
--- ]
 
 
 main : Program () Model Msg
