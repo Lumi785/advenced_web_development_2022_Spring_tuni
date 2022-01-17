@@ -6,10 +6,11 @@
 module Main exposing (..)
 
 import Browser
+import Debug
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (onCheck, onClick, onInput, onSubmit)
-import Http
+import Http exposing (Error(..))
 import Json.Decode as Decode exposing (Decoder, field, map3)
 
 
@@ -75,18 +76,48 @@ init _ =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    let
+        _ =
+            Debug.log "msg = " msg
+
+        _ =
+            Debug.log "model = " model
+    in
     case msg of
         SetName word ->
-            ( model, Cmd.none )
+            let
+                updatedPlayer =
+                    Player (model.newPlayer.id + 1) word False
+            in
+            ( { model | newPlayer = updatedPlayer }, Cmd.none )
 
         AddPlayer ->
-            ( model, Cmd.none )
+            let
+                updatedPlayers =
+                    model.players ++ [ model.newPlayer ]
+            in
+            ( { model | players = updatedPlayers }, Cmd.none )
 
         DeletePlayer id ->
-            ( model, Cmd.none )
+            let
+                afterDelPlayers =
+                    List.filter (\player -> player.id /= id) model.players
+            in
+            ( { model | players = afterDelPlayers }, Cmd.none )
 
         ModifyPlayer id status ->
-            ( model, Cmd.none )
+            let
+                updateStatus player =
+                    if player.id == id then
+                        { player | isActive = status }
+
+                    else
+                        player
+
+                modifiedPlayers =
+                    List.map updateStatus model.players
+            in
+            ( { model | players = modifiedPlayers }, Cmd.none )
 
         FetchPlayers data ->
             ( model, Cmd.none )
