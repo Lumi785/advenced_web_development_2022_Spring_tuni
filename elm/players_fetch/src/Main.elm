@@ -135,7 +135,7 @@ update msg model =
                     ( { model | players = playersList, reqStatus = "" }, Cmd.none )
 
                 Err _ ->
-                    ( { model | players = [], reqStatus = "An error has occurred!!!" }, Cmd.none )
+                    ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
 
 
@@ -163,6 +163,7 @@ view model =
             ]
         , h3 []
             [ text "Players List" ]
+        , h3 [] [ text model.reqStatus ]
         , ol
             [ id "players-list" ]
             (List.map
