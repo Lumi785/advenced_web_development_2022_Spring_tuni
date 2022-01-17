@@ -54,6 +54,10 @@ fetchPlayers url =
         }
 
 
+
+-- GotText (Result Http.Error String)
+
+
 listLast : List a -> Maybe a
 listLast list =
     List.head <| List.reverse list
@@ -120,7 +124,31 @@ update msg model =
             ( { model | players = modifiedPlayers }, Cmd.none )
 
         FetchPlayers data ->
-            ( model, Cmd.none )
+            -- data = Result Error (List Player)
+            -- GotText (Result Http.Error String)
+            case data of
+                Ok playersList ->
+                    -- let
+                    --     readyPlayers =
+                    --         playersList
+                    -- in
+                    ( { model | players = playersList, reqStatus = "" }, Cmd.none )
+
+                Err _ ->
+                    ( { model | players = [], reqStatus = "An error has occurred!!!" }, Cmd.none )
+
+
+
+-- Err _ ->
+--     (Failure, Cmd.none)
+-- ( { model | players = fetchPlayers }, Cmd.none )
+-- case msg of
+--     GotText result ->
+--         case result of
+--             Ok fullText ->
+--                 (Success fullText, Cmd.none)
+--             Err _ ->
+--                 (Failure, Cmd.none)
 
 
 view : Model -> Html Msg
