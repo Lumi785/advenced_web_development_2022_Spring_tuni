@@ -94,7 +94,37 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    p [] [ text "Elm Exercise: Players Fetch" ]
+    div []
+        [ h1 [] [ text "Players CRUD" ]
+        , h2 [] [ text "Update app from server" ]
+        , h3 [] [ text "Add Player" ]
+        , Html.form [ id "submit-player", onSubmit AddPlayer ]
+            [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
+            , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
+            ]
+        , h3 []
+            [ text "Players List" ]
+        , ol
+            [ id "players-list" ]
+            (List.map
+                (\player ->
+                    li [ id ("player-" ++ String.fromInt player.id) ]
+                        [ div [ class "player-name" ] [ text player.name ]
+                        , input
+                            [ type_ "checkbox"
+                            , class "player-status"
+                            , checked player.isActive
+                            , onCheck (ModifyPlayer player.id)
+                            ]
+                            []
+                        , label [] [ text "Active" ]
+                        , br [] []
+                        , button [ type_ "button", class "btn-delete", onClick (DeletePlayer player.id) ] [ text "Delete" ]
+                        ]
+                )
+                model.players
+            )
+        ]
 
 
 main : Program () Model Msg
