@@ -128,10 +128,6 @@ update msg model =
             -- GotText (Result Http.Error String)
             case data of
                 Ok playersList ->
-                    -- let
-                    --     readyPlayers =
-                    --         playersList
-                    -- in
                     ( { model | players = playersList, reqStatus = "" }, Cmd.none )
 
                 Err _ ->
@@ -139,9 +135,8 @@ update msg model =
 
 
 
--- Err _ ->
---     (Failure, Cmd.none)
--- ( { model | players = fetchPlayers }, Cmd.none )
+-- Implementation of FetchPlayers data is inspired by
+--
 -- case msg of
 --     GotText result ->
 --         case result of
@@ -149,6 +144,7 @@ update msg model =
 --                 (Success fullText, Cmd.none)
 --             Err _ ->
 --                 (Failure, Cmd.none)
+-- source: https://guide.elm-lang.org/effects/http.html
 
 
 view : Model -> Html Msg
@@ -163,7 +159,7 @@ view model =
             ]
         , h3 []
             [ text "Players List" ]
-        , h3 [] [ text model.reqStatus ]
+        , h3 [ id "request-status" ] [ text model.reqStatus ]
         , ol
             [ id "players-list" ]
             (List.map
