@@ -178,28 +178,32 @@ update msg model =
                     ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
         PutPlayerReq id status ->
-            ( model, Cmd.none )
+            -- ( model, Cmd.none )
+            let
+                playerToBeModifyArray =
+                    List.filter (\player -> player.id == id) model.players
 
-        -- let
-        --     playerToBeModifyArray =
-        --         List.filter (\player -> player.id == id) model.players
-        --     playerToBeModify =
-        --         List.head playerToBeModifyArray
-        -- in
-        -- let
-        --     nameOfPlayer =
-        --         if playerToBeModify == Nothing then
-        --             Nothing
-        --         else
-        --             (Just playerToBeModify).name
-        -- in
-        -- let
-        --     a_player =
-        --         Player id nameOfPlayer status
-        --     url =
-        --         "http://localhost:3001/api/players/"
-        -- in
-        -- ( { a_player | isActive = status }, putPlayerReq url a_player )
+                playerToBeModify =
+                    List.head playerToBeModifyArray
+            in
+            let
+                nameOfPlayer =
+                    case playerToBeModify of
+                        Just player ->
+                            player.name
+
+                        Nothing ->
+                            ""
+            in
+            let
+                a_player =
+                    Player id nameOfPlayer status
+
+                url =
+                    "http://localhost:3001/api/players/"
+            in
+            ( model, putPlayerReq url a_player )
+
         ModifyPlayer data ->
             case data of
                 Ok player ->
