@@ -109,6 +109,15 @@ listLast list =
     List.head <| List.reverse list
 
 
+
+-- checkPlayer : Player a -> Maybe a
+-- checkPlayer player =
+--     if player == "" then
+--         Nothing
+--     else
+--         Just player
+
+
 initPlayer : Int -> Player
 initPlayer id =
     Player id "" False
@@ -132,24 +141,76 @@ init _ =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
+    let
+        _ =
+            Debug.log "model = " model
+
+        _ =
+            Debug.log "Msg = " msg
+    in
     case msg of
         SetName word ->
-            ( model, Cmd.none )
+            let
+                updatedPlayer =
+                    Player (model.newPlayer.id + 1) word False
+            in
+            ( { model | newPlayer = updatedPlayer }, Cmd.none )
 
         FetchPlayers data ->
-            ( model, Cmd.none )
+            case data of
+                Ok playersList ->
+                    ( { model | players = playersList, reqStatus = "" }, Cmd.none )
+
+                Err _ ->
+                    ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
         PostPlayerReq ->
             ( model, Cmd.none )
 
         AddPlayer data ->
-            ( model, Cmd.none )
+            case data of
+                Ok player ->
+                    let
+                        newPlayers =
+                            model.players ++ [ player ]
+                    in
+                    ( { model | players = newPlayers, reqStatus = "" }, Cmd.none )
+
+                Err _ ->
+                    ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
         PutPlayerReq id status ->
-            ( model, Cmd.none )
+            let
+                playerToBeModifyArray =
+                    List.filter (\player -> player.id == id) model.players
+
+                playerToBeModify =
+                    List.head playerToBeModifyArray
+            in
+            let
+                nameOfPlayer =
+                    if playerToBeModify == Nothing then
+                        Nothing
+
+                    else
+                        Just playerToBeModify.name
+            in
+            let
+                a_player =
+                    Player id nameOfPlayer status
+
+                url =
+                    "http://localhost:3001/api/players/"
+            in
+            ( { a_player | isActive = status }, putPlayerReq url a_player )
 
         ModifyPlayer data ->
-            ( model, Cmd.none )
+            case data of
+                Ok player ->
+                    ( { model | newPlayer = player, reqStatus = "" }, Cmd.none )
+
+                Err _ ->
+                    ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
         DeletePlayerReq id ->
             ( model, Cmd.none )
@@ -160,7 +221,42 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    p [] [ text "Elm Exercise: Players CRUD2" ]
+    -- div []
+    --     [ h3 [ id "request-status" ] [ text model.reqStatus ]
+    --     , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
+    --     ]
+    div []
+        [ h1 [] [ text "Players CRUD" ]
+        , h2 [] [ text "Update app from server" ]
+        , h3 [] [ text "Add Player" ]
+        , Html.form [ id "submit-player", onSubmit AddPlayer ]
+            [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
+            , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
+            ]
+        , h3 []
+            [ text "Players List" ]
+        , h3 [ id "request-status" ] [ text model.reqStatus ]
+        , ol
+            [ id "players-list" ]
+            (List.map
+                (\player ->
+                    li [ id ("player-" ++ String.fromInt player.id) ]
+                        [ div [ class "player-name" ] [ text player.name ]
+                        , input
+                            [ type_ "checkbox"
+                            , class "player-status"
+                            , checked player.isActive
+                            , onCheck (PutPlayerReq player.id)
+                            ]
+                            []
+                        , label [] [ text "Active" ]
+                        , br [] []
+                        , button [ type_ "button", class "btn-delete", onClick (DeletePlayerReq player.id) ] [ text "Delete" ]
+                        ]
+                )
+                model.players
+            )
+        ]
 
 
 main : Program () Model Msg
