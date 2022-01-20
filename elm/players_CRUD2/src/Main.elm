@@ -109,15 +109,6 @@ listLast list =
     List.head <| List.reverse list
 
 
-
--- checkPlayer : Player a -> Maybe a
--- checkPlayer player =
---     if player == "" then
---         Nothing
---     else
---         Just player
-
-
 initPlayer : Int -> Player
 initPlayer id =
     Player id "" False
@@ -165,7 +156,15 @@ update msg model =
                     ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
         PostPlayerReq ->
-            ( model, Cmd.none )
+            let
+                aPlayer =
+                    Player model.newPlayer.id model.newPlayer.name False
+
+                url =
+                    "http://localhost:3001/api/players/"
+            in
+            -- ( { model | newPlayer = aPlayer }, postPlayerReq url aPlayer )
+            ( model, postPlayerReq url aPlayer )
 
         AddPlayer data ->
             case data of
@@ -180,30 +179,28 @@ update msg model =
                     ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
         PutPlayerReq id status ->
-            let
-                playerToBeModifyArray =
-                    List.filter (\player -> player.id == id) model.players
+            ( model, Cmd.none )
 
-                playerToBeModify =
-                    List.head playerToBeModifyArray
-            in
-            let
-                nameOfPlayer =
-                    if playerToBeModify == Nothing then
-                        Nothing
-
-                    else
-                        Just playerToBeModify.name
-            in
-            let
-                a_player =
-                    Player id nameOfPlayer status
-
-                url =
-                    "http://localhost:3001/api/players/"
-            in
-            ( { a_player | isActive = status }, putPlayerReq url a_player )
-
+        -- let
+        --     playerToBeModifyArray =
+        --         List.filter (\player -> player.id == id) model.players
+        --     playerToBeModify =
+        --         List.head playerToBeModifyArray
+        -- in
+        -- let
+        --     nameOfPlayer =
+        --         if playerToBeModify == Nothing then
+        --             Nothing
+        --         else
+        --             (Just playerToBeModify).name
+        -- in
+        -- let
+        --     a_player =
+        --         Player id nameOfPlayer status
+        --     url =
+        --         "http://localhost:3001/api/players/"
+        -- in
+        -- ( { a_player | isActive = status }, putPlayerReq url a_player )
         ModifyPlayer data ->
             case data of
                 Ok player ->
@@ -221,15 +218,11 @@ update msg model =
 
 view : Model -> Html Msg
 view model =
-    -- div []
-    --     [ h3 [ id "request-status" ] [ text model.reqStatus ]
-    --     , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
-    --     ]
     div []
         [ h1 [] [ text "Players CRUD" ]
         , h2 [] [ text "Update app from server" ]
         , h3 [] [ text "Add Player" ]
-        , Html.form [ id "submit-player", onSubmit AddPlayer ]
+        , Html.form [ id "submit-player", onSubmit PostPlayerReq ]
             [ input [ type_ "text", value model.newPlayer.name, id "input-player", onInput SetName, placeholder "player name" ] []
             , button [ type_ "submit", id "btn-add" ] [ text "Add" ]
             ]
