@@ -163,7 +163,6 @@ update msg model =
                 url =
                     "http://localhost:3001/api/players/"
             in
-            -- ( { model | newPlayer = aPlayer }, postPlayerReq url aPlayer )
             ( model, postPlayerReq url aPlayer )
 
         AddPlayer data ->
@@ -210,10 +209,32 @@ update msg model =
                     ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
 
         DeletePlayerReq id ->
-            ( model, Cmd.none )
+            let
+                url =
+                    "http://localhost:3001/api/players/"
+            in
+            ( model, deletePlayerReq url id )
 
         DeletePlayer id data ->
-            ( model, Cmd.none )
+            case data of
+                Ok () ->
+                    let
+                        afterDelPlayers =
+                            List.filter (\player -> player.id /= id) model.players
+                    in
+                    ( { model | players = afterDelPlayers, reqStatus = "" }, Cmd.none )
+
+                Err _ ->
+                    ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
+
+
+
+-- case data of
+--         Ok player ->
+--             ( { model | newPlayer = player, reqStatus = "" }, Cmd.none )
+--         Err _ ->
+--             ( { model | reqStatus = "An error has occurred!!!" }, Cmd.none )
+--     ( model, Cmd.none )
 
 
 view : Model -> Html Msg
