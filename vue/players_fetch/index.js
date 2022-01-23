@@ -31,7 +31,49 @@ const template= `
 
 const App = {
 //TODO: template, data and methods missing
-  created() {
-    this.getPlayers();
+ 
+  
+  template: `<div id="root">${template}</div>`,
+ 
+
+  data: function(){
+
+    return {
+      
+      players: [],
+      selectedPlayer:{},
+      // newPlayer: {
+      //   name: String,
+      //   id: Number,
+      //   isActive: Boolean
+      // },
+      alertMessage: 'myMessage',
+      reqStatus: ''
+      
+      
+
+    }
+
+
   },
-};
+
+  methods: {
+    // async getPlayers(){
+    //   const res = await fetch('http://localhost:3001/api/players');
+    //   const {results} = await res.json();
+
+    //   console.log(results);
+    
+
+    created() {
+      // this.getPlayers();
+      console.log(`${{template}}`);
+      console.log("app")
+    },
+
+    },
+
+  
+
+}
+  
