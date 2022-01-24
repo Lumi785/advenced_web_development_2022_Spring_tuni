@@ -4,6 +4,7 @@ const template= `
 <div>
   <div>
     <h3>Players List</h3>
+    <p>{{players}}</p>
     <ol id="players-list">
       <li
         v-for="player in players"
@@ -40,13 +41,14 @@ const App = {
 
     return {
       
-      players: [],
-      selectedPlayer:{},
-      // newPlayer: {
-      //   name: String,
-      //   id: Number,
-      //   isActive: Boolean
-      // },
+      players: ["rose", "apple"],
+      selectedPlayer:{
+        name: String,
+        id: Number,
+        isActive: Boolean},
+      newPlayer: {
+        
+      },
       alertMessage: 'myMessage',
       reqStatus: ''
       
@@ -59,17 +61,43 @@ const App = {
 
   methods: {
     // async getPlayers(){
-    //   const res = await fetch('http://localhost:3001/api/players');
-    //   const {results} = await res.json();
-
-    //   console.log(results);
+    //   const res = await fetch("http://localhost:3001/api/players");
+    //   const data = await res.json();
+      
+    //   return data;
+    //   console.log(data);
+    // },
     
-
-    created() {
-      // this.getPlayers();
-      console.log(`${{template}}`);
-      console.log("app")
+    getPlayers(){
+      fetch("http://localhost:3001/api/players")
+      .then(res=>res.json())
+      .then(data=>{
+        console.log(data);
+        return data;
+        
+      })
     },
+   
+    // async created() {
+    //   this.players = await this.getPlayers();
+
+      
+      
+    //   console.log("appcreated")
+    // },
+    
+    mounted(){
+      this.players = this.getPlayers();
+      console.log("m = ", players);
+
+
+    }
+
+    },
+
+    created(){
+      this.players = this.getPlayers();
+      console.log("p = ", this.players);
 
     },
 
