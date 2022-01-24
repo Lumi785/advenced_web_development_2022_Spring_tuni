@@ -54,26 +54,33 @@ const App = {
   methods: {
     
     getPlayers(){
+      this.reqStatus = 'Loading...';
       fetch("http://localhost:3001/api/players")
       .then(res=>res.json())
       .then(data=>{
         this.players = data;
-        console.log("data = ", data);
+        this.reqStatus = '';
+        // console.log("data = ", data);
         return data;
         
+      }).catch(error => {
+        this.reqStatus = 'An error has occured!!!';
       })
     },
 
     getPlayer(id){
-      this.selectedPlayer = this.players.filter(player => player.id === id)[0];
       
+      this.selectedPlayer = this.players.filter(player => player.id === id)[0];
     }
 
     },
 
+    //this should be outside of methods!
     created(){
       this.getPlayers();
     },
 
+    
+   
 }
   
