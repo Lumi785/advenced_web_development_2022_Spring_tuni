@@ -69,6 +69,7 @@ const App = {
     },
 
     getPlayer(id){
+      this.reqStatus = 'Loading...';
       
       this.selectedPlayer = this.players.filter(player => player.id === id)[0];
     }
