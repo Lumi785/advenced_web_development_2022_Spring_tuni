@@ -31,10 +31,8 @@ const template= `
 
 const App = {
 //TODO: template, data and methods missing
- 
-  
+
   template: `<div id="root">${template}</div>`,
- 
 
   data: function(){
 
@@ -44,7 +42,8 @@ const App = {
       selectedPlayer:{
         name: String,
         id: Number,
-        isActive: Boolean},
+        isActive: Boolean
+      },
      
       reqStatus: ''
 
@@ -68,20 +67,39 @@ const App = {
       })
     },
 
+    //I have to use fetch to send get request again, because I don't know how to let 'Loading...' go away after player has successfully fetched, tried async as bellow commented-out codes, but not work 
     getPlayer(id){
       this.reqStatus = 'Loading...';
-      
-      this.selectedPlayer = this.players.filter(player => player.id === id)[0];
-    }
-
+      fetch(`http://localhost:3001/api/players/${id}`)
+      .then(res=>res.json())
+      .then(data=>{
+        this.selectedPlayer = data;
+        this.reqStatus = '';
+        console.log("data = ", data);
+        return data;
+        
+      }).catch(error => {
+        this.reqStatus = 'An error has occured!!!';
+      })
     },
+    
+    // getPlayer(id){
+    //   this.reqStatus = 'Loading...';
+    //   this.selectedPlayer = this.players.filter(player => player.id === id)[0];
+    //   async function temp(){
+    //     this.reqStatus = 'jhdjvfdvb';
+    //   };
+    //   (async () => await temp)();
+    // }
 
-    //this should be outside of methods!
-    created(){
-      this.getPlayers();
-    },
+  },
+
+  //this should be outside of methods!
+  created(){
+    this.getPlayers();
+  },
 
     
-   
+
 }
   
