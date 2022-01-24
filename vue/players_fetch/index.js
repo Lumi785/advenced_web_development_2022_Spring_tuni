@@ -64,6 +64,11 @@ const App = {
       })
     },
 
+    getPlayer(id){
+      this.selectedPlayer = this.players.filter(player => player.id === id)[0];
+      
+    }
+
     },
 
     created(){
