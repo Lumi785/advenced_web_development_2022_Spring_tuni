@@ -40,9 +40,9 @@ const App = {
       
       players: [],
       selectedPlayer:{
-        name: String,
-        id: Number,
-        isActive: Boolean
+        name: '',
+        id: 0,
+        isActive: false
       },
      
       reqStatus: ''
