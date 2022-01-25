@@ -49,28 +49,70 @@ const AddPlayerComponent = {
 };
 
 
-// Vue.component('button-counter', {
-//   data: function () {
-//     return {
-//       count: 0
-//     }
-//   },
-//   template: '<button v-on:click="count++">You clicked me {{ count }} times.</button>'
-// })
+const ListPlayerComponent = {
+  name: "list-player",
+  // TODO: Implement the <list-player> component here.
 
+  props: ['player'],
+
+  template: 
+  `<li>{{player}}</li>`
+  
+};
 
 
 
 const ListPlayersComponent = {
   name: "list-players",
   // TODO: Implement the <list-players> component here.
+  data: function () {
+    return {
+      players: [],
+      player: {
+        name: '',
+        id: 0,
+        isActive: false 
+      },
+      reqStatus: ''
+    };
+  },
+
+  methods: {
+    listPlayers(){
+      this.reqStatus = 'Loading...';
+      fetch("http://localhost:3001/api/players")
+      .then(res=>res.json())
+      .then(data=>{
+        this.players = data;
+        this.reqStatus = '';
+        console.log("data = ", data);
+        return data;
+        
+      }).catch(error => {
+        this.reqStatus = 'An error has occured!!!';
+      })
+    },
+  },
+
+  components: {
+    ListPlayerComponent
+  },
+
+  template: 
+  `<ol id="players-lis">
+    <list-player v-for="player in players" 
+      v-bind:name="player.name"
+      v-bind:key="player.id"
+    ></list-player>
+
+  </ol>`,
+
+  created(){
+    this.listPlayers();
+  },
   
 };
 
-const ListPlayerComponent = {
-  name: "list-player",
-  // TODO: Implement the <list-player> component here.
-};
 
 const ShowPlayerComponent = {
   name: "show-player",
@@ -83,12 +125,16 @@ const RequestStatusComponent = {
 };
 
 const App = {
+
   template: `
     <div>
         <p>
+        <h1>Manage hockey players with Vue</h1>
+
           // TODO: Implement the App component here.
           
           <add-player></add-player>
+          <list-players></list-players>
         
 
         </p>
