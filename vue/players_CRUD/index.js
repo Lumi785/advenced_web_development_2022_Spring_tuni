@@ -40,7 +40,7 @@ const AddPlayerComponent = {
   `<div>
   <form @submit.prevent="addPlayer" id="submit-player" >
     <input v-model="player.name" id="input-player" type="text" placeholder="Enter player name"/>
-    <button  id="add-btn" type="submit" >Add</button>
+    <button id="add-btn" type="submit" >Add</button>
   </form>
   <p>{{player}}</p>
   </div>`
@@ -68,11 +68,10 @@ const ListPlayersComponent = {
   data: function () {
     return {
       players: [],
-      
       reqStatus: ''
     };
   },
-
+ 
   methods: {
     listPlayers(){
       this.reqStatus = 'Loading...';
@@ -88,6 +87,22 @@ const ListPlayersComponent = {
         this.reqStatus = 'An error has occured!!!';
       })
     },
+
+    playerClicked(id){
+      this.reqStatus = 'Loading...';
+      fetch(`http://localhost:3001/api/players/${id}`)
+      .then(res=>res.json())
+      .then(data=>{
+        this.selectedPlayer = data;
+        this.reqStatus = '';
+        console.log("data = ", data);
+        return data;
+        
+      }).catch(error => {
+        this.reqStatus = 'An error has occured!!!';
+      });
+
+    },
   },
 
   components: {
@@ -95,7 +110,7 @@ const ListPlayersComponent = {
   },
 
   template: 
-  `<ol id="players-list">
+  `<ol id="players-list" @click="playerClicked">
     <list-player 
       v-for="player in players" 
       v-bind:playerItem="player"
@@ -112,9 +127,36 @@ const ListPlayersComponent = {
 };
 
 
+
+
 const ShowPlayerComponent = {
   name: "show-player",
   // TODO: Implement the <show-player> component here.
+  data: function(){
+    return {
+      selectedPlayer: {
+        name: '',
+        id: 0,
+        isActive: ''
+      },
+      reqStatus: ''
+    }
+  },
+
+  methods:{
+    deletePlayer(id){
+
+    }
+
+  },
+
+  template: 
+  `<div id="selected-player">
+    <div className="player-id"></div>
+    <div v-bind:name="selectedPlayer.name" className="player-name"></div>
+    <div :key="selectedPlayer.id" className="player-status"></div>
+    <button @click="deletePlayer" className="delete-btn">Delete</button>
+  </div>`
 };
 
 const RequestStatusComponent = {
@@ -134,6 +176,7 @@ const App = {
           <add-player></add-player>
           <p>reqStatus</p>
           <list-players></list-players>
+          <show-player></show-player>
         
 
         </p>
