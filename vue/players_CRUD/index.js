@@ -71,7 +71,10 @@ const ListPlayerComponent = {
   },
 
   template: 
-  `<li @click="playerClicked" :id="'player-'+playerItem.id">{{playerItem.name}}</li>`
+  `<li @click="playerClicked" :id="'player-'+playerItem.id">
+    <a href="#">{{playerItem.name}}</a>
+  
+  </li>`
   
 };
 
