@@ -6,6 +6,7 @@ const AddPlayerComponent = {
   
   data: function () {
     return {
+      value:'',
       player: {
         name: '',
         isActive: false 
@@ -27,7 +28,7 @@ const AddPlayerComponent = {
 
   template: 
   `<form id="submit-player" >
-    <input id="input-player" type="text" />
+    <input v-model="value" id="input-player" type="text" placeholder="Enter player name"/>
     <button id="add-btn" type="submit" @click="addPlayer">Add</button>
   </form>`
 
