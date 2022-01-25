@@ -59,11 +59,12 @@ const ListPlayerComponent = {
   methods: {
 
     //Get the id of clicked player from current's component's prop playerItem
-    playerClicked(){
+    playerClicked: function(){
       const id = this.playerItem.id;
       console.log("id = ", id);
-      return id;
-      // this.$root.$emit('playerClicked', id);
+
+      //shout to public there is a parameter id, whoever can catch it, note here should use like 'clickkk' an uniqe name.
+      this.$root.$emit('clickkk', id);
 
     }
 
@@ -109,24 +110,6 @@ const ListPlayersComponent = {
         this.reqStatus = 'An error has occured!!!';
       })
     },
-
-    playerClicked(e){
-      const id = e.target.getAttribute('id');
-      console.log("id = ", id);
-      this.reqStatus = 'Loading...';
-      fetch(`http://localhost:3001/api/players/${id}`)
-      .then(res=>res.json())
-      .then(data=>{
-        this.selectedPlayer = data;
-        this.reqStatus = '';
-        console.log("data = ", data);
-        return data;
-        
-      }).catch(error => {
-        this.reqStatus = 'An error has occured!!!';
-      });
-
-    },
   },
 
   components: {
@@ -169,17 +152,46 @@ const ShowPlayerComponent = {
     }
   },
   // props:['selectedPlayer'],
+  mounted: function () { 
+    this.$root.$on('clickkk', (myId) => { 
+      this.selectedPlayer.id = myId;
+      console.log("myId = ", myId);
+    })
+  },
+
   methods:{
+    
+    getAndShowPlayer(){
+      const id = e.target.getAttribute('id');
+      console.log("id = ", id);
+      this.reqStatus = 'Loading...';
+      fetch(`http://localhost:3001/api/players/${id}`)
+      .then(res=>res.json())
+      .then(data=>{
+        this.selectedPlayer = data;
+        this.reqStatus = '';
+        console.log("data = ", data);
+        return data;
+        
+      }).catch(error => {
+        this.reqStatus = 'An error has occured!!!';
+      });
+
+    },
+
     deletePlayer(id){
 
     }
 
   },
 
+  
+  
+
   template: 
   `<div id="selected-player">
     <div className="player-id"></div>
-    <div v-bind:name="selectedPlayer.name9" className="player-name"></div>
+    <div v-bind:name="selectedPlayer.name" className="player-name"></div>
     <div :key="selectedPlayer.id" className="player-status"></div>
     <button @click="deletePlayer" className="delete-btn">Delete</button>
   </div>`
