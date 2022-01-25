@@ -152,18 +152,12 @@ const ShowPlayerComponent = {
     }
   },
   // props:['selectedPlayer'],
-  mounted: function () { 
-    this.$root.$on('clickkk', (myId) => { 
-      this.selectedPlayer.id = myId;
-      console.log("myId = ", myId);
-    })
-  },
+  
 
   methods:{
     
-    getAndShowPlayer(){
-      const id = e.target.getAttribute('id');
-      console.log("id = ", id);
+    getAndShowPlayer(id){
+      
       this.reqStatus = 'Loading...';
       fetch(`http://localhost:3001/api/players/${id}`)
       .then(res=>res.json())
@@ -185,7 +179,14 @@ const ShowPlayerComponent = {
 
   },
 
-  
+  mounted: function () { 
+    this.$root.$on('clickkk', (myId) => { 
+      this.selectedPlayer.id = myId;
+      console.log("myId = ", myId);
+      this.getAndShowPlayer(myId);
+      
+    })
+  },
   
 
   template: 
