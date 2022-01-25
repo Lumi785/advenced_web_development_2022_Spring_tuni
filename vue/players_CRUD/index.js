@@ -53,10 +53,10 @@ const ListPlayerComponent = {
   name: "list-player",
   // TODO: Implement the <list-player> component here.
 
-  props: ['player'],
+  props: ['playerItem'],
 
   template: 
-  `<li>{{player}}</li>`
+  `<li>{{playerItem.name}}</li>`
   
 };
 
@@ -68,11 +68,7 @@ const ListPlayersComponent = {
   data: function () {
     return {
       players: [],
-      player: {
-        name: '',
-        id: 0,
-        isActive: false 
-      },
+      
       reqStatus: ''
     };
   },
@@ -85,7 +81,7 @@ const ListPlayersComponent = {
       .then(data=>{
         this.players = data;
         this.reqStatus = '';
-        console.log("data = ", data);
+        console.log("data = ", data[0].name);
         return data;
         
       }).catch(error => {
@@ -99,10 +95,12 @@ const ListPlayersComponent = {
   },
 
   template: 
-  `<ol id="players-lis">
-    <list-player v-for="player in players" 
+  `<ol id="players-list">
+    <list-player 
+      v-for="player in players" 
+      v-bind:playerItem="player"
       v-bind:name="player.name"
-      v-bind:key="player.id"
+      :key="player.id"
     ></list-player>
 
   </ol>`,
@@ -134,6 +132,7 @@ const App = {
           // TODO: Implement the App component here.
           
           <add-player></add-player>
+          <p>reqStatus</p>
           <list-players></list-players>
         
 
