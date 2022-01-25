@@ -145,7 +145,7 @@ const ShowPlayerComponent = {
     return {
       selectedPlayer: {
         name: '',
-        id: 0,
+        id: '',
         isActive: ''
       },
       reqStatus: ''
