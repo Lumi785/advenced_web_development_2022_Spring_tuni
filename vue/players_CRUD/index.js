@@ -128,7 +128,7 @@ const ListPlayersComponent = {
     ></list-player>
 
   </ol>
-  <show-player></show-player>
+  
   </div>`,
 
   created(){
@@ -191,9 +191,9 @@ const ShowPlayerComponent = {
 
   template: 
   `<div id="selected-player">
-    <div className="player-id"></div>
-    <div v-bind:name="selectedPlayer.name" className="player-name"></div>
-    <div :key="selectedPlayer.id" className="player-status"></div>
+    <div className="player-id">{{selectedPlayer.id}}</div>
+    <div v-bind:name="selectedPlayer.name" className="player-name">{{selectedPlayer.name}}</div>
+    <div :key="selectedPlayer.id" className="player-status">{{selectedPlayer.isActive}}</div>
     <button @click="deletePlayer" className="delete-btn">Delete</button>
   </div>`
 };
@@ -218,6 +218,7 @@ const App = {
           <add-player></add-player>
          
           <list-players></list-players>
+          <show-player></show-player>
   
         </p>
     </div>
