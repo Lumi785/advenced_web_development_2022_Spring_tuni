@@ -55,10 +55,26 @@ const ListPlayerComponent = {
 
   props: ['playerItem'],
 
+  // components: [ShowPlayerComponent],
+  methods: {
+
+    //Get the id of clicked player from current's component's prop playerItem
+    playerClicked(){
+      const id = this.playerItem.id;
+      console.log("id = ", id);
+      return id;
+      // this.$root.$emit('playerClicked', id);
+
+    }
+
+  },
+
   template: 
-  `<li>{{playerItem.name}}</li>`
+  `<li @click="playerClicked">{{playerItem.id}}-{{playerItem.name}}</li>`
   
 };
+
+
 
 
 
@@ -68,6 +84,12 @@ const ListPlayersComponent = {
   data: function () {
     return {
       players: [],
+      clickedPlayer: {
+        name: '',
+        id:0,
+        isActive:''
+
+      },
       reqStatus: ''
     };
   },
@@ -88,7 +110,9 @@ const ListPlayersComponent = {
       })
     },
 
-    playerClicked(id){
+    playerClicked(e){
+      const id = e.target.getAttribute('id');
+      console.log("id = ", id);
       this.reqStatus = 'Loading...';
       fetch(`http://localhost:3001/api/players/${id}`)
       .then(res=>res.json())
@@ -110,23 +134,25 @@ const ListPlayersComponent = {
   },
 
   template: 
-  `<ol id="players-list" @click="playerClicked">
+  `<div>
+  <ol id="players-list" >
     <list-player 
       v-for="player in players" 
       v-bind:playerItem="player"
       v-bind:name="player.name"
       :key="player.id"
+      
     ></list-player>
 
-  </ol>`,
+  </ol>
+  <show-player></show-player>
+  </div>`,
 
   created(){
     this.listPlayers();
   },
   
 };
-
-
 
 
 const ShowPlayerComponent = {
@@ -142,7 +168,7 @@ const ShowPlayerComponent = {
       reqStatus: ''
     }
   },
-
+  // props:['selectedPlayer'],
   methods:{
     deletePlayer(id){
 
@@ -153,11 +179,14 @@ const ShowPlayerComponent = {
   template: 
   `<div id="selected-player">
     <div className="player-id"></div>
-    <div v-bind:name="selectedPlayer.name" className="player-name"></div>
+    <div v-bind:name="selectedPlayer.name9" className="player-name"></div>
     <div :key="selectedPlayer.id" className="player-status"></div>
     <button @click="deletePlayer" className="delete-btn">Delete</button>
   </div>`
 };
+
+
+
 
 const RequestStatusComponent = {
   name: "request-status",
@@ -174,11 +203,9 @@ const App = {
           // TODO: Implement the App component here.
           
           <add-player></add-player>
-          <p>reqStatus</p>
+         
           <list-players></list-players>
-          <show-player></show-player>
-        
-
+  
         </p>
     </div>
   `,
