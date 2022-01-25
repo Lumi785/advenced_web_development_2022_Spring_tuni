@@ -39,7 +39,7 @@ const AddPlayerComponent = {
   template: 
   `<div>
   <form @submit.prevent="addPlayer" id="submit-player" >
-    <input v-model="player.name" id="input-player" type="text" placeholder="Enter player name"/>
+    <input name="player-name" v-model="player.name" id="input-player" type="text" placeholder="Enter player name"/>
     <button id="add-btn" type="submit" >Add</button>
   </form>
   <p>{{player}}</p>
@@ -71,7 +71,7 @@ const ListPlayerComponent = {
   },
 
   template: 
-  `<li @click="playerClicked">{{playerItem.id}}-{{playerItem.name}}</li>`
+  `<li @click="playerClicked" :id="'player-'+playerItem.id">{{playerItem.name}}</li>`
   
 };
 
@@ -117,7 +117,7 @@ const ListPlayersComponent = {
   },
 
   template: 
-  `<div>
+  `
   <ol id="players-list" >
     <list-player 
       v-for="player in players" 
@@ -128,8 +128,7 @@ const ListPlayersComponent = {
     ></list-player>
 
   </ol>
-  
-  </div>`,
+  `,
 
   created(){
     this.listPlayers();
@@ -173,9 +172,23 @@ const ShowPlayerComponent = {
 
     },
 
-    deletePlayer(id){
-
-    }
+    deletePlayer(myId){
+      // const player = {
+      //   id: myId,
+      //   name : `${this.selectedPlayer.name}`,
+      //   isActive: false
+      // };
+      const reqOptions = {
+        method: "DELETE",
+        // headers: {"Content-Type": "application/json"},
+        // body: JSON.stringify(player)
+      };
+      fetch(`http://localhost:3001/api/players/${myId}`, reqOptions)
+        .then(response => response.json())
+        .then(data => {
+          this.player = data;
+          console.log("DELdata = ", data)});
+    },
 
   },
 
@@ -192,10 +205,18 @@ const ShowPlayerComponent = {
   template: 
   `<div id="selected-player">
     <div className="player-id">{{selectedPlayer.id}}</div>
-    <div v-bind:name="selectedPlayer.name" className="player-name">{{selectedPlayer.name}}</div>
-    <div :key="selectedPlayer.id" className="player-status">{{selectedPlayer.isActive}}</div>
+    <div className="player-name">{{selectedPlayer.name}}</div>
+    <div className="player-status">{{selectedPlayer.isActive}}</div>
     <button @click="deletePlayer" className="delete-btn">Delete</button>
   </div>`
+
+  // template: 
+  // `<div id="selected-player">
+  //   <div className="player-id">{{selectedPlayer.id}}</div>
+  //   <div v-bind:name="selectedPlayer.name" className="player-name">{{selectedPlayer.name}}</div>
+  //   <div :key="selectedPlayer.id" className="player-status">{{selectedPlayer.isActive}}</div>
+  //   <button @click="deletePlayer" className="delete-btn">Delete</button>
+  // </div>`
 };
 
 
@@ -211,7 +232,7 @@ const App = {
   template: `
     <div>
         <p>
-        <h1>Manage hockey players with Vue</h1>
+        // <h1>Manage hockey players with Vue</h1>
 
           // TODO: Implement the App component here.
           
