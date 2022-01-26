@@ -234,7 +234,7 @@ const ShowPlayerComponent = {
       fetch(`http://localhost:3001/api/players/${aId}`, reqOptions)
         .then(response => response.json())
         .then(data => {
-          this.show = false;
+          this.$root.$emit('now-you-can-re-display-players');
 
          
           console.log("DELdata = ", data)});
