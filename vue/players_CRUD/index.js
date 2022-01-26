@@ -1,5 +1,21 @@
 "use strict";
 
+const RequestStatusComponent = {
+  name: "request-status",
+  // TODO: Implement the <request-status> component here.
+  props: ['reqStatus'],
+  template:
+  '<div id="request-status">{{reqStatus}}</div>'
+
+  ,
+  methods:{
+    printReqStatus(){
+      console.log("reqStatus = ", this.reqStatus);
+    }
+  }
+
+};
+
 const AddPlayerComponent = {
   name: "add-player",
   // TODO: Implement the <"add-player"> component here.
@@ -27,7 +43,7 @@ const AddPlayerComponent = {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(player)
       };
-      fetch("http://localhost:3001/api/players", reqOptions)
+      fetch("http://localhost:3001/api/playerss", reqOptions)
         
         .then(response => response.json())
         .then(data => {
@@ -40,6 +56,9 @@ const AddPlayerComponent = {
     },
   },
 
+  components:{
+    RequestStatusComponent
+  },
   
 // submit.prevent if no use prevent, console.log disappear quickly
   template: 
@@ -122,7 +141,8 @@ const ListPlayersComponent = {
   },
 
   components: {
-    ListPlayerComponent
+    ListPlayerComponent,
+    RequestStatusComponent
   },
 
   template: 
@@ -211,6 +231,10 @@ const ShowPlayerComponent = {
       
     })
   },
+
+  components:{
+    RequestStatusComponent
+  },
   
 
   template: 
@@ -233,14 +257,14 @@ const ShowPlayerComponent = {
 
 
 
-const RequestStatusComponent = {
-  name: "request-status",
-  // TODO: Implement the <request-status> component here.
-  props: ['reqStatus'],
-  template:
-  '<div id-"request-status">{{reqStatus}}</div>'
+// const RequestStatusComponent = {
+//   name: "request-status",
+//   // TODO: Implement the <request-status> component here.
+//   props: ['reqStatus'],
+//   template:
+//   '<div id-"request-status">{{reqStatus}}</div>'
 
-};
+// };
 
 const App = {
 
