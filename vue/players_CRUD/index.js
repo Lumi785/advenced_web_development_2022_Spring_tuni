@@ -175,7 +175,9 @@ const ShowPlayerComponent = {
 
     },
 
-    deletePlayer(myId){
+    deletePlayer(aId){
+      console.log("deee myID type = ", typeof(aId));
+      console.log("del aId = " ),aId.target.value; 
       // const player = {
       //   id: myId,
       //   name : `${this.selectedPlayer.name}`,
@@ -186,7 +188,7 @@ const ShowPlayerComponent = {
         // headers: {"Content-Type": "application/json"},
         // body: JSON.stringify(player)
       };
-      fetch(`http://localhost:3001/api/players/${myId}`, reqOptions)
+      fetch(`http://localhost:3001/api/players/${aId}`, reqOptions)
         .then(response => response.json())
         .then(data => {
           this.player = data;
@@ -195,6 +197,8 @@ const ShowPlayerComponent = {
 
   },
 
+
+  //Here catch the id shouted by "clickkk" event emitted in li element li ListPlayerComponent
   mounted: function () { 
     this.$root.$on('clickkk', (myId) => { 
       this.selectedPlayer.id = myId;
