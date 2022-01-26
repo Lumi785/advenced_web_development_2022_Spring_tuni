@@ -1,20 +1,20 @@
 "use strict";
 
-const RequestStatusComponent = {
-  name: "request-status",
-  // TODO: Implement the <request-status> component here.
-  props: ['reqStatus'],
-  template:
-  '<div id="request-status">{{reqStatus}}</div>'
+// const RequestStatusComponent = {
+//   name: "request-status",
+//   // TODO: Implement the <request-status> component here.
+//   props: ['reqStatus'],
+//   template:
+//   '<div id="request-status">{{reqStatus}}</div>'
 
-  ,
-  methods:{
-    printReqStatus(){
-      console.log("reqStatus = ", this.reqStatus);
-    }
-  }
+//   ,
+//   methods:{
+//     printReqStatus(){
+//       console.log("reqStatus = ", this.reqStatus);
+//     }
+//   }
 
-};
+// };
 
 const AddPlayerComponent = {
   name: "add-player",
@@ -36,6 +36,7 @@ const AddPlayerComponent = {
   methods: {
     addPlayer(){
       this.reqStatus = 'Loading...';
+      this.$root.$emit('now-you-can-re-update-reqstatus', reqStatus);
       const player = {
         name : `${this.player.name}`,
         isActive: false
@@ -51,27 +52,20 @@ const AddPlayerComponent = {
         .then(data => {
           this.player = data;
           this.reqStatus = '';
+          this.$root.$emit('now-you-can-re-update-reqstatus');
 
           //send event to public whoever need to update players in ui
           this.$root.$emit('now-you-can-re-display-players');
           console.log("dataddddd = ", data.name);})
         .catch(error => {
           this.reqStatus = 'An error has occured!!!';
+          this.$root.$emit('now-you-can-re-update-reqstatus', reqStatus);
       });
 
     },
   },
 
-  mounted() {
-    this.$root.$on('AddPlayerComponent', () => {
-        // your code goes here
-        this.c1method()
-    })
-  },
 
-  components:{
-    RequestStatusComponent
-  },
   
 // submit.prevent if no use prevent, console.log disappear quickly
   template: 
@@ -138,30 +132,28 @@ const ListPlayersComponent = {
   methods: {
     listPlayers(){
       this.reqStatus = 'Loading...';
+      this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
+
       fetch("http://localhost:3001/api/players")
       .then(res=>res.json())
       .then(data=>{
         this.players = data;
         this.reqStatus = '';
-        console.log("data = ", data[0].name);
+        this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
+        // console.log("data = ", data[0].name);
         return data;
         
       }).catch(error => {
         this.reqStatus = 'An error has occured!!!';
+        this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
       })
     },
   },
 
-  mounted() {
-    this.$root.$on('now-you-can-re-display-players', () => {
-        // your code goes here
-        this.listPlayers();
-    })
-  },
+ 
 
   components: {
-    ListPlayerComponent,
-    RequestStatusComponent
+    ListPlayerComponent
   },
   
   
@@ -207,21 +199,28 @@ const ShowPlayerComponent = {
     getAndShowPlayer(id){
       
       this.reqStatus = 'Loading...';
+      this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
+
       fetch(`http://localhost:3001/api/players/${id}`)
       .then(res=>res.json())
       .then(data=>{
         this.selectedPlayer = data;
         this.reqStatus = '';
+        this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
         console.log("data = ", data);
         return data;
         
       }).catch(error => {
         this.reqStatus = 'An error has occured!!!';
+        this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
       });
 
     },
 
     deletePlayer(){
+      this.reqStatus = 'Loading...';
+
+      this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
       
       console.log("dddddd= ", this.selectedPlayer.id);
       const aId = this.selectedPlayer.id;
@@ -235,9 +234,12 @@ const ShowPlayerComponent = {
         .then(response => response.json())
         .then(data => {
           this.$root.$emit('now-you-can-re-display-players');
-
-         
-          console.log("DELdata = ", data)});
+          this.reqStatus = '';
+          this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
+          console.log("DELdata = ", data)}).catch(error => {
+            this.reqStatus = 'An error has occured!!!';
+            this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
+          });
     },
 
   },
@@ -249,15 +251,9 @@ const ShowPlayerComponent = {
       this.selectedPlayer.id = myId;
       console.log("myId = ", myId);
       this.getAndShowPlayer(myId);
-
-      
     })
   },
 
-  components:{
-    RequestStatusComponent
-  },
-  
 
   template: 
   `<div id="selected-player"> 
@@ -279,14 +275,40 @@ const ShowPlayerComponent = {
 
 
 
-// const RequestStatusComponent = {
-//   name: "request-status",
-//   // TODO: Implement the <request-status> component here.
-//   props: ['reqStatus'],
-//   template:
-//   '<div id-"request-status">{{reqStatus}}</div>'
+const RequestStatusComponent = {
+  name: "request-status",
+  // TODO: Implement the <request-status> component here.
+  // props: ['reqStatus'],
+  data() {
+    return{
+      reqStatus: ''
+    }
+  },
 
-// };
+  methods: {
+    updateReqStatus(rs){
+      this.reqStatus = rs;
+    }
+  },
+
+  mounted: function(){ 
+    this.$root.$on("now-you-can-re-update-reqstatus", (requestStatus) => { 
+      this.updateReqStatus(requestStatus);
+      console.log("myreqstatus = ", requestStatus);
+    })
+  },
+
+  // mounted() {
+  //   this.$root.$on('AddPlayerComponent', () => {
+  //       // your code goes here
+  //       this.c1method()
+  //   })
+  // },
+
+  template:
+  '<div id="request-status">{{reqStatus}}</div>'
+
+};
 
 const App = {
 
