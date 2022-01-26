@@ -12,7 +12,8 @@ const AddPlayerComponent = {
         isActive: false 
       },
 
-      reqStatus: ''
+      reqStatus: '',
+      mode: false
     };
   },
 
@@ -59,7 +60,6 @@ const AddPlayerComponent = {
   </form>
   </div>`
 
-
 };
 
 
@@ -80,6 +80,8 @@ const ListPlayerComponent = {
       //shout to public there is a parameter id, whoever can catch it, note here should use like 'clickkk' an uniqe name.
       this.$root.$emit('clickkk', id);
 
+      this.$root.$emit('show-player-details', true);
+
     }
 
   },
@@ -91,7 +93,6 @@ const ListPlayerComponent = {
   </li>`
   
 };
-
 
 
 
@@ -180,7 +181,7 @@ const ShowPlayerComponent = {
         isActive: ''
       },
       reqStatus: '',
-      show: true
+      showMode: true
     }
   },
 
@@ -197,8 +198,9 @@ const ShowPlayerComponent = {
         this.selectedPlayer = data;
         this.reqStatus = '';
         this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
-        console.log("data = ", data);
-        return data;
+
+        console.log("fetchplayer by id data = ", data);
+        // return data;
         
       }).catch(error => {
         this.reqStatus = 'An error has occured!!!';
@@ -220,34 +222,48 @@ const ShowPlayerComponent = {
         headers: {"Content-Type": "application/json"},
       
       };
+      
       fetch(`http://localhost:3001/api/players/${aId}`, reqOptions)
+
         .then(response => response.json())
         .then(data => {
           this.$root.$emit('now-you-can-re-display-players');
           this.reqStatus = '';
           this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
+          this.$root.$emit('show-player-details', false);
           console.log("DELdata = ", data)}).catch(error => {
             this.reqStatus = 'An error has occured!!!';
             this.$root.$emit('now-you-can-re-update-reqstatus', this.reqStatus);
           });
     },
 
+    updateShowMode(md){
+      this.showMode = md;
+    }
   },
 
 
   //Here catch the id shouted by "clickkk" event emitted in li element ListPlayerComponent
-  mounted: function () { 
+  mounted () { 
     this.$root.$on('clickkk', (myId) => { 
       this.selectedPlayer.id = myId;
       console.log("myId = ", myId);
       this.getAndShowPlayer(myId);
       console.log("i am cllaed ");
-    })
+    });
+
+    this.$root.$on('show-player-details', (mode)=> {
+      this.updateShowMode(mode);
+      console.log("mode changed now", mode);
+    });
+
   },
+
+ 
 
 
   template: 
-  `<div id="selected-player"> 
+  `<div id="selected-player" v-if="showMode"> 
     <div className="player-id">{{selectedPlayer.id}}</div>
     <div className="player-name">{{selectedPlayer.name}}</div>
     <div className="player-status">{{selectedPlayer.isActive}}</div>
@@ -293,6 +309,9 @@ const RequestStatusComponent = {
   '<div id="request-status">{{reqStatus}}</div>'
 
 };
+
+
+
 
 const App = {
 
