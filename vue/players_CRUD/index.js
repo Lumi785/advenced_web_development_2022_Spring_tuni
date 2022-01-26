@@ -153,8 +153,6 @@ const ShowPlayerComponent = {
       reqStatus: ''
     }
   },
-  // props:['selectedPlayer'],
-  
 
   methods:{
     
@@ -232,6 +230,10 @@ const ShowPlayerComponent = {
 const RequestStatusComponent = {
   name: "request-status",
   // TODO: Implement the <request-status> component here.
+  props: ['reqStatus'],
+  template:
+  '<div id-"request-status">{{reqStatus}}</div>'
+
 };
 
 const App = {
@@ -247,6 +249,7 @@ const App = {
          
           <list-players></list-players>
           <show-player></show-player>
+          <request-status></request-status>
   
         </p>
     </div>
