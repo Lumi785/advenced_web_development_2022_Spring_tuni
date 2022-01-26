@@ -17,6 +17,7 @@ const AddPlayerComponent = {
 
   methods: {
     addPlayer(){
+      this.reqStatus = 'Loading...';
       const player = {
         name : `${this.player.name}`,
         isActive: false
@@ -27,10 +28,15 @@ const AddPlayerComponent = {
         body: JSON.stringify(player)
       };
       fetch("http://localhost:3001/api/players", reqOptions)
+        
         .then(response => response.json())
         .then(data => {
           this.player = data;
-          console.log("data = ", data)});
+          this.reqStatus = '';
+          console.log("data = ", data)})
+        .catch(error => {
+          this.reqStatus = 'An error has occured!!!';
+        })
     },
   },
 
@@ -39,7 +45,7 @@ const AddPlayerComponent = {
   template: 
   `<div>
   <form @submit.prevent="addPlayer" id="submit-player" >
-    <input name="player-name" v-model="player.name" id="input-player" type="text" placeholder="Enter player name"/>
+    <input required name="player-name" v-model="player.name" id="input-player" type="text" placeholder="Enter player name"/>
     <button id="add-btn" type="submit" >Add</button>
   </form>
   <p>{{player}}</p>
