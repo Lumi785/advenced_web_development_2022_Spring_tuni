@@ -67,7 +67,6 @@ const AddPlayerComponent = {
     <input required name="player-name" v-model="player.name" id="input-player" type="text" placeholder="Enter player name"/>
     <button id="add-btn" type="submit" >Add</button>
   </form>
-  <p>{{player}}</p>
   </div>`
 
 
@@ -199,35 +198,33 @@ const ShowPlayerComponent = {
 
     },
 
-    deletePlayer(aId){
-      console.log("deee myID type = ", typeof(aId));
-      console.log("del aId = " ),aId.target.value; 
-      // const player = {
-      //   id: myId,
-      //   name : `${this.selectedPlayer.name}`,
-      //   isActive: false
-      // };
+    deletePlayer(){
+      
+      console.log("dddddd= ", this.selectedPlayer.id);
+      const aId = this.selectedPlayer.id;
+  
       const reqOptions = {
         method: "DELETE",
-        // headers: {"Content-Type": "application/json"},
-        // body: JSON.stringify(player)
+        headers: {"Content-Type": "application/json"},
+      
       };
       fetch(`http://localhost:3001/api/players/${aId}`, reqOptions)
         .then(response => response.json())
         .then(data => {
-          this.player = data;
-          console.log("DELdata = ", data)});
+         
+        console.log("DELdata = ", data)});
     },
 
   },
 
 
-  //Here catch the id shouted by "clickkk" event emitted in li element li ListPlayerComponent
+  //Here catch the id shouted by "clickkk" event emitted in li element ListPlayerComponent
   mounted: function () { 
     this.$root.$on('clickkk', (myId) => { 
       this.selectedPlayer.id = myId;
       console.log("myId = ", myId);
       this.getAndShowPlayer(myId);
+
       
     })
   },
@@ -270,18 +267,14 @@ const App = {
 
   template: `
     <div>
-        <p>
-        // <h1>Manage hockey players with Vue</h1>
-
-          // TODO: Implement the App component here.
-          
-          <add-player></add-player>
-         
-          <list-players></list-players>
-          <show-player></show-player>
-          <request-status></request-status>
+        
+        <h1>Manage hockey players with Vue</h1>
+        <add-player></add-player>
+        <list-players></list-players>
+        <show-player></show-player>
+        <request-status></request-status>
   
-        </p>
+        
     </div>
   `,
 };
