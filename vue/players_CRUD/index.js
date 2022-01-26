@@ -27,6 +27,8 @@ const AddPlayerComponent = {
         id: 0,
         isActive: false 
       },
+
+
       reqStatus: ''
     };
   },
@@ -43,17 +45,28 @@ const AddPlayerComponent = {
         headers: {"Content-Type": "application/json"},
         body: JSON.stringify(player)
       };
-      fetch("http://localhost:3001/api/playerss", reqOptions)
+      fetch("http://localhost:3001/api/players", reqOptions)
         
         .then(response => response.json())
         .then(data => {
           this.player = data;
           this.reqStatus = '';
-          console.log("data = ", data)})
+
+          //send event to public whoever need to update players in ui
+          this.$root.$emit('now-you-can-re-display-players');
+          console.log("dataddddd = ", data.name);})
         .catch(error => {
           this.reqStatus = 'An error has occured!!!';
-        })
+      });
+
     },
+  },
+
+  mounted() {
+    this.$root.$on('AddPlayerComponent', () => {
+        // your code goes here
+        this.c1method()
+    })
   },
 
   components:{
@@ -139,10 +152,19 @@ const ListPlayersComponent = {
     },
   },
 
+  mounted() {
+    this.$root.$on('now-you-can-re-display-players', () => {
+        // your code goes here
+        this.listPlayers();
+    })
+  },
+
   components: {
     ListPlayerComponent,
     RequestStatusComponent
   },
+  
+  
 
   template: 
   `
@@ -175,7 +197,8 @@ const ShowPlayerComponent = {
         id: '',
         isActive: ''
       },
-      reqStatus: ''
+      reqStatus: '',
+      show: true
     }
   },
 
@@ -211,8 +234,10 @@ const ShowPlayerComponent = {
       fetch(`http://localhost:3001/api/players/${aId}`, reqOptions)
         .then(response => response.json())
         .then(data => {
+          this.show = false;
+
          
-        console.log("DELdata = ", data)});
+          console.log("DELdata = ", data)});
     },
 
   },
@@ -235,7 +260,7 @@ const ShowPlayerComponent = {
   
 
   template: 
-  `<div id="selected-player">
+  `<div id="selected-player"> 
     <div className="player-id">{{selectedPlayer.id}}</div>
     <div className="player-name">{{selectedPlayer.name}}</div>
     <div className="player-status">{{selectedPlayer.isActive}}</div>
