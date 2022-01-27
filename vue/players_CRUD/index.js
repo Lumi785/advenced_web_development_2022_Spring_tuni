@@ -13,7 +13,7 @@ const AddPlayerComponent = {
       },
 
       reqStatus: '',
-      mode: false
+      // mode: false
     };
   },
 
@@ -181,7 +181,7 @@ const ShowPlayerComponent = {
         isActive: ''
       },
       reqStatus: '',
-      showMode: true
+      showMode: ''
     }
   },
 
