@@ -1,21 +1,27 @@
-import { fireEvent, render, screen, waitFor, waitForElementToBeRemoved } from '@testing-library/react';
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved
+} from '@testing-library/react';
 import UserEvent from '@testing-library/user-event';
-import { server, rest } from '../mocks/server';
 import App from '../App';
 import { players } from '../mocks/players';
+import { rest, server } from '../mocks/server';
 
 test('should fetch all players from backend after successful login', async () => {
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
+  await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
 
   expect(listItems).toHaveLength(players.length);
@@ -26,10 +32,10 @@ test('should fetch all players from backend after successful login', async () =>
 
 test('should show logout link after login', async () => {
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
@@ -48,10 +54,10 @@ test('should show error status after failed login (incorrect credentials)', asyn
   );
 
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
@@ -62,10 +68,10 @@ test('should show error status after failed login (incorrect credentials)', asyn
 
 test('should remove players from DOM after logout', async () => {
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
@@ -87,7 +93,7 @@ test('should show logout link after successful registration', async () => {
   const username = await screen.findByLabelText(/username/i);
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
@@ -106,13 +112,13 @@ test('should fetch all players from backend after successful registration', asyn
   const username = await screen.findByLabelText(/username/i);
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
+  await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
 
   expect(listItems).toHaveLength(players.length);
@@ -135,7 +141,7 @@ test('should show error status after failed registration (invalid credentials)',
   const username = await screen.findByLabelText(/username/i);
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
@@ -152,10 +158,10 @@ test('should show error status when loading players fails', async () => {
   );
 
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
@@ -166,16 +172,16 @@ test('should show error status when loading players fails', async () => {
 
 test('should fetch single player data from backend when link is clicked', async () => {
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
+  await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
   UserEvent.click(linkElement);
@@ -193,16 +199,16 @@ test('should show error status when clicking link and loading player data fails'
   );
 
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
+  await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
   UserEvent.click(linkElement);
@@ -212,23 +218,23 @@ test('should show error status when clicking link and loading player data fails'
 
 test('should send POST request to backend and add new player to "#players-list"', async () => {
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
-  const name = screen.getByLabelText(/player name/i);
+  await waitFor(() => container.querySelector('input[name="name"]'));
+  const name = container.querySelector('input[name="name"]');
   await UserEvent.type(name, 'New Player', { delay: 10 });
 
   const addForm = container.querySelector('form');
   fireEvent.submit(addForm);
 
-  await waitFor(() => screen.getByText(/New Player/i, { selector: 'a' }));
+  await screen.findByText(/New Player/i, { selector: 'a' });
   expect(screen.getAllByRole('listitem')).toHaveLength(players.length + 1);
   expect(container.querySelector('.request-status').textContent.trim()).toBe('');
 });
@@ -241,17 +247,17 @@ test('should show error status and not add new player if POST request fails', as
   );
 
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
-  const name = screen.getByLabelText(/player name/i);
+  await waitFor(() => container.querySelector('input[name="name"]'));
+  const name = container.querySelector('input[name="name"]');
   await UserEvent.type(name, 'New Player', { delay: 10 });
 
   const addForm = container.querySelector('form');
@@ -263,16 +269,16 @@ test('should show error status and not add new player if POST request fails', as
 
 test('should send DELETE request to backend and delete player when "Delete" button is clicked', async () => {
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
+  await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
   await UserEvent.click(linkElement);
@@ -292,16 +298,16 @@ test('should show error status and not delete player if DELETE request fails', a
   );
 
   const { container } = render(<App />);
-  const username = screen.getByLabelText(/username/i);
+  const username = container.querySelector('#auth-form input[name="username"]');
   await UserEvent.type(username, 'username', { delay: 10 });
 
-  const password = screen.getByLabelText(/password/i);
+  const password = container.querySelector('#auth-form input[name="password"]');
   await UserEvent.type(password, 'password', { delay: 10 });
 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
-  await waitFor(() => screen.getByLabelText(/player name/i));
+  await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
   await UserEvent.click(linkElement);
@@ -309,6 +315,6 @@ test('should show error status and not delete player if DELETE request fails', a
   const button = await screen.findByText(/delete/i);
   UserEvent.click(button);
 
-  await waitFor(() => screen.queryByText('An error has occurred!!!'));
+  await screen.findByText('An error has occurred!!!');
   expect(screen.getAllByRole('listitem')).toHaveLength(players.length);
 });
