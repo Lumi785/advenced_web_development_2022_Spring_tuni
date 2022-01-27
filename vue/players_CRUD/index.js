@@ -73,7 +73,7 @@ const ListPlayerComponent = {
   methods: {
 
     //Get the id of clicked player from current's component's prop playerItem
-    playerClicked: function(){
+    playerclicked: function(){
       const id = this.playerItem.id;
       console.log("id = ", id);
 
@@ -87,7 +87,7 @@ const ListPlayerComponent = {
   },
 
   template: 
-  `<li @click="playerClicked" :id="'player-'+playerItem.id">
+  `<li @click.prevent="playerclicked" :id="'player-'+playerItem.id">
     <a href="#">{{playerItem.name}}</a>
   
   </li>`
@@ -264,10 +264,10 @@ const ShowPlayerComponent = {
 
   template: 
   `<div id="selected-player" v-if="showMode"> 
-    <div className="player-id">{{selectedPlayer.id}}</div>
-    <div className="player-name">{{selectedPlayer.name}}</div>
-    <div className="player-status">{{selectedPlayer.isActive}}</div>
-    <button @click="deletePlayer" className="delete-btn">Delete</button>
+    <div class="player-id">{{selectedPlayer.id}}</div>
+    <div class="player-name">{{selectedPlayer.name}}</div>
+    <div class="player-status">{{selectedPlayer.isActive}}</div>
+    <button @click="deletePlayer" class="delete-btn">Delete</button>
   </div>`
 
   // template: 
