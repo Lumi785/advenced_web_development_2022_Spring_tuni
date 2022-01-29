@@ -8,9 +8,9 @@ export const PlayersList = ({ players, selectPlayer }) => {
     
     <ol>
      
-      {players.map(player => <PlayerLink key={player.id} name={player.name}  url={player.name + "/" + player.isActive + "/" + player.id}/>)}
+      {players.map(player => <PlayerLink key={player.id} name={player.name}  url={player.name + "/" + player.isActive + "/" + player.id} onClick={selectPlayer}/>)}
       
-      // <PlayerLink/>
+     
     </ol>
   )
 };

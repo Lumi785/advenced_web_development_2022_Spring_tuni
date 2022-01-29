@@ -16,6 +16,7 @@ function App () {
   
   const [players, setPlayers] = useState([]);
   const [status, setStatus] = useState('');
+  const [player, setPlayer] = useState({name: '', isActive: false, id:''})
  
 
   //get all players
@@ -39,17 +40,20 @@ function App () {
   }, []);
 
 
-  //get one player by id
-  // useEffect(() => {
-  //   fetch("api/players/" + toString(id))
-  //     .then(res=>res.json())
-  //     .then(data=>{
-  //       const player = data;
-  //     }).catch(error => {
-  //       console.log("erros is = ", error);
-  //     })
+  // get one player by id
+  function selectPlayer(id){
+    const url = "api/players/" + id;
 
-  // }, {})
+    fetch(url)
+      .then(res=>res.json())
+      .then(data=>{
+        setPlayer(data);
+      }).catch(error => {
+        console.log("erros is = ", error);
+      })
+  }
+
+ 
 
 
   function handleDelete(id){
@@ -61,7 +65,7 @@ function App () {
     <>
 
     <div>
-      <PlayersList players={players}/>
+      <PlayersList players={players} selectPlayer={selectPlayer}/>
       {/* <PlayerInfo player={player} handleDelete = {handleDelete}/> */}
       <RequestStatus status={status}/>
     </div>
