@@ -7,7 +7,12 @@ export const PlayersList = ({ players, selectPlayer }) => {
   return(
     
     <ol>
-      {players.map(player => <li key={player.id}> {player.name} </li>)}
+     
+      {players.map(player => <PlayerLink key={player.id} name={player.name} />)}
+      // <PlayerLink/>
     </ol>
   )
 };
+
+
+ {/* {players.map(player => <li key={player.id}> {player.name} </li>)} */}

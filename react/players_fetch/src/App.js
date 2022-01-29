@@ -15,7 +15,8 @@ const requestStatus = {
 function App () {
   
   const [players, setPlayers] = useState([]);
-  const [status, setStatus] = useState();
+  const [status, setStatus] = useState('');
+ 
 
   //get all players
   useEffect(() => {
@@ -27,12 +28,12 @@ function App () {
       .then(data=>{
         setPlayers(data);
         setStatus(requestStatus.READY);
-        console.log("status == ", {status});
+        console.log("status == ", status);
 
       }).catch(error => {
        
         setStatus(requestStatus.ERROR);
-        console.log("erros is = ", error);
+        console.log("erros status is = ", status);
       })
 
   }, []);
