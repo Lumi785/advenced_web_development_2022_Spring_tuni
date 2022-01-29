@@ -33,7 +33,7 @@ function App () {
       }).catch(error => {
        
         setStatus(requestStatus.ERROR);
-        console.log("erros status is = ", status);
+        console.log("erros status is = ", error);
       })
 
   }, []);
