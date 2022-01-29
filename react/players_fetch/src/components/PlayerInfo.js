@@ -5,7 +5,9 @@ export const PlayerInfo = ({ player }) => {
   }
 
   return(
-    <div id="selected-player" onClick={handleDelete(player.id)}>
+    <div id="selected-player" onClick={(e)=>{
+      handleDelete(player.id);
+      e.preventDefault();}}>
       <div className="player-id">{player.id}</div>
       <div className="player-name">{player.name}</div>
       <div className="player-status">{player.status}</div>

@@ -42,9 +42,11 @@ function App () {
 
   // get one player by id
   function selectPlayer(id){
-    const url = "api/players/" + id;
+    const url = "/api/players/" + id;
+    console.log("rul = ", url);
 
     fetch(url)
+    
       .then(res=>res.json())
       .then(data=>{
         setPlayer(data);
@@ -66,7 +68,7 @@ function App () {
 
     <div>
       <PlayersList players={players} selectPlayer={selectPlayer}/>
-      {/* <PlayerInfo player={player} handleDelete = {handleDelete}/> */}
+      <PlayerInfo player={player} handleDelete = {handleDelete}/>
       <RequestStatus status={status}/>
     </div>
    
