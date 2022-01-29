@@ -10,33 +10,59 @@ const requestStatus = {
   ERROR: 'An error has occurred!!!'
 };
 
+
+
 function App () {
+  
   const [players, setPlayers] = useState([]);
+  const [status, setStatus] = useState();
 
-  console.log("hello");
-
-
+  //get all players
   useEffect(() => {
+   
+    setStatus(requestStatus.LOADING);
+    
     fetch("api/players")
       .then(res=>res.json())
       .then(data=>{
         setPlayers(data);
-        
-        console.log("data = ", players);
-        // return data;
-        
+        setStatus(requestStatus.READY);
+        console.log("status == ", {status});
+
       }).catch(error => {
+       
+        setStatus(requestStatus.ERROR);
         console.log("erros is = ", error);
       })
 
-  }, [])
+  }, []);
 
+
+  //get one player by id
+  // useEffect(() => {
+  //   fetch("api/players/" + toString(id))
+  //     .then(res=>res.json())
+  //     .then(data=>{
+  //       const player = data;
+  //     }).catch(error => {
+  //       console.log("erros is = ", error);
+  //     })
+
+  // }, {})
+
+
+  function handleDelete(id){
+    const playersAfterDelete = players.filter(player => player.id !== id);
+    setPlayers(playersAfterDelete);
+  }
 
   return(
     <>
-    <div>hello rose</div>
+
     <div>
       <PlayersList players={players}/>
+      {/* <PlayerInfo player={player} handleDelete = {handleDelete}/> */}
+      <RequestStatus status={status}/>
     </div>
    
     </>

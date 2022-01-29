@@ -1,3 +1,12 @@
 export const RequestStatus = ({ status }) => {
-  return null;
+
+  // function setStatus(status){
+  //   if (status === "" | typeof(status) !== String){
+  //     status = "";
+  //   } 
+  //   return status;
+  // }
+  return(
+    <div className="request-status">{status}</div>
+  );
 };
