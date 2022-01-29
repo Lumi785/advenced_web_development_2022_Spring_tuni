@@ -22,7 +22,7 @@ function App () {
       .then(data=>{
         setPlayers(data);
         
-        console.log("data = ", data);
+        console.log("data = ", players);
         // return data;
         
       }).catch(error => {
@@ -35,6 +35,9 @@ function App () {
   return(
     <>
     <div>hello rose</div>
+    <div>
+      <PlayersList players={players}/>
+    </div>
    
     </>
     
