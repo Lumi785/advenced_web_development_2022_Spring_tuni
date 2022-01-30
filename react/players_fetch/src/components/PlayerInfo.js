@@ -1,5 +1,15 @@
 export const PlayerInfo = ({ player, handleDelete }) => {
-
+  
+  function c (player){
+    let a;
+    if(player.isActive === false){
+     a = 'not active';
+    } else {
+      a = 'active';
+    }
+    return a;
+  }
+  const aa = c(player);
  
 
   return(
@@ -8,7 +18,7 @@ export const PlayerInfo = ({ player, handleDelete }) => {
       e.preventDefault();}}>
       <div className="player-id">{player.id}</div>
       <div className="player-name">{player.name}</div>
-      <div className="player-status">{player.status}</div>
+      <div className="player-status">{aa}</div>
     </div>
   )
 };

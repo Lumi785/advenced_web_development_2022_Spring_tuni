@@ -16,10 +16,11 @@ function App () {
   
   const [players, setPlayers] = useState([]);
   const [status, setStatus] = useState('');
-  const [player, setPlayer] = useState({name: '', isActive: false, id:''})
+  const [player, setPlayer] = useState({id:'', name: '', isActive: ''})
  
   const headers = {
-    'Accept': 'application/json'
+    'Accept': 'application/json',
+    'method': 'GET'
   };
   
   //get all players
@@ -32,6 +33,7 @@ function App () {
       .then(res=>res.json())
       .then(data=>{
         setPlayers(data);
+  
         setStatus(requestStatus.READY);
         console.log("status == ", status);
 
@@ -46,15 +48,21 @@ function App () {
 
   // get one player by id
   function selectPlayer(id){
+    setStatus(requestStatus.LOADING);
+    
     const url = "/api/players/" + id;
     console.log("rul = ", url);
 
     fetch(url, {headers})
+      
     
       .then(res=>res.json())
       .then(data=>{
+        
         setPlayer(data);
+        setStatus(requestStatus.READY);
       }).catch(error => {
+        setStatus(requestStatus.ERROR);
         console.log("erros is = ", error);
       })
   }
