@@ -66,6 +66,11 @@ function App () {
       })
   }
 
+  //add player
+  function handleSubmit(name){
+    console.log("add player" + name);
+  }
+
  
 
   // delete one player by id
@@ -77,6 +82,7 @@ function App () {
   return(
 
     <div>
+      <AddPlayer handleSubmit={handleSubmit}/>
       <h3>Players List</h3>
       <PlayersList players={players} selectPlayer={selectPlayer}/>
       <h3>Selected Player</h3>
