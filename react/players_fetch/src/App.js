@@ -18,13 +18,17 @@ function App () {
   const [status, setStatus] = useState('');
   const [player, setPlayer] = useState({name: '', isActive: false, id:''})
  
-
+  const headers = {
+    'Accept': 'application/json'
+  };
+  
   //get all players
   useEffect(() => {
    
     setStatus(requestStatus.LOADING);
-    
-    fetch("api/players")
+
+   
+    fetch("api/players", {headers})
       .then(res=>res.json())
       .then(data=>{
         setPlayers(data);
@@ -45,7 +49,7 @@ function App () {
     const url = "/api/players/" + id;
     console.log("rul = ", url);
 
-    fetch(url)
+    fetch(url, {headers})
     
       .then(res=>res.json())
       .then(data=>{
