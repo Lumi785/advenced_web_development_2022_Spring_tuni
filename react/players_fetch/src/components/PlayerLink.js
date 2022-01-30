@@ -4,9 +4,10 @@ export const PlayerLink = ({ name, onClick, url, id }) => {
   return(
     
 
-    <li id={id} onClick={
+    <li role="listitem" id={id} onClick={
       (e) => {
         onClick();
+        console.log("onlick in p");
         e.preventDefault();
       }
       }>

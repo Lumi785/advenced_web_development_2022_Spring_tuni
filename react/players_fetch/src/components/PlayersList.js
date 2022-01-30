@@ -10,7 +10,9 @@ export const PlayersList = ({ players, selectPlayer }) => {
      
      //Put wrap function of selectPlayer by another function, is to prevent selectPlayer from being called automatically
 
-      {players.map(player => <PlayerLink key={player.id} id={"player-"+player.id} name={player.name}  url={player.id} onClick={() => {selectPlayer(player.id)} }/>)}
+      {players.map(player => <PlayerLink key={player.id} id={"player-"+player.id} name={player.name}  url={player.id} onClick={() => {
+        selectPlayer(player.id);
+        console.log("rose test click");}  }/>)}
       
      
     </ol>
