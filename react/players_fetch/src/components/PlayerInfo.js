@@ -1,8 +1,6 @@
-export const PlayerInfo = ({ player }) => {
+export const PlayerInfo = ({ player, handleDelete }) => {
 
-  function handleDelete(){
-    console.log("del");
-  }
+ 
 
   return(
     <div id="selected-player" onClick={(e)=>{

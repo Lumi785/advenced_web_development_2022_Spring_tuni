@@ -57,22 +57,21 @@ function App () {
 
  
 
-
+  // delete one player by id
   function handleDelete(id){
     const playersAfterDelete = players.filter(player => player.id !== id);
     setPlayers(playersAfterDelete);
   }
 
   return(
-    <>
 
     <div>
+      <h3>Players List</h3>
       <PlayersList players={players} selectPlayer={selectPlayer}/>
+      <h3>Selected Player</h3>
       <PlayerInfo player={player} handleDelete = {handleDelete}/>
       <RequestStatus status={status}/>
     </div>
-   
-    </>
     
   )
 

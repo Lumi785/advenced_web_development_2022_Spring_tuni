@@ -1,10 +1,10 @@
-export const PlayerLink = ({ name, onClick, url }) => {
+export const PlayerLink = ({ name, onClick, url, id }) => {
 
 
   return(
     
 
-    <li onClick={
+    <li id={id} onClick={
       (e) => {
         onClick();
         e.preventDefault();
