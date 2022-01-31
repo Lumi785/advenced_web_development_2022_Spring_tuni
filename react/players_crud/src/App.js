@@ -67,11 +67,31 @@ function App () {
   }
 
   //add player
-  function handleSubmit(name){
-    console.log("add player" + name);
+  function handleSubmit(player){
+    setStatus(requestStatus.LOADING);
+    console.log("player === ", player);
+    
+    const reqOptions = {
+      method: "POST",
+      headers: {"Content-Type": "application/json"},
+      body: JSON.stringify(player)
+
+    }
+    fetch("/api/players", reqOptions)
+    .then(res => res.json())
+    .then(data => {
+      setPlayers([...players], data);
+      setStatus(requestStatus.READY);
+      console.log("dataaaaaa = ", data);
+    })
+    .catch(err => {
+      setStatus(requestStatus.ERROR);
+      console.log("err === ", err);
+    });
   }
 
- 
+
+
 
   // delete one player by id
   function handleDelete(id){
