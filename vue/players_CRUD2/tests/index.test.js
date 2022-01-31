@@ -1,3 +1,5 @@
+/** @format */
+
 'use strict';
 
 // Mocha
@@ -5,6 +7,7 @@ mocha.setup('bdd');
 
 // Chai
 const assert = chai.assert;
+const expect = chai.expect;
 const should = chai.should();
 
 // Vue Test Utils
@@ -64,7 +67,7 @@ const delay = (delay, cb = null) => {
   );
 };
 
-describe('<auth-user> tests', async () => {
+describe('AuthUserComponent tests', async () => {
   describe('login', () => {
     let wrapper = null;
     beforeEach(function () {
@@ -269,7 +272,7 @@ describe('<auth-user> tests', async () => {
   });
 });
 
-describe('<add-player> tests', async () => {
+describe('AddPlayerComponent tests', async () => {
   let wrapper = null;
   beforeEach(function () {
     wrapper = mount(AddPlayerComponent);
@@ -316,7 +319,7 @@ describe('<add-player> tests', async () => {
   });
 });
 
-describe('<show-player> tests', async () => {
+describe('ShowPlayerComponent tests', async () => {
   let wrapper = null;
   let currentPlayer = null;
   beforeEach(function () {
@@ -435,27 +438,28 @@ describe('<list-player> tests', () => {
     });
   });
 
-  it("should render <li> with id player-<id>",()=>{
-    wrapper.get(`li#player-${currentPlayer.id}`)
-  })
+  it('should render <li> with id player-<id>', () => {
+    wrapper.get(`li#player-${currentPlayer.id}`);
+  });
 
-  it("should render <a> in <li> with id player-<id>",()=>{
-    wrapper.get(`li#player-${currentPlayer.id} a`)
-  })
+  it('should render <a> in <li> with id player-<id>', () => {
+    wrapper.get(`li#player-${currentPlayer.id} a`);
+  });
   it('emits correct message', async () => {
     const a = wrapper.get(`li#player-${currentPlayer.id} a`);
     expect(wrapper.emitted()).to.not.have.property('player-clicked');
 
-    await a.trigger('click.prevent')
+    await a.trigger('click.prevent');
 
     const emitted = wrapper.emitted();
     // assert event has not been emitted
     expect(emitted).to.have.property('player-clicked');
 
     // assert event has been emitted
-    expect(wrapper.emitted(), 'player-clicked event was not emitted').to.have.property(
-      'player-clicked'
-    );
+    expect(
+      wrapper.emitted(),
+      'player-clicked event was not emitted'
+    ).to.have.property('player-clicked');
     // assert event count
     expect(emitted['player-clicked'].length).to.equal(
       1,
@@ -470,23 +474,22 @@ describe('<list-player> tests', () => {
 });
 
 describe('<request-status> tests', async () => {
-	let wrapper = null;
-	beforeEach(function () {
-		wrapper = mount(RequestStatusComponent, {
-			propsData: {
-				requestStatus: 'loading',
-			},
-		});
-	});
+  let wrapper = null;
+  beforeEach(function () {
+    wrapper = mount(RequestStatusComponent, {
+      propsData: {
+        requestStatus: 'loading',
+      },
+    });
+  });
 
-	it('renders the prop data', () => {
-		expect(wrapper.text()).to.equal('loading');
-	});
-	it('must contain a div with id "request-status"', () => {
-		wrapper.get('div#request-status');
-	});
+  it('renders the prop data', () => {
+    expect(wrapper.text()).to.equal('loading');
+  });
+  it('must contain a div with id "request-status"', () => {
+    wrapper.get('div#request-status');
+  });
 });
-
 
 describe('App test', () => {
   const basicAuthEncript = (username, password) =>
@@ -533,10 +536,13 @@ describe('App test', () => {
         .to.equal(expectedUrl.toString(), 'The URL was not as expected');
       expect(args[1]).to.have.property('headers');
       const headers = args[1].headers;
-      expect(headers).to.be.an.instanceof(Headers);
-      expect(headers.get('Authorization'), 'Authorization header missing').to
-        .not.be.null;
-      expect(headers.get('Authorization')).to.equal(
+      expect(headers).to.be.an.instanceof(Object);
+      const authHeader =
+        headers instanceof Headers
+          ? headers.get('Authorization')
+          : headers.Authorization;
+      expect(authHeader, 'Authorization header missing').to.not.be.null;
+      expect(authHeader).to.equal(
         basicAuthEncript(user, pass),
         'Incorrect authorization header'
       );
@@ -549,7 +555,7 @@ describe('App test', () => {
       );
     });
 
-    it('should register user with Basic auth and fetch users on register', async () => {
+    it('should register user with Basic auth and fetch players on register', async () => {
       const user =
         testData.users[Math.floor(Math.random() * testData.users.length)];
       const pass =
@@ -582,12 +588,16 @@ describe('App test', () => {
       );
       expect(firstCallArgs[1]).to.have.property('headers');
       const firstCallHeaders = firstCallArgs[1].headers;
-      expect(firstCallHeaders).to.be.an.instanceof(Headers);
-      expect(
-        firstCallHeaders.get('Authorization'),
-        'Authorization header missing'
-      ).to.not.be.null;
-      expect(firstCallHeaders.get('Authorization')).to.equal(
+
+      expect(firstCallHeaders).to.be.an.instanceof(Object);
+
+      const firstCallAuthHeader =
+        firstCallHeaders instanceof Headers
+          ? firstCallHeaders.get('Authorization')
+          : firstCallHeaders.Authorization;
+      expect(firstCallAuthHeader, 'Authorization header missing').to.not.be
+        .null;
+      expect(firstCallAuthHeader).to.equal(
         basicAuthEncript(user, pass),
         'Incorrect authorization header'
       );
@@ -610,12 +620,15 @@ describe('App test', () => {
       expect(lastCallArgs[1]).to.have.property('headers');
 
       const lastCallHeaders = lastCallArgs[1].headers;
-      expect(lastCallHeaders).to.be.an.instanceof(Headers);
-      expect(
-        lastCallHeaders.get('Authorization'),
-        'Authorization header missing'
-      ).to.not.be.null;
-      expect(lastCallHeaders.get('Authorization')).to.equal(
+
+      expect(lastCallHeaders).to.be.an.instanceof(Object);
+
+      const lastCallAuthHeader =
+        lastCallHeaders instanceof Headers
+          ? lastCallHeaders.get('Authorization')
+          : lastCallHeaders.Authorization;
+      expect(lastCallAuthHeader, 'Authorization header missing').to.not.be.null;
+      expect(lastCallAuthHeader).to.equal(
         basicAuthEncript(user, pass),
         'Incorrect authorization header'
       );
@@ -692,10 +705,13 @@ describe('App test', () => {
         .to.equal(expectedUrl.toString(), 'The URL was not as expected');
       expect(args[1]).to.have.property('headers');
       const headers = args[1].headers;
-      expect(headers).to.be.an.instanceof(Headers);
-      expect(headers.get('Authorization'), 'Authorization header missing').to
-        .not.be.null;
-      expect(headers.get('Authorization')).to.equal(
+      expect(headers).to.be.an.instanceof(Object);
+      const authHeader =
+        headers instanceof Headers
+          ? headers.get('Authorization')
+          : headers.Authorization;
+      expect(authHeader, 'Authorization header missing').to.not.be.null;
+      expect(authHeader).to.equal(
         basicAuthEncript(user, pass),
         'Incorrect authorization header'
       );
@@ -758,10 +774,13 @@ describe('App test', () => {
       expect(args[1].method).to.equal('DELETE', 'Incorrect request method');
       expect(args[1]).to.have.property('headers');
       const headers = args[1].headers;
-      expect(headers).to.be.an.instanceof(Headers);
-      expect(headers.get('Authorization'), 'Authorization header missing').to
-        .not.be.null;
-      expect(headers.get('Authorization')).to.equal(
+      expect(headers).to.be.an.instanceof(Object);
+      const authHeader =
+        headers instanceof Headers
+          ? headers.get('Authorization')
+          : headers.Authorization;
+      expect(authHeader, 'Authorization header missing').to.not.be.null;
+      expect(authHeader).to.equal(
         basicAuthEncript(user, pass),
         'Incorrect authorization header'
       );
@@ -827,10 +846,13 @@ describe('App test', () => {
       );
       expect(args[1]).to.have.property('headers');
       const headers = args[1].headers;
-      expect(headers).to.be.an.instanceof(Headers);
-      expect(headers.get('Authorization'), 'Authorization header missing').to
-        .not.be.null;
-      expect(headers.get('Authorization')).to.equal(
+      expect(headers).to.be.an.instanceof(Object);
+      const authHeader =
+        headers instanceof Headers
+          ? headers.get('Authorization')
+          : headers.Authorization;
+      expect(authHeader, 'Authorization header missing').to.not.be.null;
+      expect(authHeader).to.equal(
         basicAuthEncript(user, pass),
         'Incorrect authorization header'
       );
