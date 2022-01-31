@@ -93,13 +93,43 @@ function App () {
   }
 
 
+  //delete player by id
+  function handleDelete(id){
+    console.log("id = ", id);
+    const reqOptions = {
+      method: "DELETE",
+      headers: {"Content-Type": "application/json"},
+    
+    };
+
+    const url = "/api/players/" + id;
+    console.log("url = ", url);
+    
+    fetch(url, reqOptions)
+
+      .then(response => response.json())
+      .then(data => {
+        const playersAfterDelete = players.filter(player => player.id !== data.id);
+        setPlayers(playersAfterDelete);
+        
+        console.log("DELdata = ", data)})
+      .catch(error => {
+        this.reqStatus = 'An error has occured!!!';
+        
+      });
+  
+  }
+
+
+
 
 
   // delete one player by id
-  function handleDelete(id){
-    const playersAfterDelete = players.filter(player => player.id !== id);
-    setPlayers(playersAfterDelete);
-  }
+  // function handleDelete(id){
+  //   const playersAfterDelete = players.filter(player => player.id !== id);
+  //   setPlayers(playersAfterDelete);
+  //   console.log("delte");
+  // }
 
   return(
 
