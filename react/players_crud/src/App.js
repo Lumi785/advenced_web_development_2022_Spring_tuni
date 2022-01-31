@@ -23,8 +23,8 @@ function App () {
   };
   
   //get all players
-  useEffect(() => {
-   
+  function getPlayers(){
+
     setStatus(requestStatus.LOADING);
     fetch("api/players", {headers})
       .then(res=>res.json())
@@ -37,6 +37,13 @@ function App () {
         setStatus(requestStatus.ERROR);
         console.log("erros status is = ", error);
       })
+  }
+
+
+  //get all players
+  useEffect(() => {
+   
+    getPlayers();
 
   }, []);
 
@@ -53,6 +60,7 @@ function App () {
       .then(data=>{
         
         setPlayer(data);
+        
         setStatus(requestStatus.READY);
       }).catch(error => {
         setStatus(requestStatus.ERROR);
@@ -74,8 +82,9 @@ function App () {
     fetch("/api/players", reqOptions)
     .then(res => res.json())
     .then(data => {
-      setPlayers([...players, data]);
-      setStatus(requestStatus.READY);
+      // setPlayers([...players, data]);
+      // setStatus(requestStatus.READY);
+      getPlayers();
     })
     .catch(err => {
       setStatus(requestStatus.ERROR);
