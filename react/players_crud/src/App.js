@@ -26,15 +26,11 @@ function App () {
   useEffect(() => {
    
     setStatus(requestStatus.LOADING);
-
-   
     fetch("api/players", {headers})
       .then(res=>res.json())
       .then(data=>{
         setPlayers(data);
-  
         setStatus(requestStatus.READY);
-        console.log("status == ", status);
 
       }).catch(error => {
        
@@ -53,8 +49,6 @@ function App () {
     console.log("rul = ", url);
 
     fetch(url, {headers})
-      
-    
       .then(res=>res.json())
       .then(data=>{
         
@@ -80,9 +74,8 @@ function App () {
     fetch("/api/players", reqOptions)
     .then(res => res.json())
     .then(data => {
-      setPlayers([...players], data);
+      setPlayers([...players, data]);
       setStatus(requestStatus.READY);
-      console.log("dataaaaaa = ", data);
     })
     .catch(err => {
       setStatus(requestStatus.ERROR);

@@ -2,6 +2,8 @@ import { useState } from "react";
 
 
 export const AddPlayer = ({ handleSubmit }) => {
+  //cannot const [player, setPlater] = useState({XXX})
+  //should devide the player's properties and each with useState
   const [name, setName] = useState('');
   const [isActive, setIsActive] = useState(false);
 
@@ -9,6 +11,7 @@ export const AddPlayer = ({ handleSubmit }) => {
     e.preventDefault();
     const player = {name:{name}, isActive:false};
     handleSubmit({name, isActive});
+    setName('');
     
   }
 
@@ -23,6 +26,4 @@ export const AddPlayer = ({ handleSubmit }) => {
 
   )
 
-    
-  
 };
