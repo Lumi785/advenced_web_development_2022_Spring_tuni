@@ -19,6 +19,7 @@ export const PlayerInfo = ({ player, handleDelete }) => {
       <div className="player-id">{player.id}</div>
       <div className="player-name">{player.name}</div>
       <div className="player-status">{aa}</div>
+      <button className="delete-btn">Delete</button>
     </div>
   )
 };
