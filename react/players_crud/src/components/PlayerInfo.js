@@ -1,5 +1,5 @@
 
-export const PlayerInfo = ({ player, handleDelete}) => {
+export const PlayerInfo = ({ player, handleDelete, showPlayerInfo}) => {
   
 
   function c (player){
@@ -14,8 +14,8 @@ export const PlayerInfo = ({ player, handleDelete}) => {
   const aa = c(player);
  
 
-  return(
-    <div id="selected-player" >
+  return(showPlayerInfo && 
+    (<div id="selected-player" >
       <div className="player-id">{player.id}</div>
       <div className="player-name">{player.name}</div>
       <div className="player-status">{aa}</div>
@@ -25,6 +25,6 @@ export const PlayerInfo = ({ player, handleDelete}) => {
       e.preventDefault();
     }}
       >Delete</button>
-    </div>
+    </div>)
   )
 };
