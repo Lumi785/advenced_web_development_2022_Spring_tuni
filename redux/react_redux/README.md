@@ -1,14 +1,15 @@
 <!-- @format -->
 
-# Getting Started
-
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `npm start`
+### `npm install`
+
+After which the app is ready to start:
+
+### `npm start` or `npm run start`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -18,16 +19,12 @@ You may also see any lint errors in the console.
 
 ### `npm test`
 
-Launches the test runner in the interactive watch mode.\
+Launches the jest test. The results will be written in test-report.html and test-results.json \
 See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
 
 ### `npm test -- NameOfTheFile.test.js`
 
-Launches the test runner in the interactive watch more on that particular file.
-
-### `npm run html-test`
-
-Creates a test-report.html file, often easier to go through tests than in the terminal.
+Launches the test runner on that particular file.
 
 ### `npm run build`
 
