@@ -15,7 +15,8 @@ function App () {
 
   const [players, setPlayers] = useState([]);
   const [status, setStatus] = useState('');
-  const [player, setPlayer] = useState({id:'', name: '', isActive: ''})
+  const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
+  const [showPlayerInfo, setShowPlayerInfo] = useState(false);
  
   const headers = {
     'Accept': 'application/json',
@@ -59,6 +60,7 @@ function App () {
       .then(data=>{
         
         setPlayer(data);
+        setShowPlayerInfo(true);
         
         setStatus(requestStatus.READY);
       }).catch(error => {
@@ -94,7 +96,9 @@ function App () {
 
   //delete player by id
   function handleDelete(id){
-    console.log("id = ", id);
+    setStatus(requestStatus.LOADING);
+    console.log("idkkkkkkk = ", id);
+    
     const reqOptions = {
       method: "DELETE",
       headers: {"Content-Type": "application/json"},
@@ -108,27 +112,22 @@ function App () {
 
       .then(response => response.json())
       .then(data => {
+         
         const playersAfterDelete = players.filter(player => player.id !== data.id);
         setPlayers(playersAfterDelete);
+        setShowPlayerInfo(false);
+
+        setStatus(requestStatus.READY);
         
-        console.log("DELdata = ", data)})
+        console.log("DELdata = ", data)
+      })
       .catch(error => {
-        this.reqStatus = 'An error has occured!!!';
-        
+        setStatus(requestStatus.ERROR);
+        console.log("error occured: ", error);
       });
   
   }
 
-
-
-
-
-  // delete one player by id
-  // function handleDelete(id){
-  //   const playersAfterDelete = players.filter(player => player.id !== id);
-  //   setPlayers(playersAfterDelete);
-  //   console.log("delte");
-  // }
 
   return(
 
@@ -137,7 +136,7 @@ function App () {
       <h3>Players List</h3>
       <PlayersList players={players} selectPlayer={selectPlayer}/>
       <h3>Selected Player</h3>
-      <PlayerInfo player={player} handleDelete = {handleDelete}/>
+      <PlayerInfo showPlayerInfo={showPlayerInfo} player={player} handleDelete = {handleDelete}/>
       <RequestStatus status={status}/>
     </div>
     

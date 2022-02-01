@@ -1,5 +1,7 @@
-export const PlayerInfo = ({ player, handleDelete }) => {
+
+export const PlayerInfo = ({ player, handleDelete, showPlayerInfo }) => {
   
+
   function c (player){
     let a;
     if(player.isActive === false){
@@ -12,14 +14,17 @@ export const PlayerInfo = ({ player, handleDelete }) => {
   const aa = c(player);
  
 
-  return(
-    <div id="selected-player" onClick={(e)=>{
-      handleDelete(player.id);
-      e.preventDefault();}}>
+  return(showPlayerInfo&&
+    (<div id="selected-player" >
       <div className="player-id">{player.id}</div>
       <div className="player-name">{player.name}</div>
       <div className="player-status">{aa}</div>
-      <button className="delete-btn">Delete</button>
-    </div>
+      <button className="delete-btn" 
+      onClick={(e)=>{
+      handleDelete(player.id);
+      e.preventDefault();
+    }}
+      >Delete</button>
+    </div>)
   )
 };
