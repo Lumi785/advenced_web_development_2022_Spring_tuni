@@ -16,15 +16,13 @@ function App () {
   const [players, setPlayers] = useState([]);
   const [status, setStatus] = useState('');
   const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
-  const [showPlayerInfo, setShowPlayerInfo] = useState(false);
+  //const [showPlayerInfo, setShowPlayerInfo] = useState(false);
  
   const headers = {
     'Accept': 'application/json',
     'method': 'GET'
   };
   
-
-
   //get all players
   useEffect(() => {
     function getPlayers(){
@@ -34,7 +32,7 @@ function App () {
         .then(res=>res.json())
         .then(data=>{
           setPlayers(data);
-          setStatus(requestStatus.READY);
+         // setStatus(requestStatus.READY);
   
         }).catch(error => {
          
@@ -60,7 +58,7 @@ function App () {
       .then(data=>{
         
         setPlayer(data);
-        setShowPlayerInfo(true);
+        //setShowPlayerInfo(true);
         
         setStatus(requestStatus.READY);
       }).catch(error => {
@@ -76,7 +74,10 @@ function App () {
     
     const reqOptions = {
       method: "POST",
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
+      },
       body: JSON.stringify(player)
 
     }
@@ -101,7 +102,9 @@ function App () {
     
     const reqOptions = {
       method: "DELETE",
-      headers: {"Content-Type": "application/json"},
+      headers: {
+        'Accept': 'application/json'
+      }
     
     };
 
@@ -115,7 +118,7 @@ function App () {
          
         const playersAfterDelete = players.filter(player => player.id !== data.id);
         setPlayers(playersAfterDelete);
-        setShowPlayerInfo(false);
+        // setShowPlayerInfo(false);
 
         setStatus(requestStatus.READY);
         
@@ -136,7 +139,7 @@ function App () {
       <h3>Players List</h3>
       <PlayersList players={players} selectPlayer={selectPlayer}/>
       <h3>Selected Player</h3>
-      <PlayerInfo showPlayerInfo={showPlayerInfo} player={player} handleDelete = {handleDelete}/>
+      <PlayerInfo player={player} handleDelete = {handleDelete}/>
       <RequestStatus status={status}/>
     </div>
     
