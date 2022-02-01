@@ -22,27 +22,26 @@ function App () {
     'method': 'GET'
   };
   
-  //get all players
-  function getPlayers(){
-
-    setStatus(requestStatus.LOADING);
-    fetch("api/players", {headers})
-      .then(res=>res.json())
-      .then(data=>{
-        setPlayers(data);
-        setStatus(requestStatus.READY);
-
-      }).catch(error => {
-       
-        setStatus(requestStatus.ERROR);
-        console.log("erros status is = ", error);
-      })
-  }
 
 
   //get all players
   useEffect(() => {
-   
+    function getPlayers(){
+
+      setStatus(requestStatus.LOADING);
+      fetch("api/players", {headers})
+        .then(res=>res.json())
+        .then(data=>{
+          setPlayers(data);
+          setStatus(requestStatus.READY);
+  
+        }).catch(error => {
+         
+          setStatus(requestStatus.ERROR);
+          console.log("erros status is = ", error);
+        })
+    }
+
     getPlayers();
 
   }, []);
@@ -82,9 +81,9 @@ function App () {
     fetch("/api/players", reqOptions)
     .then(res => res.json())
     .then(data => {
-      // setPlayers([...players, data]);
-      // setStatus(requestStatus.READY);
-      getPlayers();
+      setPlayers([...players, data]);
+      setStatus(requestStatus.READY);
+     
     })
     .catch(err => {
       setStatus(requestStatus.ERROR);
