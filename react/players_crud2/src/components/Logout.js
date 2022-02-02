@@ -1,6 +1,9 @@
 export const Logout = ({ handleLogout }) => {
   return (
-    <button id="logout-btn">Log Out</button>
+    <button onClick={e => {
+      e.preventDefault();
+      handleLogout();
+    }} id="logout-btn">Log Out</button>
     
   );
 };

@@ -1,5 +1,5 @@
 
-export const PlayerInfo = ({ player, handleDelete/*, showPlayerInfo*/}) => {
+export const PlayerInfo = ({ player, handleDelete}) => {
   
 
   function c (player){

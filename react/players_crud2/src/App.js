@@ -20,6 +20,7 @@ function App () {
   const [status, setStatus] = useState('');
   const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
   const [showPlayerInfo, setShowPlayerInfo] = useState(false);
+  const [isLogin, setIsLogin] = useState(false);
  
   const headers = {
     'Accept': 'application/json',
@@ -72,29 +73,31 @@ function App () {
 
   //add player
   function handleSubmit(player){
-    setStatus(requestStatus.LOADING);
-    console.log("player === ", player);
+    console.log("pppppppp = ", player);
+    // setStatus(requestStatus.LOADING);
+    // console.log("player from handleSubmit in App.js === ", player);
     
-    const reqOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(player)
+    // const reqOptions = {
+    //   method: "POST",
+    //   credentials: 'same-origin',
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //     'Accept': 'application/json'
+    //   },
+    //   body: JSON.stringify(player)
 
-    }
-    fetch("/api/players", reqOptions)
-    .then(res => res.json())
-    .then(data => {
-      setPlayers([...players, data]);
-      setStatus(requestStatus.READY);
+    // }
+    // fetch("/api/players", reqOptions)
+    // .then(res => res.json())
+    // .then(data => {
+    //   setPlayers([...players, data]);
+    //   setStatus(requestStatus.READY);
      
-    })
-    .catch(err => {
-      setStatus(requestStatus.ERROR);
-      console.log("err === ", err);
-    });
+    // })
+    // .catch(err => {
+    //   setStatus(requestStatus.ERROR);
+    //   console.log("err === ", err);
+    // });
   }
 
 
@@ -134,9 +137,15 @@ function App () {
   
   }
 
+  function handleLogout(){
+    console.log("log out");
+  }
+
 
   return (
     <div>
+      <AuthForm handleSubmit={handleSubmit}/>
+      <Logout handleLogout={handleLogout}/>
       <AddPlayer handleSubmit={handleSubmit}/>
       <h3>Players List</h3>
       <PlayersList players={players} selectPlayer={selectPlayer}/>
