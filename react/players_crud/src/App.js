@@ -16,7 +16,7 @@ function App () {
   const [players, setPlayers] = useState([]);
   const [status, setStatus] = useState('');
   const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
-  //const [showPlayerInfo, setShowPlayerInfo] = useState(false);
+  const [showPlayerInfo, setShowPlayerInfo] = useState(false);
  
   const headers = {
     'Accept': 'application/json',
@@ -24,6 +24,7 @@ function App () {
   };
   
   //get all players
+  
   useEffect(() => {
     function getPlayers(){
 
@@ -45,6 +46,7 @@ function App () {
 
   }, []);
 
+  
 
   // get one player by id
   function selectPlayer(id){
@@ -58,7 +60,7 @@ function App () {
       .then(data=>{
         
         setPlayer(data);
-        //setShowPlayerInfo(true);
+        setShowPlayerInfo(true);
         
         setStatus(requestStatus.READY);
       }).catch(error => {
@@ -98,7 +100,6 @@ function App () {
   //delete player by id
   function handleDelete(id){
     setStatus(requestStatus.LOADING);
-    console.log("idkkkkkkk = ", id);
     
     const reqOptions = {
       method: "DELETE",
@@ -118,7 +119,8 @@ function App () {
          
         const playersAfterDelete = players.filter(player => player.id !== data.id);
         setPlayers(playersAfterDelete);
-        //setShowPlayerInfo(false);
+        setShowPlayerInfo(false);
+      
 
         setStatus(requestStatus.READY);
         
@@ -139,13 +141,12 @@ function App () {
       <h3>Players List</h3>
       <PlayersList players={players} selectPlayer={selectPlayer}/>
       <h3>Selected Player</h3>
-      <PlayerInfo /*showPlayerInfo={showPlayerInfo}*/ player={player} handleDelete = {handleDelete}/>
+      {showPlayerInfo &&
+          <PlayerInfo  player={player} handleDelete = {handleDelete}/>
+      }
       <RequestStatus status={status}/>
     </div>
-    
   )
-
-  
 }
 
 export default App;
