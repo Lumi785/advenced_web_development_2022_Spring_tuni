@@ -1,3 +1,6 @@
 export const Logout = ({ handleLogout }) => {
-  return null;
+  return (
+    <button id="logout-btn">Log Out</button>
+    
+  );
 };
