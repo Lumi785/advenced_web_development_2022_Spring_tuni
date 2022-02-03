@@ -9,6 +9,9 @@ import {useEffect, useState} from 'react';
 import axios from 'axios';
 
 
+
+
+
 const requestStatus = {
   LOADING: 'Loading...',
   READY: '',
@@ -22,12 +25,29 @@ function App () {
   const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
   const [showPlayerInfo, setShowPlayerInfo] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
- 
+  
+  
+
+  // function checkLoginStatus(){
+  //   axios.get("http://localhost:3001/logged_in", {withCredentials: true})
+  //   .then(response => { console.log("logged in? ", response)})
+  //   .catch(err => console.log("check login err = ", err))
+  
+  // }
+
+  // function componentDidMount(){
+  //   checkLoginStatus();
+  // }
+  // componentDidMount();
+
+
+/*
+
   const headers = {
     'Accept': 'application/json',
     'method': 'GET'
   };
- /*
+ 
   //get all players
   useEffect(() => {
     function getPlayers(){
@@ -49,11 +69,15 @@ function App () {
     getPlayers();
 
   }, []);
-*/
 
+*/
   // get one player by id
   function selectPlayer(id){
     setStatus(requestStatus.LOADING);
+    const headers = {
+      'Accept': 'application/json',
+      'method': 'GET'
+    };
     
     const url = "/api/players/" + id;
     console.log("rul = ", url);
@@ -73,32 +97,80 @@ function App () {
   }
 
   //register user
-  function handleSubmit(player){
+  function handleSubmit(e, isLogin){
     setStatus(requestStatus.LOADING);
-    console.log("player === ", player);
+    // console.log("e.target.value = ", e.target.value);
     
-    const reqOptions = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        'Accept': 'application/json'
-      },
-      body: JSON.stringify(player)
+    if(!isLogin){
+      const url = '/api/users'
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+      const user = {username, password};
 
+      const encodedData = "Basic " + window.btoa(`username:password`);
+      
+
+      const reqOptions = {
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': encodedData
+        },
+        body: JSON.stringify(user)
+      }
+
+      fetch(url, reqOptions)
+      .then(res => {
+        if(! res){console.log("res error = ", res.err)};
+        res.json();
+      })
+      .then(data => {
+        setPlayers([...players, data]);
+        setStatus(requestStatus.READY);
+        console.log("dataaaaa = ", data);
+        setIsLogin(true);
+        sessionStorage.setItem("encodedData", encodedData);
+      
+      })
+      .catch(err => {
+        setStatus(requestStatus.ERROR);
+        console.log("err === ", err);
+      });
+        
+    } 
+
+    else {
+      console.log("apple");
+      const url = "/api/players";
+      const name = e.target.name.value;
+      const player = {name:{name}, isActive:false};
+      const reqOptions = {
+        method: "POST",
+        headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+        },
+        body: JSON.stringify(player)
+      }
+      
+      fetch(url, reqOptions)
+      .then(res => {
+        if(! res){console.log("res error = ", res.err)};
+        res.json();
+      })
+      .then(data => {
+        setPlayers([...players, data]);
+        setStatus(requestStatus.READY);
+        console.log("dataaaaa = ", data);
+      
+      })
+      .catch(err => {
+        setStatus(requestStatus.ERROR);
+        console.log("err === ", err);
+      });
     }
-    fetch("/api/users", reqOptions)
-    .then(res => res.json())
-    .then(data => {
-      // setPlayers([...players, data]);
-      // setStatus(requestStatus.READY);
-      console.log("dataaaaa = ", data);
-     
-    })
-    .catch(err => {
-      setStatus(requestStatus.ERROR);
-      console.log("err === ", err);
-    });
-  }
+  } 
 
   //delete player by id
   function handleDelete(id){
@@ -118,7 +190,11 @@ function App () {
     
     fetch(url, reqOptions)
 
-      .then(response => response.json())
+      .then(response => {
+        if (!response){
+          console.log("response erro = ", response.ERROR);
+        }
+        response.json()})
       .then(data => {
          
         const playersAfterDelete = players.filter(player => player.id !== data.id);
@@ -143,12 +219,16 @@ function App () {
 
   return (
     <div>
-      <AuthForm handleSubmit={handleSubmit}/>
-      <Logout handleLogout={handleLogout}/>
-      <AddPlayer handleSubmit={handleSubmit}/>
-      <h3>Players List</h3>
-      <PlayersList players={players} selectPlayer={selectPlayer}/>
-      <h3>Selected Player</h3>
+      {(!isLogin && <AuthForm handleSubmit={handleSubmit} isLogin={isLogin} />)}
+      {(isLogin && 
+      <>
+        <Logout handleLogout={handleLogout}/>
+      
+        <AddPlayer handleSubmit={handleSubmit} isLogin={isLogin}/>
+        <h3>Players List</h3>
+        <PlayersList players={players} selectPlayer={selectPlayer}/>
+        <h3>Selected Player</h3>
+      </>)}
       {showPlayerInfo &&
           <PlayerInfo  player={player} handleDelete = {handleDelete}/>
       }
