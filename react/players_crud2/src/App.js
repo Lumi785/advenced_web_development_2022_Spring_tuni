@@ -6,6 +6,7 @@ import { PlayerInfo } from './components/PlayerInfo';
 import { PlayersList } from './components/PlayersList';
 import { RequestStatus } from './components/RequestStatus';
 import {useEffect, useState} from 'react';
+import axios from 'axios';
 
 
 const requestStatus = {
@@ -26,7 +27,7 @@ function App () {
     'Accept': 'application/json',
     'method': 'GET'
   };
-  
+ /*
   //get all players
   useEffect(() => {
     function getPlayers(){
@@ -48,7 +49,7 @@ function App () {
     getPlayers();
 
   }, []);
-
+*/
 
   // get one player by id
   function selectPlayer(id){
@@ -71,35 +72,33 @@ function App () {
       })
   }
 
-  //add player
+  //register user
   function handleSubmit(player){
-    console.log("pppppppp = ", player);
-    // setStatus(requestStatus.LOADING);
-    // console.log("player from handleSubmit in App.js === ", player);
+    setStatus(requestStatus.LOADING);
+    console.log("player === ", player);
     
-    // const reqOptions = {
-    //   method: "POST",
-    //   credentials: 'same-origin',
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     'Accept': 'application/json'
-    //   },
-    //   body: JSON.stringify(player)
+    const reqOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(player)
 
-    // }
-    // fetch("/api/players", reqOptions)
-    // .then(res => res.json())
-    // .then(data => {
-    //   setPlayers([...players, data]);
-    //   setStatus(requestStatus.READY);
+    }
+    fetch("/api/users", reqOptions)
+    .then(res => res.json())
+    .then(data => {
+      // setPlayers([...players, data]);
+      // setStatus(requestStatus.READY);
+      console.log("dataaaaa = ", data);
      
-    // })
-    // .catch(err => {
-    //   setStatus(requestStatus.ERROR);
-    //   console.log("err === ", err);
-    // });
+    })
+    .catch(err => {
+      setStatus(requestStatus.ERROR);
+      console.log("err === ", err);
+    });
   }
-
 
   //delete player by id
   function handleDelete(id){
