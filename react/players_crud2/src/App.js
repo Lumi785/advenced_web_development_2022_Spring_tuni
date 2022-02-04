@@ -20,8 +20,10 @@ function App () {
   const [status, setStatus] = useState('');
   const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
   const [showPlayerInfo, setShowPlayerInfo] = useState(false);
-  const [isLogin, setIsLogin] = useState(false);
+  const [logginState, setLogginState] = useState(false);
   const [encodedCredential, setEncodedCredential] = useState('');
+  const [users, setUsers] = useState([]);
+
 
   
   
@@ -53,7 +55,11 @@ function App () {
 
       setStatus(requestStatus.LOADING);
       fetch("api/players", {headers})
-        .then(res=>res.json())
+        .then(res=>{
+          if (res.status !==200){
+            console.log(res.err);
+          }
+          res.json()})
         .then(data=>{
           setPlayers(data);
           setStatus(requestStatus.READY);
@@ -64,8 +70,10 @@ function App () {
           console.log("erros status is = ", error);
         })
     }
+    // if (isLogin){
 
-    getPlayers();
+    //   getPlayers();
+    // }
 
   }, []);
 
@@ -83,7 +91,10 @@ function App () {
     console.log("rul = ", url);
 
     fetch(url, {headers})
-      .then(res=>res.json())
+      .then(res=>{
+        if (res.err){console.log("response err = ", res.err)};
+        res.json()
+      })
       .then(data=>{
         
         setPlayer(data);
@@ -98,19 +109,27 @@ function App () {
 
 
 
+  
+
   //register user
-  function handleSubmit(isLogine, e){
+  function handleSubmit(isLogin, e){
+
     setStatus(requestStatus.LOADING);
     // console.log("e.target.value = ", e.target.value);
     
-    if(!isLogin){
+    // switch 
+    //   e = form
+
+    //   e = player
+
+    if(!isLogin){ //resigster
       const url = '/api/users'
       const username = e.target.username.value;
       const password = e.target.password.value;
       const user = {username, password};
 
       const encodedData = "Basic " + window.btoa(`username:password`);
-      setEncodedCredential(encodedData);
+      
       
 
       const reqOptions = {
@@ -118,23 +137,23 @@ function App () {
         headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `${encodedCredential}`
+        'Authorization': `${encodedData}`
         },
         body: JSON.stringify(user)
       }
 
       fetch(url, reqOptions)
       .then(res => {
-        if(! res.OK){console.log("res error = ", res.err)};
+        if(res.err){console.log("res error = ", res.err)};
         res.json();
       })
       .then(data => {
-        setPlayers([...players, data]);
+        setUsers([...users, data]);
         setStatus(requestStatus.READY);
+        setLogginState(true);
         console.log("dataaaaa = ", data);
-        setIsLogin(true);
-        sessionStorage.setItem("encodedData", encodedData);
-      
+        setEncodedCredential(encodedData);
+        // sessionStorage.setItem("encodedData", encodedData);
       })
       .catch(err => {
         setStatus(requestStatus.ERROR);
@@ -142,10 +161,9 @@ function App () {
       });
         
     } 
-
-    else {
+    else { //login
       console.log("apple");
-      const encodedData = sessionStorage.getItem("encodedData");
+      // const encodedData = sessionStorage.getItem("encodedData");
       
       const url = "/api/players";
       const name = e.target.name.value;
@@ -162,7 +180,7 @@ function App () {
       
       fetch(url, reqOptions)
       .then(res => {
-        if(! res.OK){console.log("res error = ", res.err)};
+        if(res.err){console.log("res error = ", res.err)};
         res.json();
       })
       .then(data => {
@@ -220,21 +238,23 @@ function App () {
 
   function handleLogout(){
     console.log("log out");
+    setLogginState(false);
+
     setEncodedCredential('');
-    setIsLogin(false);
+    
   }
 
 
   return (
     <div>
-      {(!isLogin && <AuthForm handleSubmit={handleSubmit} isLogin={isLogin} />)}
-      {(isLogin && 
+      {(!logginState && <AuthForm handleSubmit={handleSubmit}  />)}
+      {(logginState && 
       <>
         <Logout handleLogout={handleLogout}/>
       
-        <AddPlayer handleSubmit={handleSubmit} isLogin={isLogin}/>
+        <AddPlayer handleSubmit={handleSubmit} />
         <h3>Players List</h3>
-        {/* <PlayersList players={players} selectPlayer={selectPlayer}/> */}
+        <PlayersList players={players} selectPlayer={selectPlayer}/>
         <h3>Selected Player</h3>
       </>)}
       {showPlayerInfo &&

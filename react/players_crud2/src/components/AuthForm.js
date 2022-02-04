@@ -1,6 +1,7 @@
 import {useState} from 'react';
 
-export const AuthForm = ({ handleSubmit, isLogin }) => {
+export const AuthForm = ({ handleSubmit }) => {
+  //console.log("islogin = ", isLogin);
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -19,6 +20,7 @@ export const AuthForm = ({ handleSubmit, isLogin }) => {
     // console.log("password from authForm ", e.target.password.value)
     //const player = {e.target.username.value, e.target.password.value}
 
+    const isLogin = formMode === 'login';
     handleSubmit(isLogin, e);
     setUsername('');
     setPassword('');
