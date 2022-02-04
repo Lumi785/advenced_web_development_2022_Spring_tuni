@@ -47,14 +47,13 @@ function createCredential(username, password){
 
   const headers = {
     'Accept': 'application/json',
-    'method': 'GET',
-    'Authorization': `${encodedCredential}`
+    'method': 'GET'
+    
   };
  
   //get all players
   useEffect(() => {
     function getPlayers(){
-
       setStatus(requestStatus.LOADING);
       fetch("api/players", {headers})
         .then(res=>{
@@ -115,23 +114,12 @@ function createCredential(username, password){
 
   //register user
   function handleSubmit(isLogin, e){
-    // switch(e){
-
-
-
-    // }
+    // console.log("e.crrentTarget = ", e.currentTarget.getElementById("auth-form"));
 
     setStatus(requestStatus.LOADING);
-    // console.log("e.target.value = ", e.target.value);
-    
-    // switch 
-    //   e = form
-
-    //   e = player
-
 
     if(!isLogin){ //resigster
-      const url = '/api/users'
+      const url = '/api/users/register'
       const username = e.target.username.value;
       const password = e.target.password.value;
       const user = {username, password};
@@ -171,36 +159,39 @@ function createCredential(username, password){
       });
         
     } 
-    else { //login
+    else { //login, immeadiately after logged in, display players
       console.log("apple");
-      // const encodedData = sessionStorage.getItem("encodedData");
-      // console.log("enndode crecdential = ", encodedCredential);
-      // console.log("jjjkdjfksjfhkdjf = ", `${encodedCredential}`);
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+      // const user = {username, password};
 
-      // const encodedData = createCredential(username, password);
-
-      const url = "/api/players";
-      const name = e.target.name.value;
-      const player = {name:name, isActive:false};
+      // const encodedData = "Basic " + window.btoa(`username:password`);
+      const encodedData = createCredential(username, password);
+    
+      const url = "api/players";
       const reqOptions = {
-        method: "POST",
+        method: "GET",
         headers: {
-        'Content-Type': 'application/json',
+        // 'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': `${encodedCredential}`
-        },
-        body: JSON.stringify(player)
+        'Authorization': `${encodedData}`
+        }
       }
       
       fetch(url, reqOptions)
       .then(res => {
         if(res.err){console.log("res error = ", res.err)};
-        res.json();
+        return res.json();
       })
       .then(data => {
-        setPlayers([...players, data]);
+        console.log('data====', data);
+        setPlayers(data);
         setStatus(requestStatus.READY);
-        console.log("dataaaaa = ", data);
+        setEncodedCredential(encodedData);
+        setLogginState(true);
+
+
+        console.log("dataaaaa players= ", players);
       
       })
       .catch(err => {
