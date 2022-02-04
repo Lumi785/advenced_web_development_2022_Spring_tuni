@@ -105,8 +105,8 @@ function App () {
 
     if(!isLogin){ //resigster
       const url = '/api/users'
-      const username = e.target.username.value;
-      const password = e.target.password.value;
+      const username = e.target.elements.username.value;
+      const password = e.target.elements.password.value;
       const user = {username, password};
 
       // const encodedData = "Basic " + window.btoa(`username:password`);
@@ -147,8 +147,8 @@ function App () {
     } 
     else { //login, immeadiately after logged in, display players
      
-      const username = e.target.username.value;
-      const password = e.target.password.value;
+      const username = e.target.elements.username.value;
+      const password = e.target.elements.password.value;
       const encodedData = createCredential(username, password);
       const url = "api/players";
 

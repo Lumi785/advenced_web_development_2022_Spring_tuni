@@ -13,10 +13,12 @@ export const AuthForm = ({ handleSubmit }) => {
   
 
   const onSubmit = (e) => {
-    console.log("e.currentTarget.localName = ", e.currentTarget.localName);
-    console.log("e.currentTarget.methoddddddddddddddddgdsgdfsndghcshgf = ", e.currentTarget.method);
-    console.log("e.target.username.= ", e);
+    // console.log("e.currentTarget.localName = ", e.currentTarget.localName);
+    // console.log("e.currentTarget.methoddddddddddddddddgdsgdfsndghcshgf = ", e.currentTarget.method);
     e.preventDefault();
+    //console.log("e.target.username.= ", e.target.elements.username.value);
+    //console.log("e.target.password.= ", e.target.elements.password.value);
+
     // const player = {username, password};
     // console.log("player from auth form = ", player);
     // console.log("username from authForm = ", e.target.username.value) 
