@@ -48,7 +48,7 @@ test('should show logout link after login', async () => {
 
 test('should show error status after failed login (incorrect credentials)', async () => {
   server.use(
-    rest.get('/api/players', (req, res, ctx) => {
+    rest.get(/\/api\/players$/, (req, res, ctx) => {
       return res(ctx.status(403), ctx.json({ error: 'Check username and password' }));
     })
   );
@@ -129,7 +129,7 @@ test('should fetch all players from backend after successful registration', asyn
 
 test('should show error status after failed registration (invalid credentials)', async () => {
   server.use(
-    rest.post('/api/users', (req, res, ctx) => {
+    rest.post(/\/api\/users$/, (req, res, ctx) => {
       return res(ctx.status(400), ctx.json({ error: { username: 'username already taken' } }));
     })
   );
@@ -152,7 +152,7 @@ test('should show error status after failed registration (invalid credentials)',
 
 test('should show error status when loading players fails', async () => {
   server.use(
-    rest.get('/api/players', (req, res, ctx) => {
+    rest.get(/\/api\/players$/, (req, res, ctx) => {
       res(ctx.networkError('Network error'));
     })
   );
@@ -194,6 +194,12 @@ test('should fetch single player data from backend when link is clicked', async 
 test('should show error status when clicking link and loading player data fails', async () => {
   server.use(
     rest.get('/api/players/:playerId', (req, res, ctx) => {
+      res(ctx.networkError('Network error'));
+    })
+  );
+
+  server.use(
+    rest.get('http://localhost:3001/api/players/:playerId', (req, res, ctx) => {
       res(ctx.networkError('Network error'));
     })
   );
@@ -241,7 +247,7 @@ test('should send POST request to backend and add new player to "#players-list"'
 
 test('should show error status and not add new player if POST request fails', async () => {
   server.use(
-    rest.post('/api/players', (req, res, ctx) => {
+    rest.post(/\/api\/players$/, (req, res, ctx) => {
       res(ctx.networkError('Network error'));
     })
   );
@@ -293,6 +299,12 @@ test('should send DELETE request to backend and delete player when "Delete" butt
 test('should show error status and not delete player if DELETE request fails', async () => {
   server.use(
     rest.delete('/api/players/:playerId', (req, res, ctx) => {
+      res(ctx.networkError('Network error'));
+    })
+  );
+
+  server.use(
+    rest.delete('http://localhost:3001/api/players/:playerId', (req, res, ctx) => {
       res(ctx.networkError('Network error'));
     })
   );
