@@ -7,7 +7,7 @@ import { PlayersList } from './components/PlayersList';
 import { RequestStatus } from './components/RequestStatus';
 import {useEffect, useState} from 'react';
 
-
+//const aa = JSON.parse(sessionStorage.getItem('ldkjfdljf'));
 const requestStatus = {
   LOADING: 'Loading...',
   READY: '',
@@ -21,6 +21,8 @@ function App () {
   const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
   const [showPlayerInfo, setShowPlayerInfo] = useState(false);
   const [isLogin, setIsLogin] = useState(false);
+  const [encodedCredential, setEncodedCredential] = useState('');
+
   
   
 
@@ -37,11 +39,12 @@ function App () {
   // componentDidMount();
 
 
-/*
+
 
   const headers = {
     'Accept': 'application/json',
-    'method': 'GET'
+    'method': 'GET',
+    'Authorization': `${encodedCredential}`
   };
  
   //get all players
@@ -66,13 +69,14 @@ function App () {
 
   }, []);
 
-*/
+
   // get one player by id
   function selectPlayer(id){
     setStatus(requestStatus.LOADING);
     const headers = {
       'Accept': 'application/json',
-      'method': 'GET'
+      'method': 'GET',
+      'Authorization': `${encodedCredential}`
     };
     
     const url = "/api/players/" + id;
@@ -92,8 +96,10 @@ function App () {
       })
   }
 
+
+
   //register user
-  function handleSubmit(e, isLogin){
+  function handleSubmit(isLogine, e){
     setStatus(requestStatus.LOADING);
     // console.log("e.target.value = ", e.target.value);
     
@@ -104,6 +110,7 @@ function App () {
       const user = {username, password};
 
       const encodedData = "Basic " + window.btoa(`username:password`);
+      setEncodedCredential(encodedData);
       
 
       const reqOptions = {
@@ -111,7 +118,7 @@ function App () {
         headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': encodedData
+        'Authorization': `${encodedCredential}`
         },
         body: JSON.stringify(user)
       }
@@ -148,7 +155,7 @@ function App () {
         headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': encodedData
+        'Authorization': `${encodedCredential}`
         },
         body: JSON.stringify(player)
       }
@@ -213,7 +220,8 @@ function App () {
 
   function handleLogout(){
     console.log("log out");
-    sessionStorage.clear();
+    setEncodedCredential('');
+    setIsLogin(false);
   }
 
 

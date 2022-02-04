@@ -4,7 +4,9 @@ export const AuthForm = ({ handleSubmit, isLogin }) => {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [formMode, setFormMode] = useState('register');
+  const [formMode, setFormMode] = useState('login');
+
+  console.log("form Mode = ", {formMode});
 
   
   
@@ -20,6 +22,7 @@ export const AuthForm = ({ handleSubmit, isLogin }) => {
     handleSubmit(isLogin, e);
     setUsername('');
     setPassword('');
+    
   }
 
   function changeFormMode(){
@@ -37,17 +40,19 @@ export const AuthForm = ({ handleSubmit, isLogin }) => {
   return (
 
     <form id="auth-form" role="heading" onSubmit={onSubmit}>
-      {(formMode==='register' && <a role="link" onClick={(e) => {
+      {(formMode==='login' && <a role="link" onClick={(e) => {
         e.preventDefault();
         changeFormMode()}
       }
-        >Register</a>) || (<a role="link" onClick={(e) => {
+        >Register</a>) 
+        
+        || (<a role="link" onClick={(e) => {
           e.preventDefault();
           changeFormMode();
         }}
       >Log In</a>)}
       
-      {(formMode==='register' && <button role="heading" role="button" type="submit">Log In</button>) || (<button role="heading" role="button" type="submit">Register</button>)}
+      {(formMode==='login' && <button role="heading" role="button" type="submit">Log In</button>) || (<button role="heading" role="button" type="submit">Register</button>)}
 
       <input required type="text" name="username" id="username"  value={username} onChange={e=>setUsername(e.target.value)} placeholder="username"/>
 
