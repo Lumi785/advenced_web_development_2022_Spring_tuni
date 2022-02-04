@@ -1,11 +1,12 @@
 import './App.css';
+// import axios from 'axios';
 import { AddPlayer } from './components/AddPlayer';
 import { AuthForm } from './components/AuthForm';
 import { Logout } from './components/Logout';
 import { PlayerInfo } from './components/PlayerInfo';
 import { PlayersList } from './components/PlayersList';
 import { RequestStatus } from './components/RequestStatus';
-import {useEffect, useState} from 'react';
+import { useEffect, useState } from 'react';
 
 //const aa = JSON.parse(sessionStorage.getItem('ldkjfdljf'));
 const requestStatus = {
@@ -20,81 +21,66 @@ function App () {
   const [status, setStatus] = useState('');
   const [player, setPlayer] = useState({id:'', name: '', isActive: ''});
   const [showPlayerInfo, setShowPlayerInfo] = useState(false);
-  const [logginState, setLogginState] = useState(false);
-  const [encodedCredential, setEncodedCredential] = useState('');
+  const [loggedinState, setLoggedinState] = useState(false);
+  //don't work by set credential in useState!!!
+  //const [encodedCredential, setEncodedCredential] = useState('');
   const [users, setUsers] = useState([]);
 
+  /**
+   * 
+   * @param {*} username 
+   * @param {*} password 
+   * @returns an encoded Base 64 credential
+   */
+  function createCredential(username, password){
+    return "Basic " + window.btoa(`${username}:${password}`);
+  }
 
-  
-  
-
-  // function checkLoginStatus(){
-  //   axios.get("http://localhost:3001/logged_in", {withCredentials: true})
-  //   .then(response => { console.log("logged in? ", response)})
-  //   .catch(err => console.log("check login err = ", err))
-  
-  // }
-
-  // function componentDidMount(){
-  //   checkLoginStatus();
-  // }
-  // componentDidMount();
-
-function createCredential(username, password){
-  return "Basic " + window.btoa(`${username}:${password}`);
-}
-
-
-  const headers = {
-    'Accept': 'application/json',
-    'method': 'GET'
-    
-  };
- 
   //get all players
-  useEffect(() => {
-    function getPlayers(){
-      setStatus(requestStatus.LOADING);
-      fetch("api/players", {headers})
-        .then(res=>{
-          if (res.status !==200){
-            console.log(res.err);
-          }
-          res.json()})
-        .then(data=>{
-          setPlayers(data);
-          setStatus(requestStatus.READY);
-  
-        }).catch(error => {
-         
-          setStatus(requestStatus.ERROR);
-          console.log("erros status is = ", error);
-        })
-    }
-    // if (isLogin){
+  function getPlayers(){
+    setStatus(requestStatus.LOADING);
+    const credential = sessionStorage.getItem("encodedData");
+    const headers = {
+      'Accept': 'application/json',
+      'method': 'GET',
+      'Authorization': `${credential}`
+    };
+    fetch("api/players", {headers})
+      .then(res=>{
+        if (res.err){
+          console.log("response error = ", res.err);
+        }
+        return res.json()})
+      .then(data=>{
+        setPlayers(data);
+        setStatus(requestStatus.READY);
 
-    //   getPlayers();
-    // }
+      }).catch(error => {
+        
+        setStatus(requestStatus.ERROR);
+        console.log("erros status is = ", error);
+      })
+  }
 
-  }, []);
 
 
   // get one player by id
   function selectPlayer(id){
     setStatus(requestStatus.LOADING);
+    const credential = sessionStorage.getItem("encodedData");
     const headers = {
       'Accept': 'application/json',
       'method': 'GET',
-      'Authorization': `${encodedCredential}`
+      'Authorization': `${credential}`
     };
-    
+   
     const url = "/api/players/" + id;
     console.log("rul = ", url);
 
     fetch(url, {headers})
       .then(res=>{
         if (res.err){console.log("response err = ", res.err)};
-        res.json()
+        return res.json()
       })
       .then(data=>{
         
@@ -109,17 +95,16 @@ function createCredential(username, password){
   }
 
 
-
-  
-
   //register user
   function handleSubmit(isLogin, e){
-    // console.log("e.crrentTarget = ", e.currentTarget.getElementById("auth-form"));
+    console.log("apple");
+    // console.log("e.currentTarget.localName = ", e.currentTarget.localName);
+    // console.log("e.currentTarget.method = ", e.currentTarget.method);
 
     setStatus(requestStatus.LOADING);
 
     if(!isLogin){ //resigster
-      const url = '/api/users/register'
+      const url = '/api/users'
       const username = e.target.username.value;
       const password = e.target.password.value;
       const user = {username, password};
@@ -127,8 +112,6 @@ function createCredential(username, password){
       // const encodedData = "Basic " + window.btoa(`username:password`);
       const encodedData = createCredential(username, password);
       
-      
-
       const reqOptions = {
         method: "POST",
         headers: {
@@ -142,37 +125,36 @@ function createCredential(username, password){
       fetch(url, reqOptions)
       .then(res => {
         if(res.err){console.log("res error = ", res.err)};
-        res.json();
+        return res.json();
       })
       .then(data => {
         setUsers([...users, data]);
         setStatus(requestStatus.READY);
-        setLogginState(true);
+        setLoggedinState(true);
         console.log("dataaaaa = ", data);
-        setEncodedCredential(encodedData);
-        console.log("enndode crecdential = ", encodedData);
-        // sessionStorage.setItem("encodedData", encodedData);
+        // setEncodedCredential(encodedData);
+        sessionStorage.setItem("encodedData", encodedData);
+       
+        //now it is registered, upon registration it is automatically logged in, and automatically display plyers. 
+        getPlayers();
+
       })
       .catch(err => {
         setStatus(requestStatus.ERROR);
         console.log("err === ", err);
       });
-        
+      
     } 
     else { //login, immeadiately after logged in, display players
-      console.log("apple");
+     
       const username = e.target.username.value;
       const password = e.target.password.value;
-      // const user = {username, password};
-
-      // const encodedData = "Basic " + window.btoa(`username:password`);
       const encodedData = createCredential(username, password);
-    
       const url = "api/players";
+
       const reqOptions = {
         method: "GET",
         headers: {
-        // 'Content-Type': 'application/json',
         'Accept': 'application/json',
         'Authorization': `${encodedData}`
         }
@@ -181,37 +163,75 @@ function createCredential(username, password){
       fetch(url, reqOptions)
       .then(res => {
         if(res.err){console.log("res error = ", res.err)};
+        //must use return here, because now arrow function got wrapped with {}
         return res.json();
       })
       .then(data => {
         console.log('data====', data);
         setPlayers(data);
         setStatus(requestStatus.READY);
-        setEncodedCredential(encodedData);
-        setLogginState(true);
-
-
-        console.log("dataaaaa players= ", players);
-      
+        // setEncodedCredential(encodedData);
+        sessionStorage.setItem("encodedData", encodedData);
+        setLoggedinState(true);
       })
       .catch(err => {
         setStatus(requestStatus.ERROR);
         console.log("err === ", err);
       });
     }
+
+
+    // if (url === 'api/players'){
+
+    //   const name = e.target.name.value;
+    //   const isActive = false;
+    //   const player = {name, isActive};
+    //   addPlayer(player);
+    // }
   } 
+
+
+
+  //add player
+  function addPlayer(player){
+    setStatus(requestStatus.LOADING);
+    const encodedData = sessionStorage.getItem("encodedData");
+    const url = 'api/players';
+    
+    const reqOptions = {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        'Accept': 'application/json',
+        'Authorization': `${encodedData}`
+      },
+      body: JSON.stringify(player)
+
+    }
+    fetch(url, reqOptions)
+    .then(res => res.json())
+    .then(data => {
+      setPlayers([...players, data]);
+      setStatus(requestStatus.READY);
+     
+    })
+    .catch(err => {
+      setStatus(requestStatus.ERROR);
+      console.log("err === ", err);
+    });
+  }
 
   //delete player by id
   function handleDelete(id){
     setStatus(requestStatus.LOADING);
-    console.log("idkkkkkkk = ", id);
-    
+    const credential = sessionStorage.getItem("encodedData");
+   
     const reqOptions = {
       method: "DELETE",
       headers: {
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': `${credential}`
       }
-    
     };
 
     const url = "/api/players/" + id;
@@ -220,40 +240,37 @@ function createCredential(username, password){
     fetch(url, reqOptions)
 
       .then(response => {
-        if (!response){
-          console.log("response erro = ", response.ERROR);
+        if (response.err){
+          console.log("response erro = ", response.err);
         }
-        response.json()})
+        return response.json()})
       .then(data => {
          
         const playersAfterDelete = players.filter(player => player.id !== data.id);
         setPlayers(playersAfterDelete);
         setShowPlayerInfo(false);
-
         setStatus(requestStatus.READY);
-        
-        console.log("DELdata = ", data)
       })
       .catch(error => {
         setStatus(requestStatus.ERROR);
         console.log("error occured: ", error);
       });
-  
   }
 
   function handleLogout(){
     console.log("log out");
-    setLogginState(false);
+    setLoggedinState(false);
 
-    setEncodedCredential('');
+    // setEncodedCredential('');
+    sessionStorage.clear();
     
   }
 
 
   return (
     <div>
-      {(!logginState && <AuthForm handleSubmit={handleSubmit}  />)}
-      {(logginState && 
+      {(!loggedinState && <AuthForm handleSubmit={handleSubmit}  />)}
+      {(loggedinState && 
       <>
         <Logout handleLogout={handleLogout}/>
       

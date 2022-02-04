@@ -1,17 +1,17 @@
 import { useState } from "react";
 
 
-export const AddPlayer = ({ handleSubmit, isLogin }) => {
+export const AddPlayer = ({ handleSubmit}) => {
   //cannot const [player, setPlater] = useState({XXX})
   //should devide the player's properties and each with useState
   const [name, setName] = useState('');
-  const [isActive, setIsActive] = useState(false);
+  //const [isActive, setIsActive] = useState(false);
 
   const onSubmit = e => {
     e.preventDefault();
     // const player = {name:{name}, isActive:false};
     // handleSubmit({name, isActive});
-    handleSubmit(isLogin, e);
+    handleSubmit();
     setName('');
     
   }
