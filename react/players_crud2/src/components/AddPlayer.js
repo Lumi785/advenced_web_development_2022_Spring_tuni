@@ -11,7 +11,8 @@ export const AddPlayer = ({ handleSubmit}) => {
     e.preventDefault();
     // const player = {name:{name}, isActive:false};
     // handleSubmit({name, isActive});
-    handleSubmit();
+
+    handleSubmit(e);
     setName('');
     
   }

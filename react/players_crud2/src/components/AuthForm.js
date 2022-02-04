@@ -14,7 +14,8 @@ export const AuthForm = ({ handleSubmit }) => {
 
   const onSubmit = (e) => {
     console.log("e.currentTarget.localName = ", e.currentTarget.localName);
-    console.log("e.currentTarget.method = ", e.currentTarget.method);
+    console.log("e.currentTarget.methoddddddddddddddddgdsgdfsndghcshgf = ", e.currentTarget.method);
+    console.log("e.target.username.= ", e);
     e.preventDefault();
     // const player = {username, password};
     // console.log("player from auth form = ", player);
@@ -27,8 +28,8 @@ export const AuthForm = ({ handleSubmit }) => {
     const isLogin = formMode === 'login';
     console.log("isLogin = ", isLogin);
     handleSubmit(isLogin, e);
-    setUsername('');
-    setPassword('');
+    // setUsername('');
+    // setPassword('');
     
   }
 

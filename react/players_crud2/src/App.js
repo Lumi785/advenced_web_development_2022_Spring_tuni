@@ -96,7 +96,7 @@ function App () {
 
 
   //register user
-  function handleSubmit(isLogin, e){
+  function handleAuthSubmit(isLogin, e){
     console.log("apple");
     // console.log("e.currentTarget.localName = ", e.currentTarget.localName);
     // console.log("e.currentTarget.method = ", e.currentTarget.method);
@@ -193,8 +193,12 @@ function App () {
 
 
   //add player
-  function addPlayer(player){
+  function handleAddPlayerSubmit(e){
     setStatus(requestStatus.LOADING);
+    const namea = e.target.name.value;
+    const isActivea = false;
+    const player = {name:namea, isActive:isActivea};
+    console.log("player = ", player);
     const encodedData = sessionStorage.getItem("encodedData");
     const url = 'api/players';
     
@@ -269,12 +273,12 @@ function App () {
 
   return (
     <div>
-      {(!loggedinState && <AuthForm handleSubmit={handleSubmit}  />)}
+      {(!loggedinState && <AuthForm handleSubmit={handleAuthSubmit}  />)}
       {(loggedinState && 
       <>
         <Logout handleLogout={handleLogout}/>
       
-        <AddPlayer handleSubmit={handleSubmit} />
+        <AddPlayer handleSubmit={handleAddPlayerSubmit} />
         <h3>Players List</h3>
         <PlayersList players={players} selectPlayer={selectPlayer}/>
         <h3>Selected Player</h3>
