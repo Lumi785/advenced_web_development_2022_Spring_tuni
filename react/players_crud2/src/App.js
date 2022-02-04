@@ -40,7 +40,9 @@ function App () {
   // }
   // componentDidMount();
 
-
+function createCredential(username, password){
+  return "Basic " + window.btoa(`${username}:${password}`);
+}
 
 
   const headers = {
@@ -113,6 +115,11 @@ function App () {
 
   //register user
   function handleSubmit(isLogin, e){
+    // switch(e){
+
+
+
+    // }
 
     setStatus(requestStatus.LOADING);
     // console.log("e.target.value = ", e.target.value);
@@ -122,13 +129,15 @@ function App () {
 
     //   e = player
 
+
     if(!isLogin){ //resigster
       const url = '/api/users'
       const username = e.target.username.value;
       const password = e.target.password.value;
       const user = {username, password};
 
-      const encodedData = "Basic " + window.btoa(`username:password`);
+      // const encodedData = "Basic " + window.btoa(`username:password`);
+      const encodedData = createCredential(username, password);
       
       
 
@@ -153,6 +162,7 @@ function App () {
         setLogginState(true);
         console.log("dataaaaa = ", data);
         setEncodedCredential(encodedData);
+        console.log("enndode crecdential = ", encodedData);
         // sessionStorage.setItem("encodedData", encodedData);
       })
       .catch(err => {
@@ -164,7 +174,11 @@ function App () {
     else { //login
       console.log("apple");
       // const encodedData = sessionStorage.getItem("encodedData");
-      
+      // console.log("enndode crecdential = ", encodedCredential);
+      // console.log("jjjkdjfksjfhkdjf = ", `${encodedCredential}`);
+
+      // const encodedData = createCredential(username, password);
+
       const url = "/api/players";
       const name = e.target.name.value;
       const player = {name:name, isActive:false};
