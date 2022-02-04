@@ -21,6 +21,7 @@ test('should fetch all players from backend after successful login', async () =>
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
 
@@ -118,6 +119,7 @@ test('should fetch all players from backend after successful registration', asyn
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
 
@@ -181,6 +183,7 @@ test('should fetch single player data from backend when link is clicked', async 
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
@@ -214,6 +217,7 @@ test('should show error status when clicking link and loading player data fails'
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
@@ -233,6 +237,7 @@ test('should send POST request to backend and add new player to "#players-list"'
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const name = container.querySelector('input[name="name"]');
   await UserEvent.type(name, 'New Player', { delay: 10 });
@@ -262,6 +267,7 @@ test('should show error status and not add new player if POST request fails', as
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const name = container.querySelector('input[name="name"]');
   await UserEvent.type(name, 'New Player', { delay: 10 });
@@ -284,6 +290,7 @@ test('should send DELETE request to backend and delete player when "Delete" butt
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
@@ -319,6 +326,7 @@ test('should show error status and not delete player if DELETE request fails', a
   const authForm = container.querySelector('#auth-form');
   fireEvent.submit(authForm);
 
+  await waitForElementToBeRemoved(() => screen.getByText(/loading/i));
   await waitFor(() => container.querySelector('input[name="name"]'));
   const listItems = await screen.findAllByRole('listitem');
   const linkElement = listItems[0].querySelector('a');
