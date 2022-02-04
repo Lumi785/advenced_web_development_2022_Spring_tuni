@@ -6,10 +6,6 @@ import { PlayerInfo } from './components/PlayerInfo';
 import { PlayersList } from './components/PlayersList';
 import { RequestStatus } from './components/RequestStatus';
 import {useEffect, useState} from 'react';
-import axios from 'axios';
-
-
-
 
 
 const requestStatus = {
@@ -122,7 +118,7 @@ function App () {
 
       fetch(url, reqOptions)
       .then(res => {
-        if(! res){console.log("res error = ", res.err)};
+        if(! res.OK){console.log("res error = ", res.err)};
         res.json();
       })
       .then(data => {
@@ -142,21 +138,24 @@ function App () {
 
     else {
       console.log("apple");
+      const encodedData = sessionStorage.getItem("encodedData");
+      
       const url = "/api/players";
       const name = e.target.name.value;
-      const player = {name:{name}, isActive:false};
+      const player = {name:name, isActive:false};
       const reqOptions = {
         method: "POST",
         headers: {
         'Content-Type': 'application/json',
-        'Accept': 'application/json'
+        'Accept': 'application/json',
+        'Authorization': encodedData
         },
         body: JSON.stringify(player)
       }
       
       fetch(url, reqOptions)
       .then(res => {
-        if(! res){console.log("res error = ", res.err)};
+        if(! res.OK){console.log("res error = ", res.err)};
         res.json();
       })
       .then(data => {
@@ -214,6 +213,7 @@ function App () {
 
   function handleLogout(){
     console.log("log out");
+    sessionStorage.clear();
   }
 
 
@@ -226,7 +226,7 @@ function App () {
       
         <AddPlayer handleSubmit={handleSubmit} isLogin={isLogin}/>
         <h3>Players List</h3>
-        <PlayersList players={players} selectPlayer={selectPlayer}/>
+        {/* <PlayersList players={players} selectPlayer={selectPlayer}/> */}
         <h3>Selected Player</h3>
       </>)}
       {showPlayerInfo &&

@@ -9,7 +9,7 @@ export const AuthForm = ({ handleSubmit, isLogin }) => {
   
   
 
-  const onSubmit = e => {
+  const onSubmit = (e) => {
     e.preventDefault();
     // const player = {username, password};
     // console.log("player from auth form = ", player);
@@ -17,7 +17,7 @@ export const AuthForm = ({ handleSubmit, isLogin }) => {
     // console.log("password from authForm ", e.target.password.value)
     //const player = {e.target.username.value, e.target.password.value}
 
-    handleSubmit(e, isLogin);
+    handleSubmit(isLogin, e);
     setUsername('');
     setPassword('');
   }
@@ -41,13 +41,13 @@ export const AuthForm = ({ handleSubmit, isLogin }) => {
         e.preventDefault();
         changeFormMode()}
       }
-        >Go to Login</a>) || (<a role="link" onClick={(e) => {
+        >Register</a>) || (<a role="link" onClick={(e) => {
           e.preventDefault();
           changeFormMode();
         }}
-      >Go to Register</a>)}
+      >Log In</a>)}
       
-      {(formMode==='register' && <button role="heading" role="button" type="submit">Register</button>) || (<button role="heading" role="button" type="submit">Log In</button>)}
+      {(formMode==='register' && <button role="heading" role="button" type="submit">Log In</button>) || (<button role="heading" role="button" type="submit">Register</button>)}
 
       <input required type="text" name="username" id="username"  value={username} onChange={e=>setUsername(e.target.value)} placeholder="username"/>
 
