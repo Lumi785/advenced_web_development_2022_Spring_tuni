@@ -64,6 +64,7 @@ export const AuthForm = ({ handleSubmit }) => {
       
       {(formMode==='login' && <button role="heading" role="button" type="submit">Log In</button>) || (<button role="heading" role="button" type="submit">Register</button>)}
 
+      <label for="username">Username</label>
       <input required type="text" name="username" id="username"  value={username} onChange={e=>setUsername(e.target.value)} placeholder="username"/>
 
       <input required type="password" name="password" id="password" required value={password} onChange={e=>setPassword(e.target.value)} placeholder="password"/>
