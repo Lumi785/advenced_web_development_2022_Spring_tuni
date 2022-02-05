@@ -22,7 +22,9 @@ export default (state = [], action) => {
       if (state.length === 0){
         return state;
       }
+      
       const tempArray = state.filter(player => player.id === action.payload.id);
+
       if (tempArray.length === 0){
         return state;
       }

@@ -7,7 +7,7 @@ export const addPlayer = (name, isActive = false) => {
     type: "ADD_PLAYER",
     payload: {
       name: name,
-      isActive: false
+      isActive: isActive
     }
   }
 };
