@@ -22,7 +22,7 @@ export default (state = [], action) => {
       if (state.length === 0){
         return state;
       }
-      
+
       const tempArray = state.filter(player => player.id === action.payload.id);
 
       if (tempArray.length === 0){
@@ -30,6 +30,9 @@ export default (state = [], action) => {
       }
 
       let updatedPlayer = tempArray[0];
+      const ind = state.indexOf(updatedPlayer);
+
+      
 
       console.log("update palyer before = ", updatedPlayer);
       
@@ -37,12 +40,15 @@ export default (state = [], action) => {
       
       console.log("update palyer after = ", updatedPlayer);
 
+      const newState = [...state.splice(0, ind),
+                        updatedPlayer,
+                        ...state.splice(1, state.length)
+                        ]
 
-      let newState = state.filter(player => player.id !== action.payload.id);
 
-      console.log("newstateb= ", newState);
-
-      newState.push(updatedPlayer);
+      //take the copy of state from index of 0 to ind-1, then add updatedPlayer at position ind,
+      // then remove one element(the old version of updatedPlayer which is at original ind postion, 
+      //then continuelly copy from now ind +1 to the end of array. 
 
       return newState;
      
