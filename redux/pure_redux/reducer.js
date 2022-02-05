@@ -14,22 +14,13 @@ export default (state = [], action) => {
         }];
 
     case "REMOVE_PLAYER":
-      return state.fileter(player => player.id !== action.payload.id);
+      return state.filter(player => player.id !== action.payload.id);
 
     case "TOGGLE_PLAYER_STATUS":
-      return state.map(player => player.id === action.payload.id ? true:false);
+      return state.map(player => player.id === action.payload.id ? player.isActive = !player.isActive : player.isActive);
 
     default:
       return state;
 
   }
 };
-
-
-
-
-
-// export const REMOVE_PLAYER = 'REMOVE_PLAYER';
-
-// export const ADD_PLAYER = 'ADD_PLAYER';
-// export const TOGGLE_PLAYER_STATUS = 'TOGGLE_PLAYER_STATUS';
