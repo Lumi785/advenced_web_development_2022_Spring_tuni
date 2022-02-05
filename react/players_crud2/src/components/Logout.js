@@ -3,7 +3,7 @@ export const Logout = ({ handleLogout }) => {
     <button onClick={e => {
       e.preventDefault();
       handleLogout();
-    }} id="logout-btn" name="/logout/i" role="button">logout/i</button>
+    }} id="logout-btn" name="/logout/i" role="button">Logout</button>
     
   );
 };

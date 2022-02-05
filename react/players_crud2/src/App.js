@@ -97,13 +97,9 @@ function App () {
 
   //register user
   function handleAuthSubmit(isLogin, e){
-    console.log("apple");
-    // console.log("e.currentTarget.localName = ", e.currentTarget.localName);
-    // console.log("e.currentTarget.method = ", e.currentTarget.method);
-
     setStatus(requestStatus.LOADING);
 
-    if(!isLogin){ //resigster
+    if(!isLogin){ //resigster mode, handle registration
       const url = '/api/users'
       const username = e.target.elements.username.value;
       const password = e.target.elements.password.value;
@@ -131,7 +127,7 @@ function App () {
         setUsers([...users, data]);
         setStatus(requestStatus.READY);
         setLoggedinState(true);
-        console.log("dataaaaa = ", data);
+        
         // setEncodedCredential(encodedData);
         sessionStorage.setItem("encodedData", encodedData);
        
@@ -145,7 +141,7 @@ function App () {
       });
       
     } 
-    else { //login, immeadiately after logged in, display players
+    else { //login mode, handle logging in, note:immeadiately after logged in, display players
      
       const username = e.target.elements.username.value;
       const password = e.target.elements.password.value;
