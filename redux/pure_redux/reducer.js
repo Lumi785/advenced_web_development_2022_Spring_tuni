@@ -6,19 +6,44 @@ export default (state = [], action) => {
   //throw new Error('Not Implemented');
   switch(action.type){
     case "ADD_PLAYER":
-      return [...state, 
+      return [
+        ...state, 
         {
           id: ++lastId,
           name: action.payload.name,
-          isActive: false
+          isActive: action.payload.isActive
         }];
 
     case "REMOVE_PLAYER":
       return state.filter(player => player.id !== action.payload.id);
 
     case "TOGGLE_PLAYER_STATUS":
-      return state.map(player => player.id === action.payload.id ? player.isActive = !player.isActive : player.isActive);
+      
+      if (state.length === 0){
+        return state;
+      }
+      const tempArray = state.filter(player => player.id === action.payload.id);
+      if (tempArray.length === 0){
+        return state;
+      }
 
+      let updatedPlayer = tempArray[0];
+
+      console.log("update palyer before = ", updatedPlayer);
+      
+      updatedPlayer.isActive = !(updatedPlayer.isActive);
+      
+      console.log("update palyer after = ", updatedPlayer);
+
+
+      let newState = state.filter(player => player.id !== action.payload.id);
+
+      console.log("newstateb= ", newState);
+
+      newState.push(updatedPlayer);
+
+      return newState;
+     
     default:
       return state;
 
