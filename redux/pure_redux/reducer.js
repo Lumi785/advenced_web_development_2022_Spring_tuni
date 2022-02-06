@@ -5,7 +5,7 @@ export default (state = [], action) => {
   // TODO: Implement this function
   //throw new Error('Not Implemented');
   switch(action.type){
-    case "ADD_PLAYER":
+    case actions.ADD_PLAYER:
       return [
         ...state, 
         {
@@ -14,10 +14,10 @@ export default (state = [], action) => {
           isActive: action.payload.isActive
         }];
 
-    case "REMOVE_PLAYER":
+    case actions.REMOVE_PLAYER:
       return state.filter(player => player.id !== action.payload.id);
 
-    case "TOGGLE_PLAYER_STATUS":
+    case actions.TOGGLE_PLAYER_STATUS:
       
       if (state.length === 0){
         return state;
@@ -45,7 +45,7 @@ export default (state = [], action) => {
                         ...state.splice(1, state.length)
                         ]
 
-
+      //This is how to update an array in a store
       //take the copy of state from index of 0 to ind-1, then add updatedPlayer at position ind,
       // then remove one element(the old version of updatedPlayer which is at original ind postion, 
       //then continuelly copy from now ind +1 to the end of array. 
