@@ -67,8 +67,8 @@ export function playersReducer(state = initialState, action) {
       return state;
 
   
+	}
 
 
-
-};
+}
 
