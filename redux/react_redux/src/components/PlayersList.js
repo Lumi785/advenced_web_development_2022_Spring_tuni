@@ -9,9 +9,16 @@ const selectPlayers = state => state.players;
 export const PlayersList = () => {
 
 	const players = useSelector(selectPlayers);
+
+	
+
+
+
+
 	console.log("players from PlayersList.js = ", players);
-	const ids = Object.keys(players)
-	console.log("ids = ", ids);
+	console.log("type of players = ", typeof(players));
+	// const ids = Object.keys(players)
+	// console.log("ids = ", ids);
 
 
 	const renderedPlayerItems = players.map(player => {
@@ -20,7 +27,7 @@ export const PlayersList = () => {
 	})
 
 	return(
-		<ol id='players-list'>{renderedPlayerItems}</ol>
+		<ol role='list' id='players-list'>{renderedPlayerItems}</ol>
 
 	)
 

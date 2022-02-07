@@ -40,7 +40,7 @@ export function playersReducer(state = initialState, action){
 			...state,
 			players: newPlayers
 		}
-		console.log("after revove players from test= ", state.players);
+		;
 
 
     
