@@ -3,7 +3,7 @@
 import { ADD_PLAYER, REMOVE_PLAYER } from '../constants';
 
 
-let lastId = 0;
+let lastId = -1;
 
 
 export const initialState = {
@@ -31,17 +31,17 @@ export function playersReducer(state = initialState, action){
 		
 
     case REMOVE_PLAYER:
-		console.log("before revove players = ", state.players);
-		console.log("action = ", action);
-		// state.players.forEach(player => console.log(`player.id is: ${player.id}));
-
+		console.log("before revove players from test= ", state.players);
 		
 		const newPlayers = state.players.filter(player => player.id !== action.payload);
+
 		console.log("newPlayers = ", newPlayers);
 		return {
 			...state,
 			players: newPlayers
 		}
+		console.log("after revove players from test= ", state.players);
+
 
     
    

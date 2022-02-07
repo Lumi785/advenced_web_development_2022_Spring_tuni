@@ -10,17 +10,13 @@ export const PlayersList = () => {
 
 	const players = useSelector(selectPlayers);
 	console.log("players from PlayersList.js = ", players);
-
-	// if (players.length === 0){
-	// 	console.error("no players");
-	// 	return(<></>);
-	// }
-
+	const ids = Object.keys(players)
+	console.log("ids = ", ids);
 
 
 	const renderedPlayerItems = players.map(player => {
 		console.log("player = ", player);
-		return <Player id={player.id} key={player.id} name={player.name} isActive={player.isActive} />
+		return <Player key={player.id} name={player.name} id={player.id} isActive={player.isActive} />
 	})
 
 	return(
