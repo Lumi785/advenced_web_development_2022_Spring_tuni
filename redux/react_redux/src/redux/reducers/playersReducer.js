@@ -11,7 +11,7 @@ export const initialState = {
 };
 
 //TODO: previous exercise is reusable here
-export function playersReducer(state = initialState, action) {
+export function playersReducer(state = initialState, action){
 
   // TODO: Implement this function
   //throw new Error('Not Implemented');
@@ -32,57 +32,27 @@ export function playersReducer(state = initialState, action) {
 
     case REMOVE_PLAYER:
 		console.log("before revove players = ", state.players);
-		console.log("action.paylaod.id = ", action.payload);
-		state.players.forEach(player => console.log(player.id));
+		console.log("action = ", action);
+		// state.players.forEach(player => console.log(`player.id is: ${player.id}));
 
 		
 		const newPlayers = state.players.filter(player => player.id !== action.payload);
 		console.log("newPlayers = ", newPlayers);
 		return {
+			...state,
 			players: newPlayers
 		}
 
-    // case actions.TOGGLE_PLAYER_STATUS:
-      
-    //   if (state.length === 0){
-    //     return state;
-    //   }
-
-    //   const tempArray = state.filter(player => player.id === action.payload.id);
-
-    //   if (tempArray.length === 0){
-    //     return state;
-    //   }
-
-    //   let updatedPlayer = tempArray[0];
-    //   const ind = state.indexOf(updatedPlayer);
-
-      
-
-    //   console.log("update palyer before = ", updatedPlayer);
-      
-    //   updatedPlayer.isActive = !(updatedPlayer.isActive);
-      
-    //   console.log("update palyer after = ", updatedPlayer);
-
-    //   const newState = [...state.splice(0, ind),
-    //                     updatedPlayer,
-    //                     ...state.splice(1, state.length)
-    //                     ]
-
-      //This is how to update an array in a store
-      //take the copy of state from index of 0 to ind-1, then add updatedPlayer at position ind,
-      // then remove one element(the old version of updatedPlayer which is at original ind postion, 
-      //then continuelly copy from now ind +1 to the end of array. 
-
-    //   return newState;
-     
+    
+   
+               
     default:
-      return state;
+      	return state;
 
-  
 	}
-
-
 }
+	
+
+
+
 

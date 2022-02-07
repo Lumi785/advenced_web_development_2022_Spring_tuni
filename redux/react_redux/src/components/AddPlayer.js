@@ -35,7 +35,7 @@ export const AddPlayer = () => {
 			<form onSubmit={handlePlayerSubmit}>
 				<input type="text" name='name' id='name' placeholder='input your name' 
 				value={name} onChange={e=>setName(e.target.value)}/>
-
+				<label htmlFor="active">is active</label>
 				<input type="checkbox" name='active' id='active' onClick={hanldeToggle}/>
 				<button type='submit'>Add</button>
 			</form>

@@ -13,7 +13,7 @@ export const PlayersList = () => {
 
 	const renderedPlayerItems = players.map(player => {
 		console.log("player = ", player);
-		return <Player key={player.id} name={player.name} isActive={player.isActive} />
+		return <Player id={player.id} key={player.id} name={player.name} isActive={player.isActive} />
 	})
 
 	return(
