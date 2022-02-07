@@ -21,7 +21,7 @@ export const Player = ({ name, isActive, id }) => {
 	//TOCO: complete
 	return (
 		
-		<div className='player'>
+		<div className='player' >
 			<p>{id}</p>
 			<p>{name}</p>
 			<p>{activeStatus}</p>
