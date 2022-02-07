@@ -29,23 +29,29 @@ export default (state = [], action) => {
         return state;
       }
 
-      let updatedPlayer = tempArray[0];
-      const ind = state.indexOf(updatedPlayer);
+
+      //Way1
+      return state.map(player => 
+        player.id !== action.payload.id ? player : {...player, isActive: !player.isActive});
+
 
       
+      //Way2, this is too complicated. Use Way2
 
-      console.log("update palyer before = ", updatedPlayer);
+      // let updatedPlayer = tempArray[0];
+      // const ind = state.indexOf(updatedPlayer);
+      // console.log("update palyer before = ", updatedPlayer);
       
-      updatedPlayer.isActive = !(updatedPlayer.isActive);
+      // updatedPlayer.isActive = !(updatedPlayer.isActive);
       
-      console.log("update palyer after = ", updatedPlayer);
+      // console.log("update palyer after = ", updatedPlayer);
 
-      const newState = [...state.splice(0, ind),
-                        updatedPlayer,
-                        ...state.splice(1, state.length)
-                        ]
+      // const newState = [...state.splice(0, ind),
+      //                   updatedPlayer,
+      //                   ...state.splice(1, state.length)
+      //                   ]
 
-      //This is how to update an array in a store
+      //This is way2 how to update an array in a store
       //take the copy of state from index of 0 to ind-1, then add updatedPlayer at position ind,
       // then remove one element(the old version of updatedPlayer which is at original ind postion, 
       //then continuelly copy from now ind +1 to the end of array. 
