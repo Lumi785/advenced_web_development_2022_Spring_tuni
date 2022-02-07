@@ -9,8 +9,10 @@ const selectPlayers = state => state.players;
 export const PlayersList = () => {
 
 	const players = useSelector(selectPlayers);
-	
+	console.log("players from PlayersList.js = ", players);
+
 	const renderedPlayerItems = players.map(player => {
+		console.log("player = ", player);
 		return <Player key={player.id} name={player.name} isActive={player.isActive} />
 	})
 

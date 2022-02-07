@@ -3,8 +3,6 @@
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { addPlayer } from '../redux/actionCreators/playersActions';
-import store from '../redux/store';
-
 
 export const AddPlayer = () => {
 	
@@ -26,10 +24,7 @@ export const AddPlayer = () => {
 		// const name = e.target.value;
 		console.log("name = ", name);
 		const player = {name, isActive};
-		dispatch({
-			type: {addPlayer},
-			payload: player
-		})
+		dispatch(addPlayer(player));
 		
 	};
 

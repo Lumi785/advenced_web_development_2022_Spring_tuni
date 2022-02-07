@@ -8,11 +8,7 @@ export const Player = ({ name, isActive, id }) => {
 	const dispatch = useDispatch();
 
 	const handleRemove = (id) => {
-		dispatch({
-			type: {removePlayer},
-			payload: id
-		})
-
+		dispatch(removePlayer(id));
 	};
 
 
@@ -20,9 +16,9 @@ export const Player = ({ name, isActive, id }) => {
 	return (
 		
 		<div className='player' onClick={handleRemove}>
-			<h3>{id}</h3>
-			<h3>{name}</h3>
-			<h3>{isActive}</h3>
+			<p>{id}</p>
+			<p>{name}</p>
+			<p>{isActive}</p>
 			<button className='remove-btn'>Remove</button>
 		</div>
 	);

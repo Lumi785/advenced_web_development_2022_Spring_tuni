@@ -17,16 +17,30 @@ export function playersReducer(state = initialState, action) {
   //throw new Error('Not Implemented');
   switch(action.type){
     case ADD_PLAYER:
-      return [
-        ...state, 
-        {
-          id: ++lastId,
-          name: action.payload.name,
-          isActive: action.payload.isActive
-        }];
+		return {
+			players: [
+				...state.players, 
+				{
+				id: ++lastId,
+				name: action.payload.name,
+				isActive: action.payload.isActive
+				}
+			]
+
+		}
+		
 
     case REMOVE_PLAYER:
-      return state.filter(player => player.id !== action.payload.id);
+		console.log("before revove players = ", state.players);
+		console.log("action.paylaod.id = ", action.payload);
+		state.players.forEach(player => console.log(player.id));
+
+		
+		const newPlayers = state.players.filter(player => player.id !== action.payload);
+		console.log("newPlayers = ", newPlayers);
+		return {
+			players: newPlayers
+		}
 
     // case actions.TOGGLE_PLAYER_STATUS:
       
