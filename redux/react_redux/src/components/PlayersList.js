@@ -9,16 +9,9 @@ const selectPlayers = state => state.players;
 export const PlayersList = () => {
 
 	const players = useSelector(selectPlayers);
-
-	
-
-
-
-
 	console.log("players from PlayersList.js = ", players);
-	console.log("type of players = ", typeof(players));
-	// const ids = Object.keys(players)
-	// console.log("ids = ", ids);
+	const ids = Object.keys(players)
+	console.log("ids = ", ids);
 
 
 	const renderedPlayerItems = players.map(player => {

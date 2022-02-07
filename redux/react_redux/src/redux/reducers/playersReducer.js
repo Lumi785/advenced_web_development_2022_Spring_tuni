@@ -33,7 +33,10 @@ export function playersReducer(state = initialState, action){
     case REMOVE_PLAYER:
 		console.log("before revove players from test= ", state.players);
 		
-		const newPlayers = state.players.filter(player => player.id !== action.payload);
+		//from aonther student
+		//let id = parseInt(action.payload);
+		
+		const newPlayers = state.players.filter(player => player.id !== parseInt(action.payload));
 
 		console.log("newPlayers = ", newPlayers);
 		return {
