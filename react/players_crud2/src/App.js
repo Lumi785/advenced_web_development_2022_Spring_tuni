@@ -176,14 +176,6 @@ function App () {
       });
     }
 
-
-    // if (url === 'api/players'){
-
-    //   const name = e.target.name.value;
-    //   const isActive = false;
-    //   const player = {name, isActive};
-    //   addPlayer(player);
-    // }
   } 
 
 

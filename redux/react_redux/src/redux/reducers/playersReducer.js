@@ -41,17 +41,13 @@ export function playersReducer(state = initialState, action){
 
 		const newPlayers = state.players.filter(player => 
 			player.id !== parseInt(action.payload));
-			
+
 
 		console.log("newPlayers = ", newPlayers);
 		return {
 			...state,
 			players: newPlayers
 		};
-
-
-    
-   
                
     default:
       	return state;
