@@ -36,14 +36,18 @@ export function playersReducer(state = initialState, action){
 		//from aonther student
 		//let id = parseInt(action.payload);
 		
-		const newPlayers = state.players.filter(player => player.id !== parseInt(action.payload));
+		// const newPlayers = state.players.filter(player => 
+		// 	player.id !== parseInt(action.payload));
+
+		const newPlayers = state.players.filter(player => 
+			player.id !== parseInt(action.payload));
+			
 
 		console.log("newPlayers = ", newPlayers);
 		return {
 			...state,
 			players: newPlayers
-		}
-		;
+		};
 
 
     

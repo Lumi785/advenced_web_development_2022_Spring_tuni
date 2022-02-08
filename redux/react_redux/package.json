@@ -18,6 +18,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "jest",
+    "test22": "jest -t 'list contains as many items as there are in players prop'",
     "test-react": "react-scripts test",
     "html-test": "npm test -- --reporters=jest-html-reporter --watchAll=false",
     "eject": "react-scripts eject"
