@@ -2,16 +2,20 @@
 
 import { useSelector } from 'react-redux';
 
-// export const RequestStatus = () => {
-// 	return null;
-// };
+
+//pre-check what properties are in state?
+// import store from '../redux/store';  
+// const state = store.getState();
 
 
-//copied from React/players_crud/src/components
+const selectStatus = state => state.status;
 
-export const RequestStatus = ({ status }) => {
+export const RequestStatus = () => {
+
+	const status = useSelector(selectStatus);
 
 	return(
 	  <div className="request-status">{status}</div>
 	);
-  };
+
+};
