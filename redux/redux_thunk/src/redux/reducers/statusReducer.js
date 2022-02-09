@@ -13,10 +13,8 @@ const defaultState = requestStatus.LOADING;
 
 const statusReducer = (state = defaultState, action) => {
 
-	console.log("status reducer action.payload = ", action.payload);
-	console.log("action from status REducer = ", action);
-
-	//let msgTitle = action.payload;
+	// console.log("status reducer action.payload = ", action.payload);
+	// console.log("action from status REducer = ", action);
 
 	switch(action.type){
 		case SET_STATUS:
