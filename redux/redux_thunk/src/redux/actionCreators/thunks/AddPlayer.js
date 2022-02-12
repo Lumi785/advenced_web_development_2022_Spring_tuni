@@ -5,6 +5,7 @@ import { addPlayer } from '../playersActions';
 import { clearSelectedPlayer } from '../selectedPlayerActions';
 import { setStatus } from '../statusActions';
 
+
 /**
  * @description thunk for posting a new player.
  * Upon starting, Dispatches
@@ -19,4 +20,38 @@ import { setStatus } from '../statusActions';
  * @param {Object} newPlayer -  The player to be added
  * @return {Function} - thunk
  */
-export const postPlayer = (newPlayer) => {};
+export const  postPlayer =  (newPlayer) => {
+    console.log("from thunk player = ", newPlayer);
+
+    const reqOptions = {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify(newPlayer)
+    }
+
+    return async (dispatch) => {
+    
+        dispatch(setStatus(LOADING));
+
+        await fetch('/api/players', reqOptions)
+        .then(res => {
+            if (res.error){console.log("response error = ", error)}
+            console.log("res === ", res);
+            return res.json()
+        })
+        .then(data => {
+            console.log("data === ", data);
+            dispatch(setStatus(READY));
+            dispatch(addPlayer(data));
+            dispatch(clearSelectedPlayer());
+        }).catch(error => {
+            console.log("error occured: ", error);
+            dispatch(setStatus(ERROR));
+        })
+
+    }
+ 
+};
