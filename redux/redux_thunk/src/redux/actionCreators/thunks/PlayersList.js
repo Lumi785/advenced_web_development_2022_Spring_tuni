@@ -15,4 +15,35 @@ import { setStatus } from '../statusActions';
  * - setStatus-action with "ERROR" string as param
  * @return {Function} - thunk
  */
-export const getPlayers = () => {};
+export const getPlayers = () => {
+    const reqOptions = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json'
+        }
+    }
+
+    return async (dispatch) => {
+    
+        dispatch(setStatus(LOADING));
+
+        await fetch('/api/players', reqOptions)
+        .then(res => {
+            if (res.error){console.log("response error = ", error)}
+            console.log("res === ", res);
+            return res.json()
+        })
+        .then(data => {
+            console.log("data === ", data);
+            dispatch(setStatus(READY));
+            dispatch(setPlayers(data));
+           
+        }).catch(error => {
+            console.log("error occured: ", error);
+            dispatch(setStatus(ERROR));
+        })
+
+    }
+
+};
