@@ -4,6 +4,8 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { postPlayer } from '../redux/actionCreators/thunks/AddPlayer';
 
+
+
 export const AddPlayer = () => {
 
 	//cannot const [player, setPlater] = useState({XXX})
@@ -14,16 +16,22 @@ export const AddPlayer = () => {
 	const dispatch = useDispatch();
 
 	function handleSubmit(newPlayer){
-		return(dispatch) => {
-			dispatch(postPlayer(newPlayer));
-		}
+		console.log("handle sbumit called ... ");
+	
+		dispatch(postPlayer(newPlayer));
+	
 	}
 	
-  const onSubmit = e => {
-    e.preventDefault();
-    const player = {name:{name}, isActive:false};
-    handleSubmit(player);
-    setName('');
+  	const onSubmit = e => {
+	  	
+		e.preventDefault();
+
+		const player = {name:name, isActive:false};
+
+		handleSubmit(player);
+		
+		setName('');
+		setIsActive(false);
     
   }
 
