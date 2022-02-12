@@ -16,4 +16,41 @@ import { setStatus } from '../statusActions';
  * @param {String} url -  url of the player to be selected
  * @return {Function} - thunk
  */
-export const getSelectedPlayer = (url) => {};
+export const getSelectedPlayer = (url) => {
+
+    const reqOptions = {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json'
+        }
+    }
+
+    return async (dispatch) => {
+    
+        dispatch(setStatus(LOADING));
+
+        await fetch(url, reqOptions)
+        .then(res => {
+            if (res.error){console.log("response error = ", error)}
+            console.log("res === ", res);
+            return res.json()
+        })
+        .then(data => {
+            console.log("data === ", data);
+            dispatch(setStatus(READY));
+            dispatch(setSelectedPlayer(data));
+           
+        }).catch(error => {
+            console.log("error occured: ", error);
+            dispatch(setStatus(ERROR));
+        })
+
+    }
+
+
+
+
+
+
+};
