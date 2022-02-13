@@ -20,7 +20,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "html-test": "npm test -- --reporters=jest-html-reporter --watchAll=false",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test22": "jest -t 'should dispatch setStatus(LOADING), setStatus(READY), addPlayer(expectedResponse) and clearSelectedPlayer() action on successful requests'"
   },
   "eslintConfig": {
     "extends": [

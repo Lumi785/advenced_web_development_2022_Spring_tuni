@@ -32,7 +32,7 @@ export const getSelectedPlayer = (url) => {
 
         await fetch(url, reqOptions)
         .then(res => {
-            if (res.error){console.log("response error = ", error)}
+            if (res.error){console.log("response error = ", res.error)}
             console.log("res === ", res);
             return res.json()
         })
@@ -41,8 +41,8 @@ export const getSelectedPlayer = (url) => {
             dispatch(setStatus(READY));
             dispatch(setSelectedPlayer(data));
            
-        }).catch(error => {
-            console.log("error occured: ", error);
+        }).catch(err => {
+            console.log("error occured: ", err);
             dispatch(setStatus(ERROR));
         })
 

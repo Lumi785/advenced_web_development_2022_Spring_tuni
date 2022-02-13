@@ -6,31 +6,30 @@ import { getPlayers } from '../redux/actionCreators/thunks/PlayersList';
 
 import { PlayerLink } from './PlayerLink';
 
-// export const PlayersList = () => {
-// 	return (null);
-// };
 
+const selectPlayers = state => state.players;
 
-//copied from React/players_crud/src/components
+export const PlayersList = () => {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		dispatch(getPlayers());
 
-import { PlayerLink } from './PlayerLink';
-
-export const PlayersList = ({ players, selectPlayer }) => {
-  console.log("ppppp = ", players);
+	}, [])
+	
+	const players = useSelector(selectPlayers);
+	// const pp = players[0];
+	// console.log("players 00000000 = ", players);
+	// console.log("aslfjlsdjfkdjfdkgj = ", 'player=='+ pp.id)
   
   
-  return(
-    
-    <ol id='players-list'>
-    
-
-      {players.map(player => <PlayerLink key={player.id} id={"player-"+player.id} name={player.name}  url={player.id} onClick={() => {
-        selectPlayer(player.id);
-        console.log("rose test click");}  }/>)}
-      
-     
-    </ol>
-  )
+	return(
+		
+		<ol id='players-list'>
+		
+		{players.map(player => <PlayerLink key={player.id} name={player.name} player={player} url={player.id} />)}
+		
+		</ol>
+	)
 };
 
 

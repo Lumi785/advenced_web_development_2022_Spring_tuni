@@ -35,12 +35,12 @@ export const deleteSelectedPlayer = () => {
     return async (dispatch, getState) => {
         const selectedPlayer = getState().selectedPlayer;
         console.log("selectedPlayer = ", selectedPlayer);
-        
+
         dispatch(setStatus(LOADING));
 
         await fetch('/api/players/'+ selectedPlayer.id, reqOptions)
         .then(res => {
-            if (res.error){console.log("response error = ", error)}
+            if (res.error){console.log("response error = ", res.error)}
             console.log("res === ", res);
             return res.json()
         })
@@ -48,8 +48,8 @@ export const deleteSelectedPlayer = () => {
             dispatch(setStatus(READY));
             dispatch(removePlayer(selectedPlayer.id));
             dispatch(clearSelectedPlayer());
-        }).catch(error => {
-            console.log("error occured: ", error);
+        }).catch(err => {
+            console.log("error occured: ", err);
             dispatch(setStatus(ERROR));
         })
 

@@ -30,7 +30,8 @@ export const getPlayers = () => {
 
         await fetch('/api/players', reqOptions)
         .then(res => {
-            if (res.error){console.log("response error = ", error)}
+            if (res.error){console.log("response error = ", res.error)} 
+            //NOTE, this ERROR is not the same as setStatus(ERROR)
             console.log("res === ", res);
             return res.json()
         })
@@ -39,8 +40,8 @@ export const getPlayers = () => {
             dispatch(setStatus(READY));
             dispatch(setPlayers(data));
            
-        }).catch(error => {
-            console.log("error occured: ", error);
+        }).catch(err => {
+            console.log("error occured: ", err);
             dispatch(setStatus(ERROR));
         })
 

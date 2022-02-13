@@ -7,7 +7,16 @@ import { RequestStatus } from './components/RequestStatus';
 
 
 function App () {
-	return null;
+	return(
+		<>
+		
+		<AddPlayer/>
+		<PlayersList/>
+		<PlayerInfo/>
+		<RequestStatus/>
+		</>
+
+	);
 }
   
 

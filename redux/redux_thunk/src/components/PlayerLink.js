@@ -1,6 +1,8 @@
 /** @format COMPONENTS */
 
 import { useDispatch } from 'react-redux';
+// import { Player } from '../../../react_redux/src/components/Player';
+import { PlayerInfo } from './PlayerInfo';
 import { getSelectedPlayer } from '../redux/actionCreators/thunks/PlayerLink';
 
 
@@ -16,8 +18,9 @@ export const PlayerLink = ({ name, url}) => {
 
 	return(
 	  
-	  <li role="listitem">
-	  <a href={url} role="link" onClick={onClick}
+	  <li role="listitem" >
+		  
+	  <a href={'/api/players/' + url} role="link" onClick={onClick}
 		>{name}</a>
 	  </li>
   
