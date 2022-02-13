@@ -3,38 +3,43 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteSelectedPlayer } from '../redux/actionCreators/thunks/PlayerInfo';
 
-// export const PlayerInfo = () => {
-// 	return ( null );
-// };
+const selectSelectedPlayer = state => state.selectedPlayer;
+console.log("aaaaa = ", selectSelectedPlayer);
 
-//copied from React/players_crud/src/components
-export const PlayerInfo = ({ player, handleDelete/*, showPlayerInfo*/}) => {
-  
+export const PlayerInfo = () => {
+
+	const selectedPlayer = useSelector(selectSelectedPlayer);
+	console.log("selectedPlayer = ", selectedPlayer);
+
+	const dispatch = useDispatch();
+
+	const onClick = e => {
+		e.preventDefault();
+		dispatch(deleteSelectedPlayer());
+	}
 
 	function c (player){
-	  let a;
-	  if(player.isActive === false){
-	   a = 'not active';
-	  } else {
-		a = 'active';
+		let a;
+		if(player.isActive === false){
+		 a = 'not active';
+		} else {
+		  a = 'active';
+		}
+		return a;
 	  }
-	  return a;
-	}
-	const aa = c(player);
-   
-  
-	return(/*showPlayerInfo && 
-	  (*/<div id="selected-player" >
-		<div className="player-id">{player.id}</div>
-		<div className="player-name">{player.name}</div>
+	  const aa = c(selectedPlayer);
+	 
+
+	return ( 
+		<div id="selected-player" >
+		<div className="player-id">{selectedPlayer.id}</div>
+		<div className="player-name">{selectedPlayer.name}</div>
 		<div className="player-status">{aa}</div>
 		<button className="delete-btn" 
-		onClick={(e)=>{
-		handleDelete(player.id);
-		e.preventDefault();
-	  }}
+		onClick={onClick}
 		>Delete</button>
-	  </div>/*)*/
-	)
-  };
+		</div>
+	);
+};
+
   
