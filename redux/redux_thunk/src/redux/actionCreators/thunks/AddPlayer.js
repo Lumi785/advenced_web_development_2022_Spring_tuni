@@ -21,7 +21,7 @@ import { setStatus } from '../statusActions';
  * @return {Function} - thunk
  */
 export const  postPlayer =  (newPlayer) => {
-    console.log("from thunk player = ", newPlayer);
+    //console.log("from thunk player = ", newPlayer);
 
     const reqOptions = {
         method: "POST",
@@ -38,12 +38,12 @@ export const  postPlayer =  (newPlayer) => {
 
         await fetch('/api/players', reqOptions)
         .then(res => {
-            if (res.error){console.log("response error = ", error)}
+            if (res.error){console.log("response error = ", res.error)}
             console.log("res === ", res);
-            return res.json()
+            return res.json();
         })
         .then(data => {
-            console.log("data === ", data);
+            //console.log("data === ", data);
             dispatch(setStatus(READY));
             dispatch(addPlayer(data));
             dispatch(clearSelectedPlayer());

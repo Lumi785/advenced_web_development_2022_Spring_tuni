@@ -20,7 +20,7 @@ export const PlayerLink = ({ name, url}) => {
 	  
 	  <li role="listitem" >
 		  
-	  <a href={'/api/players/' + url} role="link" onClick={onClick}
+	  <a href={url} role="link" onClick={onClick}
 		>{name}</a>
 	  </li>
   
