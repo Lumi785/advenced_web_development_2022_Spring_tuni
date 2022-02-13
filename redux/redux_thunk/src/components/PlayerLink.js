@@ -3,28 +3,24 @@
 import { useDispatch } from 'react-redux';
 import { getSelectedPlayer } from '../redux/actionCreators/thunks/PlayerLink';
 
-// export const PlayerLink = ({ name, url }) => {
-// 	return ( null );
-// };
 
+//copied from React/players_crud/src/components
+export const PlayerLink = ({ name, url}) => {
 
+	const dispatch = useDispatch();
 
-// //copied from React/players_crud/src/components
-export const PlayerLink = ({ name, onClick, url, id }) => {
-
+	const onClick= e => {
+		  e.preventDefault();
+		  dispatch(getSelectedPlayer(url));
+		}
 
 	return(
 	  
-	  <li role="listitem" id={id}>
-	  <a href={url} role="link" onClick={
-		(e) => {
-		  onClick(url);
-		  console.log("onlick url ====== ", url);
-		  e.preventDefault();
-		}}
+	  <li role="listitem">
+	  <a href={url} role="link" onClick={onClick}
 		>{name}</a>
 	  </li>
   
 	)
-  };
+};
   
