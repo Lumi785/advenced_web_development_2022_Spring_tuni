@@ -17,9 +17,9 @@ export const setSelectedPlayer = (player) => ({
 /**
  * @description normal action creator that returns an action with type CLEAR_SELECTED_PLAYER to the frontends reducers
  * @param {Object} player - The player that is to be stored in state
- * @return {Object} action   //???????wrong?????
+ * @return {Object} action   
  */
-export const clearSelectedPlayer = () => ({
+export const clearSelectedPlayer = (player) => ({
     type: CLEAR_SELECTED_PLAYER,
-    payload: ''
+    payload: player
 });
