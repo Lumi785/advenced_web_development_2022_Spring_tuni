@@ -5,6 +5,8 @@ import { removePlayer } from '../playersActions';
 import { clearSelectedPlayer } from '../selectedPlayerActions';
 import { setStatus } from '../statusActions';
 
+
+
 /**
  * @description thunk for deleting the selected player.
  * Upon starting, Dispatches
@@ -18,4 +20,40 @@ import { setStatus } from '../statusActions';
  * - setStatus-action with "ERROR" string as param
  * @return {Function} - thunk
  */
-export const deleteSelectedPlayer = () => {};
+
+
+export const deleteSelectedPlayer = () => {
+
+    const reqOptions = {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          'Accept': 'application/json'
+        }
+    }
+
+    return async (dispatch, getState) => {
+        const selectedPlayer = getState().selectedPlayer;
+        console.log("selectedPlayer = ", selectedPlayer);
+        
+        dispatch(setStatus(LOADING));
+
+        await fetch('/api/players/'+ selectedPlayer.id, reqOptions)
+        .then(res => {
+            if (res.error){console.log("response error = ", error)}
+            console.log("res === ", res);
+            return res.json()
+        })
+        .then(data => {
+            dispatch(setStatus(READY));
+            dispatch(removePlayer(selectedPlayer.id));
+            dispatch(clearSelectedPlayer());
+        }).catch(error => {
+            console.log("error occured: ", error);
+            dispatch(setStatus(ERROR));
+        })
+
+    }
+
+
+};
