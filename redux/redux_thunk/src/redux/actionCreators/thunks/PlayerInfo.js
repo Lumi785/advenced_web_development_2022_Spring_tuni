@@ -34,22 +34,23 @@ export const deleteSelectedPlayer = () => {
 
     return async (dispatch, getState) => {
         const selectedPlayer = getState().selectedPlayer;
-        //console.log("selectedPlayer = ", selectedPlayer);
 
         dispatch(setStatus(LOADING));
 
         await fetch('/api/players/'+ selectedPlayer.id, reqOptions)
         .then(res => {
-            if (res.error){console.log("response error = ", res.error)}
-            //console.log("res === ", res);
+            if (res.error){console.log("Thunk delete response error = ", res.error)}
             return res.json()
         })
         .then(data => {
             dispatch(setStatus(READY));
+
             dispatch(removePlayer(data.id));
+
             dispatch(clearSelectedPlayer());
+
         }).catch(err => {
-            console.log("error occured: ", err);
+            console.log("error from playerinfo thunk: ", err);
             dispatch(setStatus(ERROR));
         })
 

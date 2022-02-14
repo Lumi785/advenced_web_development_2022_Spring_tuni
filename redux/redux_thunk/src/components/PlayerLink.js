@@ -3,10 +3,7 @@
 import { useDispatch } from 'react-redux';
 import { getSelectedPlayer } from '../redux/actionCreators/thunks/PlayerLink';
 
-
-//copied from React/players_crud/src/components
 export const PlayerLink = ({ name, url, id}) => {
-
 
 	const dispatch = useDispatch();
 
