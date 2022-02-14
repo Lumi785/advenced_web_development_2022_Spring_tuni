@@ -1,13 +1,14 @@
 /** @format COMPONENTS */
 
 import { useDispatch } from 'react-redux';
-// import { Player } from '../../../react_redux/src/components/Player';
-import { PlayerInfo } from './PlayerInfo';
 import { getSelectedPlayer } from '../redux/actionCreators/thunks/PlayerLink';
 
 
 //copied from React/players_crud/src/components
 export const PlayerLink = ({ name, url}) => {
+	console.log("url from PlayerLink should be '/api/players/id= ", url);
+	console.log("name from PlayerLink = ", name);
+
 
 	const dispatch = useDispatch();
 
@@ -20,8 +21,8 @@ export const PlayerLink = ({ name, url}) => {
 	  
 	  <li role="listitem" >
 		  
-	  <a href={url} role="link" onClick={onClick}
-		>{name}</a>
+		<a href={url} role="link" onClick={onClick} 
+			>{name}</a>
 	  </li>
   
 	)

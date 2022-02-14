@@ -26,13 +26,15 @@ export const PlayersList = () => {
 		
 		<ol id='players-list'>
 		
-		{players.map(player => <PlayerLink key={player.id} name={player.name} player={player} url={player.id} />)}
+		{players.map(player => <PlayerLink key={player.id} name={player.name} 
+		player={player} id={`player-${player.id}`} url={'/api/players/' + player.id}/>)}
 		
 		</ol>
 	)
 };
 
-
+// {players.map(player => <PlayerLink key={player.id} name={player.name} 
+// 	player={player} url={player.id} id={`player-${player.id}`}/>)}
  
   
      //Put wrap function of selectPlayer by another function, is to prevent selectPlayer from being called automatically

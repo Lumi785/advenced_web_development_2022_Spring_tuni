@@ -36,7 +36,7 @@ export const getPlayers = () => {
             return res.json()
         })
         .then(data => {
-            console.log("data === ", data);
+            //console.log("data === ", data);
             dispatch(setStatus(READY));
             dispatch(setPlayers(data));
            

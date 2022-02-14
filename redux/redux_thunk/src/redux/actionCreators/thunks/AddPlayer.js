@@ -39,7 +39,6 @@ export const  postPlayer =  (newPlayer) => {
         await fetch('/api/players', reqOptions)
         .then(res => {
             if (res.error){console.log("response error = ", res.error)}
-            console.log("res === ", res);
             return res.json();
         })
         .then(data => {

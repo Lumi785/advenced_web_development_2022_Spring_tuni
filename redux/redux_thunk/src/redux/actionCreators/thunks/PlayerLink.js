@@ -37,7 +37,7 @@ export const getSelectedPlayer = (url) => {
             return res.json()
         })
         .then(data => {
-            console.log("data === ", data);
+            //console.log("data === ", data);
             dispatch(setStatus(READY));
             dispatch(setSelectedPlayer(data));
            
