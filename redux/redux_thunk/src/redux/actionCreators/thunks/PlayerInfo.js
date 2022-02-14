@@ -34,7 +34,7 @@ export const deleteSelectedPlayer = () => {
 
     return async (dispatch, getState) => {
         const selectedPlayer = getState().selectedPlayer;
-        console.log("selectedPlayer = ", selectedPlayer);
+        //console.log("selectedPlayer = ", selectedPlayer);
 
         dispatch(setStatus(LOADING));
 

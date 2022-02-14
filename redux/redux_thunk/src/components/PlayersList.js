@@ -17,17 +17,13 @@ export const PlayersList = () => {
 	}, [])
 	
 	const players = useSelector(selectPlayers);
-	// const pp = players[0];
-	// console.log("players 00000000 = ", players);
-	// console.log("aslfjlsdjfkdjfdkgj = ", 'player=='+ pp.id)
-  
   
 	return(
 		
 		<ol id='players-list'>
 		
 		{players.map(player => <PlayerLink key={player.id} name={player.name} 
-		player={player} id={`player-${player.id}`} url={'/api/players/' + player.id}/>)}
+		player={player} id={'player-' + player.id} url={'/api/players/' + player.id}/>)}
 		
 		</ol>
 	)

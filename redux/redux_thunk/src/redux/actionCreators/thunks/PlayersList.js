@@ -32,7 +32,7 @@ export const getPlayers = () => {
         .then(res => {
             if (res.error){console.log("response error = ", res.error)} 
             //NOTE, this ERROR is not the same as setStatus(ERROR)
-            console.log("res === ", res);
+            //console.log("res === ", res);
             return res.json()
         })
         .then(data => {

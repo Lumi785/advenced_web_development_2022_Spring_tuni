@@ -27,19 +27,19 @@ export const AddPlayer = () => {
 	  	
 		e.preventDefault();
 
-		const player = {name:name, isActive:false};
+		const player = {name:name, isActive:isActive};
 
 		handleSubmit(player);
 
 		setName('');
-		setIsActive(false);
+		
   }
 
   return (
   <form onSubmit={onSubmit}>
 
     <input required value={name} onChange={e=>setName(e.target.value)} type="text" name="name" id="name" />
-    <input type="checkbox" name="active" id="active" />
+    <input type="checkbox" name="active" id="active" value={isActive} onChange={e=>setIsActive(!e.target.value)}/>
     <button type="submit">Add</button>
   
   </form>

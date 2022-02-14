@@ -4,12 +4,12 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteSelectedPlayer } from '../redux/actionCreators/thunks/PlayerInfo';
 
 const selectSelectedPlayer = state => state.selectedPlayer;
-console.log("aaaaa = ", selectSelectedPlayer);
+//console.log("aaaaa = ", selectSelectedPlayer);
 
 export const PlayerInfo = () => {
 
 	const selectedPlayer = useSelector(selectSelectedPlayer);
-	console.log("selectedPlayer = ", selectedPlayer);
+	//console.log("selectedPlayer = ", selectedPlayer);
 
 	const dispatch = useDispatch();
 

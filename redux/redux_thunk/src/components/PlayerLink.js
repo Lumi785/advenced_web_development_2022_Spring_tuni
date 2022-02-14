@@ -5,9 +5,7 @@ import { getSelectedPlayer } from '../redux/actionCreators/thunks/PlayerLink';
 
 
 //copied from React/players_crud/src/components
-export const PlayerLink = ({ name, url}) => {
-	console.log("url from PlayerLink should be '/api/players/id= ", url);
-	console.log("name from PlayerLink = ", name);
+export const PlayerLink = ({ name, url, id}) => {
 
 
 	const dispatch = useDispatch();
@@ -19,7 +17,7 @@ export const PlayerLink = ({ name, url}) => {
 
 	return(
 	  
-	  <li role="listitem" >
+	  <li role="listitem" id={id}>
 		  
 		<a href={url} role="link" onClick={onClick} 
 			>{name}</a>

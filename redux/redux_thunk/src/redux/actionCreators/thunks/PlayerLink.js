@@ -33,7 +33,7 @@ export const getSelectedPlayer = (url) => {
         await fetch(url, reqOptions)
         .then(res => {
             if (res.error){console.log("response error = ", res.error)}
-            console.log("res === ", res);
+            //console.log("res === ", res);
             return res.json()
         })
         .then(data => {
