@@ -46,7 +46,7 @@ export const deleteSelectedPlayer = () => {
         })
         .then(data => {
             dispatch(setStatus(READY));
-            dispatch(removePlayer(selectedPlayer.id));
+            dispatch(removePlayer(data.id));
             dispatch(clearSelectedPlayer());
         }).catch(err => {
             console.log("error occured: ", err);
