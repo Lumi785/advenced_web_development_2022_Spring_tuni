@@ -12,6 +12,7 @@ const Login = () => {
 
 
     const handleSubmit = e => {
+        console.log("handleSubmit called ...");
         e.preventDefault();
         const formData = new FormData(e.target);
         const credential = {email: formData.get('email'), password: formData.get('password')};
