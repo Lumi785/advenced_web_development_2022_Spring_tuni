@@ -1,5 +1,7 @@
 /** @format */
 
+import res from 'express/lib/response';
+import { dispatch } from '../../tests/utils/tools';
 import {
 	CLEAR_ORDERS,
 	CLEAR_USERS,
@@ -37,7 +39,43 @@ export const validAuth = {
  *
  * @returns {Function} Thunk
  */
-export const initAuth = () => {};
+export const initAuth = () => {
+	
+	// return async(dispatch) => {
+	// 	const reqOptions = {
+	// 		method: 'POST',
+	// 		headers: {
+	// 		  'Accept': 'application/json',
+	// 		  'Content-Type': 'application/json'
+	// 		},
+	// 		// body: JSON.stringify(logInCreds)
+	// 	};
+
+
+	// 	await fetch('/api/check-status', reqOptions)
+	// 	.then(res => {
+	// 		if(res.ok){return res}
+	// 		else(console.log('response err = ', res.err));
+	// 	})
+	// 	.then(data => {
+
+	// 		console.log('data = ', data);
+	// 		dispatch(
+	// 			{
+	// 				type: INIT_AUTH,
+	// 				payload: data,
+	// 			},
+	// 		)
+
+	// 	})
+	// 	.catch(err => console.log(err));
+	// }
+
+
+
+
+
+};
 /**
  * @description Asynchronous thunk that handles validation for logInCreds (check Login and Registration validation from assignment instructions). Expects for a successful login-response from server, before dispatches
  * 1) INIT_AUTH with user as payload
@@ -46,7 +84,52 @@ export const initAuth = () => {};
  * @param {Object} logInCreds - The credentials used to login, contains username and password
  * @returns {Function} action
  */
-export const logIn = (logInCreds) => {};
+export const logIn = (logInCreds) => {
+	console.log("longIn thunk called ...");
+	console.log("logInCredentials = ", logInCreds);
+	// const {email, password} = logInCreds;
+	// let errors = 0;
+	// if (password.length < 10 ){
+	// 	errors += 1;
+	// }
+	return async (dispatch) => {
+
+		const reqOptions = {
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(logInCreds)
+		};
+		await fetch('/api/login', reqOptions)
+		.then(res => {
+			if(res.ok){
+				return res.json();
+			} else {
+				console.log("response error = ", res.errors);
+			}
+		})
+		.then(data => {
+			console.log("data === ", data);
+			dispatch(
+					{
+						type: INIT_AUTH,
+						payload: data.user
+					});
+			dispatch(
+				{
+					type: NEW_NOTIFICATION,
+					payload: { message: validAuth.welcomeBack, isSuccess: true },
+				},
+			)
+	
+		})
+		.catch(err => console.log(err));
+	}
+	
+
+};
 
 /**
  * @description Asynchronous thunk that awaits for a successful logout-response from server, before dispatches
