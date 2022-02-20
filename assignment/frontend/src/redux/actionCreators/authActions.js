@@ -142,26 +142,19 @@ export const logIn = (logInCreds) => {
 				dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: 'test-error', isSuccess: false },
-	
 				})
-				
-			}	
-				
+			}			
 		})
 		.then(data => {
 			//console.log("data === ", data);
-			dispatch(
-					{
+			dispatch({
 						type: INIT_AUTH,
 						payload: data.user
 					});
-			dispatch(
-				{
+			dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: validAuth.welcomeBack, isSuccess: true },
-				},
-			)
-	
+				})
 		})
 		.catch(error => {
 			console.log("response error = ", error);
@@ -179,7 +172,42 @@ export const logIn = (logInCreds) => {
  * 4) NEW_NOTIFICATION with succesfull message from the backend as payload to the reducers.
  * @returns {Function}
  */
-export const logOut = () => {};
+export const logOut = () => {
+
+	return async(dispatch) => {
+
+		const reqOptions = {
+			method: 'GET',
+			headers: {
+			  'Accept': 'application/json',
+			}
+		};
+		
+		await fetch('/api/logout', reqOptions)
+		.then(res => {
+			if(res.ok){ 
+				return res.json()
+			} else{
+				console.log("response error = ", res.error);
+			}
+		})
+		.then(
+			data => {
+				//console.log("data from logout = ", data);
+				dispatch({type: REMOVE_AUTH});
+				dispatch({type: CLEAR_ORDERS});
+				dispatch({type: CLEAR_USERS});
+				dispatch({
+					type: NEW_NOTIFICATION,
+					payload: {message: data.message, isSuccess: true}
+				});
+			}
+		)
+		.catch(error => console.log(error));
+	}
+
+
+};
 
 /**
  * @description Asynchronous thunk that handles registeration events. Handles validation for registerCreds (check Login and Registration validation from assignment instructions). If the response is ok, Dispatches
