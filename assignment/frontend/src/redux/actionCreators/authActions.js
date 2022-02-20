@@ -57,10 +57,14 @@ export const initAuth = () => {
 		})
 		.then(data => {
 			//console.log('data = ', data);
-			dispatch({
-					type: INIT_AUTH,
-					payload: data.user,
-				})
+			if (Object.keys(data).length === 0){
+				dispatch({type: INIT_AUTH})
+			} else {
+				dispatch({
+						type: INIT_AUTH,
+						payload: data.user,
+					})
+			}
 		})
 		.catch(err => {
 			console.log(err);
@@ -68,14 +72,8 @@ export const initAuth = () => {
 				type: NEW_NOTIFICATION,
 				payload: {message: 'test-error', isSuccess: false}
 			})
-		})
-			
+		})	
 	}
-
-
-
-
-
 };
 /**
  * @description Asynchronous thunk that handles validation for logInCreds (check Login and Registration validation from assignment instructions). Expects for a successful login-response from server, before dispatches
