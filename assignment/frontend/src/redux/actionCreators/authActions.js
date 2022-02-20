@@ -216,4 +216,90 @@ export const logOut = () => {
  * @param registerCreds - The data of the user
  * @returns {Function}
  */
-export const register = (registerCreds) => {};
+export const register = (registerCreds) => {
+
+	//console.log("register cred = ", registerCreds);
+
+	return async(dispatch) => {
+		
+		const {name, email, password, passwordConfirmation} = registerCreds; 
+		// console.log("name = ", name);
+		// console.log("email = ", email);
+		// console.log("pas = ", password);
+		// console.log("conpas = ", passwordConfirmation);
+
+
+		//before sending credential to backend, evaluate first password, name and email
+		//if not ok, then not send to backend at all.
+		if (!validEmailRegex.test(email)){
+			await dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: invalidAuth.email, isSuccess: false}
+			});
+			return;
+		}
+		if (password && password.length < 10 ){
+			await dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: invalidAuth.password, isSuccess: false}
+			});
+			return;
+		} 
+	
+		if(name.length < 4){
+			await dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: invalidAuth.name, isSuccess: false}
+			});
+			return;
+		} 
+		
+		if (password !== passwordConfirmation){
+			console.log("passowd not match ")
+			await dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: invalidAuth.passwordMismatch, isSuccess: false}
+			})
+			return;
+		}
+
+		//credential forfats are ok, now send credential to backend to register
+		const reqOptions = {
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(registerCreds)
+		};
+		await fetch('/api/register', reqOptions)
+		.then(res => {
+			if(res.ok){
+				return res.json();
+			} 
+			
+			//dispatch error from backend.
+			else {
+				//console.log("res.statuscode = ", res.status);
+				dispatch({
+					type: NEW_NOTIFICATION,
+					payload: { message: 'test-error', isSuccess: false },
+				})
+			}			
+		})
+		.then(data => {
+			//console.log("data from register === ", data);
+			dispatch({
+						type: INIT_AUTH,
+						payload: data.user
+					});
+			dispatch({
+					type: NEW_NOTIFICATION,
+					payload: { message: validAuth.welcome(name), isSuccess: true },
+				})
+		})
+		.catch(error => {
+			console.log("response error = ", error);
+		})
+	}
+};
