@@ -85,15 +85,42 @@ export const initAuth = () => {
  * @returns {Function} action
  */
 export const logIn = (logInCreds) => {
-	console.log("longIn thunk called ...");
-	console.log("logInCredentials = ", logInCreds);
-	// const {email, password} = logInCreds;
-	// let errors = 0;
-	// if (password.length < 10 ){
-	// 	errors += 1;
-	// }
+	//console.log("logInCredentials = ", logInCreds);
+	
+
 	return async (dispatch) => {
 
+		const {email, password} = logInCreds;
+		//console.log("email = ", email);
+		//console.log("password = ", password);
+
+		//before sending credential to backend, evaluate first password, name and email
+		//if not ok, then not send to backend at all.
+		if (password.length < 10 ){
+			await dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: invalidAuth.password, isSuccess: false}
+			});
+			return;
+		} 
+		const name = email.split('@')[0];
+		if(name.length < 4){
+			await dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: invalidAuth.name, isSuccess: false}
+			});
+			return;
+		} 
+		if (!validEmailRegex.test(email)){
+			await dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: invalidAuth.email, isSuccess: false}
+			});
+			return;
+			
+		}
+
+		//credential forfats are ok, now send credential to backend to login
 		const reqOptions = {
 			method: 'POST',
 			headers: {
@@ -106,12 +133,23 @@ export const logIn = (logInCreds) => {
 		.then(res => {
 			if(res.ok){
 				return res.json();
-			} else {
-				console.log("response error = ", res.errors);
-			}
+			} 
+			
+			//dispatch error from backend. Note dispatch in catch also pass tests
+			//but I think for error from backend, here is better place
+			else {
+				//console.log("res.statuscode = ", res.status);
+				dispatch({
+					type: NEW_NOTIFICATION,
+					payload: { message: 'test-error', isSuccess: false },
+	
+				})
+				
+			}	
+				
 		})
 		.then(data => {
-			console.log("data === ", data);
+			//console.log("data === ", data);
 			dispatch(
 					{
 						type: INIT_AUTH,
@@ -125,10 +163,11 @@ export const logIn = (logInCreds) => {
 			)
 	
 		})
-		.catch(err => console.log(err));
+		.catch(error => {
+			console.log("response error = ", error);
+			
+		})
 	}
-	
-
 };
 
 /**
