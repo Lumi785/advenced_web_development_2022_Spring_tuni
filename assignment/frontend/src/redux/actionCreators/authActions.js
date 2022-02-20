@@ -41,35 +41,36 @@ export const validAuth = {
  */
 export const initAuth = () => {
 	
-	// return async(dispatch) => {
-	// 	const reqOptions = {
-	// 		method: 'POST',
-	// 		headers: {
-	// 		  'Accept': 'application/json',
-	// 		  'Content-Type': 'application/json'
-	// 		},
-	// 		// body: JSON.stringify(logInCreds)
-	// 	};
+	return async(dispatch) => {
+		const reqOptions = {
+			method: 'GET',
+			headers: {
+			  'Accept': 'application/json'
+			},
+		};
 
-
-	// 	await fetch('/api/check-status', reqOptions)
-	// 	.then(res => {
-	// 		if(res.ok){return res}
-	// 		else(console.log('response err = ', res.err));
-	// 	})
-	// 	.then(data => {
-
-	// 		console.log('data = ', data);
-	// 		dispatch(
-	// 			{
-	// 				type: INIT_AUTH,
-	// 				payload: data,
-	// 			},
-	// 		)
-
-	// 	})
-	// 	.catch(err => console.log(err));
-	// }
+		//send to backends /api/check-status path to check whether or not there is the correct browser-cookie and whether or not that browser-cookie is valid. 
+		await fetch('/api/check-status', reqOptions)
+		.then(res => {
+			if(res.ok){return res.json()}
+			//else{console.log('response err = ', res.err)};
+		})
+		.then(data => {
+			//console.log('data = ', data);
+			dispatch({
+					type: INIT_AUTH,
+					payload: data.user,
+				})
+		})
+		.catch(err => {
+			console.log(err);
+			dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: 'test-error', isSuccess: false}
+			})
+		})
+			
+	}
 
 
 
@@ -182,7 +183,7 @@ export const logOut = () => {
 			  'Accept': 'application/json',
 			}
 		};
-		
+
 		await fetch('/api/logout', reqOptions)
 		.then(res => {
 			if(res.ok){ 
