@@ -25,14 +25,60 @@ export const productMsg = {
  * @param {String} productId - The id of the product to get
  * @return {Function} - Thunk -> action
  */
-export const getProduct = (productId) => {};
+export const getProduct = (productId) => {
+	return async(dispatch) => {
+		const reqOptions = {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json'
+			}
+		}
+
+		await fetch('/api/products/'+ productId, reqOptions)
+			.then(res => res.json())
+			.then(data => {
+				if(data.error){
+					dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
+				} else {
+					dispatch({type: GET_PRODUCT, payload: data});
+				}
+			})
+			.catch(err =>{console.log(err);})
+	}
+};
+
+
 
 /**
  * @description Asynchronous Action creator that dispatches all the products it receives from DB to the frontends redux-stores product-state. Dispatches GET_PRODUCTS with products as payload if succesfull,
  * If the response is not ok, it only dispatches a NEW_NOTIFICATION-type action to the frontends notification state along with the error message from db as an unsuccessfull message.
  * @return {Function} - Thunk -> action
  */
-export const getProducts = () => {};
+export const getProducts = () => {
+	return async(dispatch) => {
+		const reqOptions = {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json'
+			  },
+		}
+
+		await fetch('/api/products', reqOptions)
+		.then(res => res.json())
+		.then(data => {
+			if(data.error){
+				dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
+			} else {
+				dispatch({type: GET_PRODUCTS, payload: data});
+			}
+		})
+		.catch(err => {
+			console.log("err ======= ", err);
+		})
+	}
+};
+
+
 
 /**
  * @description Asynchronous Action creator that adds a new product to the DB, then dispatches actions in the following order:
@@ -41,7 +87,12 @@ export const getProducts = () => {};
  *  * @param {Object} productToAdd - The product to add
  * @return {Function} - Thunk -> action
  */
-export const addProduct = (productToAdd) => {};
+export const addProduct = (productToAdd) => {
+	
+};
+
+
+
 
 /**
  * @description Asynchronous Action creator that updates an existing product in the DB, then dispatches actions in the following order:
@@ -51,7 +102,36 @@ export const addProduct = (productToAdd) => {};
  * @param {Object} productToUpdate - The product with updated values
  * @return {Function} - Thunk -> action
  */
-export const updateProduct = (productToUpdate) => {};
+export const updateProduct = (productToUpdate) => {
+	return async(dispatch) => {
+		const url = '/api/products/' + productToUpdate.id;
+		const reqOptions = {
+			method: 'PUT',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(productToUpdate)
+		};
+
+		await fetch(url, reqOptions)
+			.then(res => res.json())
+			.then(data => {
+				if(data.error){
+					dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
+				} else {
+					dispatch({type: UPDATE_PRODUCT, payload: data});
+					dispatch({type: NEW_NOTIFICATION, payload: {message: productMsg.updated, isSuccess: true}})
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			})
+	}
+};
+
+
+
 
 /**
  * @description Asynchronous Action creator that deletes existing product in the DB, then dispatches actions in the following order:
@@ -61,4 +141,29 @@ export const updateProduct = (productToUpdate) => {};
  * @param {String} productId - The id of the product to delete
  * @return {Function} redux thunk -> action
  */
-export const deleteProduct = (productId) => {};
+export const deleteProduct = (productId) => {
+	return async(dispatch) => {
+		const url = '/api/products/' + productId;
+		const reqOptions = {
+			method: 'DELETE',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(productId)
+		};
+
+		await fetch(url, reqOptions)
+			.then(res => res.json()
+			)
+			.then(data => {
+				if (data.error){
+					dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
+				} else {
+					dispatch({type: DELETE_PRODUCT, payload: data});
+					dispatch({type: NEW_NOTIFICATION, payload: {message: productMsg.deleted(data), isSuccess: true}});
+				}
+			})
+			.catch(err => console.log(err));
+	}	
+};
