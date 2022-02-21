@@ -27,7 +27,40 @@ const userMsg = {
  * @param {String} userId - The users id that is to be fetched.
  * @returns {Function} - For the thunk to then dispatch as an object (ie the action).
  */
-export const getUser = (userId) => {};
+export const getUser = (userId) => {
+
+	return async(dispatch) => {
+		const reqOptions = {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json'
+			}
+		}
+
+		console.log("'/api/users'+ userId = ", '/api/users/'+ userId);
+
+		await fetch('/api/users/'+ userId, reqOptions)
+			.then(res => {
+				if(res.ok){
+					return res.json();
+				}
+			})
+			.then(data => {
+				console.log("data === ", data);
+				dispatch({
+					type: GET_USER,
+					payload: data
+				})
+			})
+			.catch(err =>{
+				console.log(err);
+				dispatch({
+					type: NEW_NOTIFICATION,
+					payload: {message: err,  isSuccess: false,}
+				})
+			})
+	}
+};
 /**
  * @description Asynchronous action creator that attempts to get all the users from the backend. If successful, dispatches GET_USERS-type action with users as payload
  * If the response is not ok, it only dispatches a NEW_NOTIFICATION-type action to the frontends notification state along with the error message from db as an unsuccessfull message.
@@ -49,6 +82,12 @@ export const getUsers = () => {
 			if(res.ok){
 				return res.json();
 			}
+			else{
+				console.log("res.statutext = ", res.statusText)
+				console.log("res.json() = ", res.json())
+				console.log("res = ", res.err.message)
+
+			}
 			// else{
 			// 	res.json().then(aa => console.log("aa ==== ", aa))
 			// }
@@ -62,11 +101,11 @@ export const getUsers = () => {
 		})
 		.catch(err => {
 			console.log("err ======= ", err);
-			dispatch({
-				type: NEW_NOTIFICATION,
-				payload: {message: err, isSuccess: false}
+			// dispatch({
+			// 	type: NEW_NOTIFICATION,
+			// 	payload: {message: err, isSuccess: false}
 
-			})
+			// })
 		})
 	}
 
@@ -86,7 +125,40 @@ export const getUsers = () => {
  * @param {object} updatedUser - contains the updated user data
  * @returns {Function} - For the thunk to then dispatch as an object (ie the action).
  */
-export const updateUser = (updatedUser) => {};
+export const updateUser = (updatedUser) => {
+
+	console.log("updatedUser = ", updatedUser);
+
+	return async(dispatch) => {
+		const url = '/api/users/' + updatedUser.id;
+		const reqOptions = {
+			method: 'PUT',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(updatedUser)
+		};
+
+		await fetch(url, reqOptions)
+			.then(res => {
+				if(res.ok){
+					return res.json();
+				}
+			})
+			.then(data => {
+				console.log("data from update = ", data);
+				dispatch({type: UPDATE_USER, payload: data});
+				dispatch({type: NEW_NOTIFICATION, payload: {message: userMsg.updateUser, isSuccess: true}})
+			})
+			.catch(err => {
+				console.log(err);
+				dispatch({type: NEW_NOTIFICATION})
+			})
+	}
+
+	
+};
 /**
  * @description Removes the user (if possible) from the backend. If successful, dispatches actions in following order:
  * 1) REMOVE_USER-type with payload of user.
@@ -96,4 +168,36 @@ export const updateUser = (updatedUser) => {};
  * @param {String} - The users id that is to be fetched
  * @returns {Function} - For the thunk to then dispatch as an object (ie the action).
  */
-export const removeUser = (userId) => {};
+export const removeUser = (userId) => {
+	return async(dispatch) => {
+		const url = '/api/users/' + userId;
+		const reqOptions = {
+			method: 'DELETE',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(userId)
+		};
+
+		await fetch(url, reqOptions)
+			.then(res => {
+				if (res.ok){
+					return res.json();
+				} else {
+					dispatch({
+						type: NEW_NOTIFICATION,
+						payload: {message: 'apple', isSuccess: false}
+					})
+					return;
+				}
+			})
+			.then(data => {
+				dispatch({type: REMOVE_USER, payload: data});
+				dispatch({type: NEW_NOTIFICATION, payload: {message: userMsg.delete(data), isSuccess: true}});
+			})
+			.catch(err => console.log(err));
+	}
+
+	
+};
