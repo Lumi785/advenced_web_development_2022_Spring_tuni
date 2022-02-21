@@ -96,7 +96,7 @@ export const getUsers = () => {
  */
 export const updateUser = (updatedUser) => {
 
-	console.log("updatedUser = ", updatedUser);
+	// console.log("updatedUser = ", updatedUser);
 
 	return async(dispatch) => {
 		const url = '/api/users/' + updatedUser.id;
@@ -121,7 +121,6 @@ export const updateUser = (updatedUser) => {
 			})
 			.catch(err => {
 				console.log(err);
-				dispatch({type: NEW_NOTIFICATION})
 			})
 	}
 };
