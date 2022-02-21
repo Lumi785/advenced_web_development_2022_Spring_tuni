@@ -34,7 +34,49 @@ export const getUser = (userId) => {};
  *
  * @returns {Function} - For the thunk to then dispatch as an object (ie the action).
  */
-export const getUsers = () => {};
+export const getUsers = () => {
+
+	return async(dispatch) => {
+		const reqOptions = {
+			method: 'GET',
+			headers: {
+				'Accept': 'application/json'
+			  },
+		}
+
+		await fetch('/api/users', reqOptions)
+		.then(res => {
+			if(res.ok){
+				return res.json();
+			}
+			// else{
+			// 	res.json().then(aa => console.log("aa ==== ", aa))
+			// }
+		})
+		.then(data => {
+			//console.log("data = ", data);
+			dispatch({
+				type: GET_USERS,
+				payload: data
+			})
+		})
+		.catch(err => {
+			console.log("err ======= ", err);
+			dispatch({
+				type: NEW_NOTIFICATION,
+				payload: {message: err, isSuccess: false}
+
+			})
+		})
+	}
+
+
+
+
+
+
+
+};
 /**
  * @description Asynchronous action creator that updates the given user (if possible). If Successful, dispatches actions in the following order:
  * 1) UPDATE_USER type with user as payload
