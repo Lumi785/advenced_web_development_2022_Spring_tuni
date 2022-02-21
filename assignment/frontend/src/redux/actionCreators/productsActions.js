@@ -43,7 +43,9 @@ export const getProduct = (productId) => {
 					dispatch({type: GET_PRODUCT, payload: data});
 				}
 			})
-			.catch(err =>{console.log(err);})
+			.catch(err =>{
+				console.log(err);
+			})
 	}
 };
 
@@ -73,7 +75,7 @@ export const getProducts = () => {
 			}
 		})
 		.catch(err => {
-			console.log("err ======= ", err);
+			console.log(err);
 		})
 	}
 };
@@ -88,6 +90,55 @@ export const getProducts = () => {
  * @return {Function} - Thunk -> action
  */
 export const addProduct = (productToAdd) => {
+	//console.log("product to be add === ", productToAdd);
+
+	/**
+	 * helper function to check an object is an object
+	 * @param {*} item to be checked whether it is an object(but not array, not null) or not
+	 * @returns true if item is an object other than array or null
+	 */
+	function isObject(item){
+		return (typeof item === 'object' &&
+				!Array.isArray(item) &&
+				item !== null)
+	}
+	
+	return async(dispatch) => {
+		const url = '/api/products';
+		const reqOptions = {
+			method: 'POST',
+			headers: {
+			  'Accept': 'application/json',
+			  'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(productToAdd)
+		};
+
+		await fetch(url, reqOptions)
+			.then(res => res.json())
+			.then(data => {
+				
+				if(data.error){
+					if (isObject(data.error)){
+						
+						//the key here is image, but it is better to get the key out, in case it is sth else
+						const key = Object.keys(data.error)[0];
+						
+						//data.error[key] is equals to data.error.image, but key is a parameter, so cannot use '.' should use '[]'
+						dispatch({type: NEW_NOTIFICATION, payload: {message: data.error[key], isSuccess: false}});
+					} else {
+						dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
+					}
+
+				} else {
+					dispatch({type: ADD_PRODUCT, payload: data});
+					dispatch({type: NEW_NOTIFICATION, payload: {message: productMsg.added, isSuccess: true}})
+				}
+			})
+			.catch(err => {
+				console.log(err);
+			})
+	}
 	
 };
 
