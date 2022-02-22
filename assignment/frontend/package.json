@@ -22,7 +22,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "docs": "jsdoc -c jsdoc.conf.json"
+    "docs": "jsdoc -c jsdoc.conf.json",
+
+    "test00": "jest -t 'expected actions should be dispatched on successful requestslogin'"
   },
   "eslintConfig": {
     "extends": [
