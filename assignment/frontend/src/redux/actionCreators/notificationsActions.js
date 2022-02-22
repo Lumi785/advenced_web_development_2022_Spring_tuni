@@ -11,12 +11,23 @@ import { NEW_NOTIFICATION, REMOVE_NOTIFICATION } from '../constants';
  * @param {String} newNotification.isSuccess - Tells whether or not it is a succesfull (green) or unsuccessfull (red) message
  * @return {Object} action
  */
-export const createNotification = (
-	newNotification = { message: '', isSuccess: false }
-) => ({});
+export const createNotification = (newNotification = { message: '', isSuccess: false }) => {
+	return async(dispatch) => {
+		dispatch({
+			type: NEW_NOTIFICATION, 
+			payload: {message: newNotification.message, isSuccess: newNotification.isSuccess
+		}});
+	}
+};
+
+
 
 /**
  * @description Action creator that decrements (reduces) a cart items quantity.  Dispatches a REMOVE_NOTIFICATION-type action
  * @return {Object} action
  */
-export const removeNotification = () => {};
+export const removeNotification = () => {
+	return async(dispatch) => {
+		dispatch({type: REMOVE_NOTIFICATION});
+	}
+};
