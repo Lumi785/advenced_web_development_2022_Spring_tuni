@@ -18,7 +18,16 @@ const cartMsg = {
  * @description Action creator that initiates the cart after page is refreshed.  Dispatches an INIT_CART-type action along with pre-existing cart-items stored locally as payload to the frontends redux-stores cart-state.
  * @return {Object} action
  */
-export const initCart = () => {};
+export const initCart = () => {
+	//const cartItems = localStorage.getItem("cart");
+	console.log("cartItems = ", cartItems);
+	return ({
+		type: INIT_CART,
+		payload: cartItems
+	})
+};
+
+
 
 /**
  * @description Action creator that adds a new cart item to local storage.  Dispatches an
@@ -27,14 +36,52 @@ export const initCart = () => {};
  * @param {String} product - The product item to add
  * @return {Function} Thunk
  */
-export const addCartItem = (product) => {};
+export const addCartItem = (product) => {
+	
+	return async(dispatch) => {
+
+		const oldCartItems = localStorage.getItem('cart');
+		const newCartItems = [...oldCartItems].push(product);
+
+		//this directly add to loacalStorage
+		localStorage.setItem('cart', newCartItems);
+
+		//this is for reducer to add to store state
+		dispatch({type: ADD_CART_ITEM, payload: product});
+		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.add, isSuccess: true}})
+	}
+	
+};
+
+
 
 /**
  * @description Action creator that removes a cart item from local storage.  Dispatches a REMOVE_CART_ITEM-type action along with product as payload to the frontends redux-stores cart-state.
  * @param {String} product - The product item to remove from cart
  * @return {Object} action
  */
-export const removeCartItem = (product) => {};
+export const removeCartItem = (product) => {
+	return async(dispatch) => {
+
+		const oldCartItems = localStorage.getItem('cart');
+
+		//oldCartItems is an array of jsons, convert it to an array of objects
+		const oldCartItemsObjects = JSON.parse(oldCartItems);
+
+		const newnewCartItemsObjects = oldCartItemsObjects.filter(item => item.product.id !== product.id);
+		
+		// update localStorage
+		localStorage.setItem('cart', newnewCartItemsObjects);
+		
+
+		// send action to reducer to update store state
+		dispatch({type: REMOVE_CART_ITEM, payload: product});
+		
+	}
+
+};
+
+
 
 /**
  * @description Thunk action creator that increments a cart items quantity in local store.  Dispatches a
@@ -45,6 +92,8 @@ export const removeCartItem = (product) => {};
  */
 export const incrementCartItem = (productId) => {};
 
+
+
 /**
  * @description Thunk action creator that decrements (reduces) a cart items quantity in local store.  Dispatches a
  * 1) UPDATE_CART_ITEM_AMOUNT-type action along with the update details  { productId, amount: -1 } as payload to the frontends redux-stores cart-state. Also sends
@@ -53,10 +102,33 @@ export const incrementCartItem = (productId) => {};
  * @param {String} productId - The cart item id to decrement
  * @return {Function} thunk
  */
-export const decrementCartItem = (productId) => {};
+export const decrementCartItem = (productId) => {
+	
+	const car = localStorage.getItem('cart');
+	
+	
+	// function updateAmount(id, item){
+	// 	return item.id === id? item.amount -= 1 : item.ammount
+	// }
+
+	// return async(dispatch) => {
+	// 	dispatch(localStorage.setItem(cart.productId, amount-=1))
+
+	// }
+	// return ({
+	// 	type: UPDATE_CART_ITEM_AMOUNT,
+	// 	payload: {productId, amount: -1},
+	// })
+};
+
+
 
 /**
  * @description An action creator which removes the entire cart-item from local store. Returns an action with EMPTY_CART-type to remove cart all items.
  * @returns {Object} the action
  */
-export const emptyCart = () => {};
+export const emptyCart = () => {
+	return({
+		type: EMPTY_CART
+	})
+};
