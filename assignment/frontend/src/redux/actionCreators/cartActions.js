@@ -73,12 +73,9 @@ export const removeCartItem = (product) => {
 		// update localStorage
 		localStorage.setItem('cart', newnewCartItemsObjects);
 		
-
 		// send action to reducer to update store state
 		dispatch({type: REMOVE_CART_ITEM, payload: product});
-		
 	}
-
 };
 
 
@@ -90,7 +87,22 @@ export const removeCartItem = (product) => {
  * @param {String} productId - The cart item id to increment
  * @return {Function} thunk
  */
-export const incrementCartItem = (productId) => {};
+export const incrementCartItem = (productId) => {
+	return async(dispatch) => {
+		const oldCartItems = localStorage.getItem('cart');
+		const oldCartItemsObjects = JSON.parse(oldCartItems);
+
+		const newnewCartItemsObjects = oldCartItemsObjects.map(item => 
+			item.product.id === productId ? item.product.amout += 1: item.product.ammount);
+
+		//update localStorage
+		localStorage.setItem('cart', newnewCartItemsObjects);
+
+		//send action to reducer to update store state
+		dispatch({type: UPDATE_CART_ITEM_AMOUNT, payload: {productId, amount: 1 }});
+		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.update, isSuccess: true}});
+	}
+};
 
 
 
@@ -103,22 +115,20 @@ export const incrementCartItem = (productId) => {};
  * @return {Function} thunk
  */
 export const decrementCartItem = (productId) => {
-	
-	const car = localStorage.getItem('cart');
-	
-	
-	// function updateAmount(id, item){
-	// 	return item.id === id? item.amount -= 1 : item.ammount
-	// }
+	return async(dispatch) => {
+		const oldCartItems = localStorage.getItem('cart');
+		const oldCartItemsObjects = JSON.parse(oldCartItems);
 
-	// return async(dispatch) => {
-	// 	dispatch(localStorage.setItem(cart.productId, amount-=1))
+		const newnewCartItemsObjects = oldCartItemsObjects.map(item => 
+			item.product.id === productId ? item.product.amout -= 1: item.product.ammount);
 
-	// }
-	// return ({
-	// 	type: UPDATE_CART_ITEM_AMOUNT,
-	// 	payload: {productId, amount: -1},
-	// })
+		//update localStorage
+		localStorage.setItem('cart', newnewCartItemsObjects);
+
+		//send action to reducer to update store state
+		dispatch({type: UPDATE_CART_ITEM_AMOUNT, payload: {productId, amount: -1 }});
+		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.update, isSuccess: true}});
+	}
 };
 
 
