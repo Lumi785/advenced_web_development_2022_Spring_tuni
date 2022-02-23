@@ -35,8 +35,8 @@ const Register = () => {
                     data-testid='name-input' 
                     value={name}
                     onChange={e => setName(e.target.value)}
-                    required 
                     placeholder='John Doe'
+                    required 
                 />
                 <br />
                 <label htmlFor='email-input'>Email</label>
@@ -45,8 +45,8 @@ const Register = () => {
                     data-testid='email-input' 
                     value={email}
                     onChange={e => setEmail(e.target.value)}
-                    required 
                     placeholder='user@example.com'
+                    required 
                 />
                 <br />
                 <label htmlFor='password-input'>Password</label>
@@ -55,8 +55,8 @@ const Register = () => {
                     data-testid='password-input' 
                     value={password}
                     onChange={e => setPassword(e.target.value)}
-                    required 
                     placeholder='password(at least 10 characters)'
+                    required 
                 />
                 <br />
                 <label htmlFor='passwordConfirmation-input'>Password confirmation</label>
@@ -65,8 +65,8 @@ const Register = () => {
                     data-testid='passwordConfirmation-input' 
                     value={confirmPassword}
                     onChange={e => setConfirmPassword(e.target.value)}
-                    required 
                     placeholder='password confirmation'
+                    required 
                 />
                 <br />
                 <input 
