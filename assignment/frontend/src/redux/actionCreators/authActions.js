@@ -1,7 +1,6 @@
 /** @format */
 
-import res from 'express/lib/response';
-import { dispatch } from '../../tests/utils/tools';
+
 import {
 	CLEAR_ORDERS,
 	CLEAR_USERS,

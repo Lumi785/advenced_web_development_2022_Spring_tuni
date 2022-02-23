@@ -19,6 +19,9 @@ import {
  * @param {Object} action the action that calls the reducer.
  * @returns {Array} new state for cart
  */
-const cartReducer = (state = [], action) => {};
+const cartReducer = (state = [], action) => {
+	console.log("action = ", action);
+	return state;
+};
 
 export default cartReducer;

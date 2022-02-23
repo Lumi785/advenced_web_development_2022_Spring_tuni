@@ -19,8 +19,8 @@ const cartMsg = {
  * @return {Object} action
  */
 export const initCart = () => {
-	//const cartItems = localStorage.getItem("cart");
-	console.log("cartItems = ", cartItems);
+	const cartItems = localStorage.getItem("cart");
+	// console.log("cartItems = ", cartItems);
 	return ({
 		type: INIT_CART,
 		payload: cartItems

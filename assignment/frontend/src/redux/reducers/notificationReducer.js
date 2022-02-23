@@ -10,6 +10,8 @@ import { NEW_NOTIFICATION, REMOVE_NOTIFICATION } from '../constants';
  * @param {Object} action the action that calls the reducer.
  * @returns {Object} new state for notification
  */
-const notificationReducer = (state = {}, action) => {};
+const notificationReducer = (state = {}, action) => {
+    return state;
+};
 
 export default notificationReducer;
