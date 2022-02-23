@@ -7,6 +7,8 @@
   "private": true,
   "dependencies": {
     "axios": "^0.26.0",
+    "crypto": "^1.0.1",
+    "path": "^0.12.7",
     "prop-types": "^15.8.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
@@ -15,7 +17,14 @@
     "react-scripts": "5.0.0",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
+    "stream": "^0.0.2",
     "web-vitals": "^2.1.4"
+  },
+  "browser": {
+    "fs": false,
+    "path": false,
+    "os": false,
+    "crypto": false
   },
   "scripts": {
     "start": "react-scripts start",
@@ -26,7 +35,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "docs": "jsdoc -c jsdoc.conf.json",
-
     "test00": "jest -t 'expected actions should be dispatched on successful requestslogin'"
   },
   "eslintConfig": {
