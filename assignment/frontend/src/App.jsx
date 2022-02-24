@@ -26,8 +26,13 @@ import { initApp } from './redux/actionCreators/appActions';
 const App = () => {
 	return (
 		<div data-testid='app-component'>
+			<Home/>
+
 			<Register/>
 			<Login/>
+		
+			{/* <User/> */}
+
 			<footer>
 				<p>Copyright &copy; 2022</p>
 			</footer>

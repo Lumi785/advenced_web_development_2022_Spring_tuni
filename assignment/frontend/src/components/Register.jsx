@@ -13,11 +13,15 @@ const Register = () => {
 
 
     const handleSubmit = e => {
-        //console.log("handleSubmit called ...");
+        console.log("handleSubmit called ...");
         e.preventDefault();
+
+        //NOTE in the html part there must be name attribute for each input, name value is the same as attribute value's value
         const formData = new FormData(e.target);
-        const credential = {email: formData.get('email'), password: formData.get('password'), confirmPassword: formData.get('confirmPassword')};
-        //console.log("cred = ", credential);
+        console.log("formData = ", formData);
+        console.log("formData.get(email) = ", formData.get(email));
+        const credential = {name: formData.get('name'), email: formData.get('email'), 
+                            password: formData.get('password'), passwordConfirmation: formData.get('confirmPassword')};
         dispatch(register(credential));
         setEmail('');
         setPassword('');
@@ -34,6 +38,7 @@ const Register = () => {
                     type="text" 
                     data-testid='name-input' 
                     value={name}
+                    name='name'
                     onChange={e => setName(e.target.value)}
                     placeholder='John Doe'
                     required 
@@ -44,6 +49,7 @@ const Register = () => {
                     type="email" 
                     data-testid='email-input' 
                     value={email}
+                    name='email'
                     onChange={e => setEmail(e.target.value)}
                     placeholder='user@example.com'
                     required 
@@ -54,6 +60,7 @@ const Register = () => {
                     type="password" 
                     data-testid='password-input' 
                     value={password}
+                    name='password'
                     onChange={e => setPassword(e.target.value)}
                     placeholder='password(at least 10 characters)'
                     required 
@@ -64,6 +71,7 @@ const Register = () => {
                     type="password" 
                     data-testid='passwordConfirmation-input' 
                     value={confirmPassword}
+                    name='confirmPassword'
                     onChange={e => setConfirmPassword(e.target.value)}
                     placeholder='password confirmation'
                     required 

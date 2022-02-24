@@ -217,15 +217,17 @@ export const logOut = () => {
  */
 export const register = (registerCreds) => {
 
-	//console.log("register cred = ", registerCreds);
+	console.log("register cred = ", registerCreds);
 
 	return async(dispatch) => {
 		
 		const {name, email, password, passwordConfirmation} = registerCreds; 
+		
 		// console.log("name = ", name);
 		// console.log("email = ", email);
 		// console.log("pas = ", password);
 		// console.log("conpas = ", passwordConfirmation);
+		
 
 
 		//before sending credential to backend, evaluate first password, name and email
@@ -252,7 +254,9 @@ export const register = (registerCreds) => {
 			});
 			return;
 		} 
-		
+		console.log("password   rom auth = ", password);
+		console.log("confirmpassword   rom auth = ", passwordConfirmation);
+
 		if (password !== passwordConfirmation){
 			console.log("passowd not match ")
 			await dispatch({
@@ -269,7 +273,7 @@ export const register = (registerCreds) => {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(registerCreds)
+			body: JSON.stringify({name, email, password})
 		};
 		await fetch('/api/register', reqOptions)
 		.then(res => {
@@ -287,7 +291,7 @@ export const register = (registerCreds) => {
 			}			
 		})
 		.then(data => {
-			//console.log("data from register === ", data);
+			console.log("data from register === ", data);
 			dispatch({
 						type: INIT_AUTH,
 						payload: data.user
