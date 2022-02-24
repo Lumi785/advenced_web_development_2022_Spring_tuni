@@ -20,8 +20,32 @@ import {
  * @returns {Array} new state for cart
  */
 const cartReducer = (state = [], action) => {
-	console.log("action = ", action);
-	return state;
+	switch(action.type){
+		case INIT_CART:
+			return action.payload? action.payload : state
+
+		case ADD_CART_ITEM:
+			
+			return [...state, action.payload];
+
+		case REMOVE_CART_ITEM:
+			
+			return state.filter(item => item.product.id !== action.payload.id);
+			
+		case UPDATE_CART_ITEM_AMOUNT:
+			console.log("state rv=", state);
+			console.log("action.payload rv= ", action.payload);
+
+			//this way use of array.map, the old state also changed, why? but in this excercise, not check the old state changed or not
+			return state.map(item => item.product.id === action.payload.productId
+				? {...item, quantity: item.quantity += action.payload.amount} : {...item});
+
+		case EMPTY_CART:
+			return [];
+
+		default:
+			return state;
+	}
 };
 
 export default cartReducer;
