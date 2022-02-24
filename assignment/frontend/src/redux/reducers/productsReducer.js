@@ -1,5 +1,6 @@
 /** @format */
 
+import { bindActionCreators } from 'redux';
 import {
 	ADD_PRODUCT,
 	DELETE_PRODUCT,
@@ -23,14 +24,26 @@ const productsReducer = (state = [], action) => {
 	
 	switch(action.type){
 		case ADD_PRODUCT:
-			//console.log("action = ", action.payload)
+			console.log("action = ", action.payload)
+			console.log("state = ", state);
+
+			//this way add the new product in front, so in UI new product will be shown the top 
+			// return [...state, action.payload] will add to the end of the array
+			return [action.payload, ...state];
+			
 			
 		case DELETE_PRODUCT:
+			return state.filter(product => product.id !== action.payload.id);
 		case GET_PRODUCT:
 			return [...state, action.payload]
 		case GET_PRODUCTS:
 			return state = action.payload;
 		case UPDATE_PRODUCT:
+			
+			// console.log("action.payload = ", action.payload);
+			// console.log("state = ", state);
+			return state.map(product => product.id === action.payload.id ? action.payload : product);
+			
 		default:
 			return state;
 	}
