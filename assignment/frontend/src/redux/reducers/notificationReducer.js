@@ -11,7 +11,19 @@ import { NEW_NOTIFICATION, REMOVE_NOTIFICATION } from '../constants';
  * @returns {Object} new state for notification
  */
 const notificationReducer = (state = {}, action) => {
-    return state;
+    
+    switch(action.type){
+        case NEW_NOTIFICATION:
+           
+            return action.payload;
+
+        case REMOVE_NOTIFICATION:
+            return {};
+            
+        default:
+            return state;
+    }
+    
 };
 
 export default notificationReducer;
