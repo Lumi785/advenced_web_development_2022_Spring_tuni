@@ -1,5 +1,4 @@
 /** @format */
-
 // USERS ACTION CREATORS
 
 import {
@@ -59,8 +58,10 @@ export const getUser = (userId) => {
  * @returns {Function} - For the thunk to then dispatch as an object (ie the action).
  */
 export const getUsers = () => {
+	console.log("getUsers called ...")
 
 	return async(dispatch) => {
+		console.log("kkkk")
 		const reqOptions = {
 			method: 'GET',
 			headers: {
@@ -69,8 +70,13 @@ export const getUsers = () => {
 		}
 
 		await fetch('/api/users', reqOptions)
-		.then(res => res.json())
+		.then(res => {
+			console.log("00000")
+			return res.json();
+		})
 		.then(data => {
+			console.log("aaaaa");
+			console.log("data from usersACTIONS = ", data);
 			if(data.error){
 				dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
 			} else {

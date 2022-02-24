@@ -5,29 +5,42 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUsers } from '../redux/actionCreators/usersActions';
 import User from './User';
 
+
+
+const selectUsers = state => state.users;
 const Users = () => {
-    // const dispatch = useDispatch();
-    // useEffect(() => {
-    //     console.log("ursers = ", users);
-    //     console.log("no users pppppppp")
-    //     if (users.length === 0){
-    //         const users = dispatch(getUsers);
-    //     }
-    // }, [])
+    const dispatch = useDispatch();
+    const users = useSelector(selectUsers);
 
-    // const users = useSelector((state) => state.users)
+    useEffect(() => {
+        users.length === 0 ? dispatch(getUsers()) : {};
+        
+    }, [])
 
-
+    //Note here here cannot print out users if they are get by getUsers()
+    //console.log("users = ", users);
 
 
     return(
-        <></>
-        // <div data-testid='users-component'>
-        //     <ul data-testid='users-container'>
-        //         {users.map(user => {<User providedUser={user} data-testid='user-component'/>})}
+        
+        <div data-testid='users-component'>
+            <ul data-testid='users-container'>
+                {users.map(user => {<User 
+                    providedUser={user} 
+                    id='user-component'
+                    key={user.id}
+
+                    />})}
                 
-        //     </ul>
-        // </div>
+            </ul>
+
+            {/* <ol id='players-list'>
+		
+                {players.map(player => <PlayerLink key={player.id} name={player.name} 
+                player={player} id={'player-' + player.id} url={'/api/players/' + player.id}/>)}
+               
+		    </ol> */}
+        </div>
     )
 };
 
