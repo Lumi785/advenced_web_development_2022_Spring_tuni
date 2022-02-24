@@ -34,7 +34,7 @@ const staticFileOptions = {
 
 const cookieOptions = {
   httpOnly: true,
-  maxAge: 360000, // one hour
+  maxAge: 3600000, // one hour
   path: '/',
   sameSite: 'strict',
   secure: false
