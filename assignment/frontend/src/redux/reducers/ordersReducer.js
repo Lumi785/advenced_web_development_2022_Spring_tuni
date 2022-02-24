@@ -13,7 +13,19 @@ import { ADD_ORDER, CLEAR_ORDERS, GET_ORDER, GET_ORDERS } from '../constants';
  * @returns {Array} new state for orders
  */
 const ordersReducer = (state = [], action) => {
-    return state;
+    switch(action.type){
+        case GET_ORDER:
+            return [action.payload, ...state];
+        case GET_ORDERS:
+            return action.payload;
+        case ADD_ORDER:
+            return [...state, action.payload];
+        case CLEAR_ORDERS:
+            return [];
+        default:
+            return state;
+    }
+    
 };
 
 export default ordersReducer;
