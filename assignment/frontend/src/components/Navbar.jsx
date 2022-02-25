@@ -16,8 +16,30 @@ const AllLinks = {
  */
 
 const selectAuth = state => state.auth;
+
+
 const Navbar = () => {
-	console.log("apple ...")
+	// const [auth, setAuth] = useState(null);
+
+	// useEffect(() => {
+	// 	console.log("apple ...")
+	// 	const reqOptions = {
+	// 		method: 'GET',
+	// 		headers: {
+	// 		  'Accept': 'application/json',
+	// 		},
+	// 	};
+
+	// 	fetch('api/check-status/', reqOptions)
+	// 	.then(res => res.json)
+	// 	.then(data => {
+	// 		console.log("data from navbar = ", data);
+	// 	}).catch(err => console.log(err))
+
+	// }, []);
+
+
+	
 	const auth = useSelector(selectAuth);
 	console.log("auth from navbar = ", auth);
 
@@ -41,6 +63,7 @@ const Navbar = () => {
 					<Link data-testid='orders-link' to='/orders'>Orders  </Link>
 					<Link data-testid='cart-link' to='/cart'>Cart  </Link>
 					<Link data-testid='logout-link' to='/logout' onClick={handleLogout}>Log Out</Link>
+					<div> customer</div>
 					
 				</div>
 			)
@@ -53,6 +76,7 @@ const Navbar = () => {
 					<Link data-testid='orders-link' to='/orders'>Orders  </Link>
 					<Link data-testid='users-link' to='/users'>Users  </Link>
 					<Link data-testid='logout-link' to='/logout' onClick={handleLogout}>Log Out</Link>
+					<div> admin</div>
 				</div>
 
 			)
@@ -66,6 +90,7 @@ const Navbar = () => {
 						<Link data-testid='cart-link' to='/cart'>Cart  </Link>
 						<Link data-testid='login-link' to='/login'>LogIn  </Link>
 						<Link data-testid='register-link' to='/register'>Register  </Link>
+						<div> guest</div>
 					</div>
 
 				)
@@ -80,6 +105,7 @@ const Navbar = () => {
 					<Link data-testid='cart-link' to='/cart'>Cart  </Link>
 					<Link data-testid='login-link' to='/login'>LogIn  </Link>
 					<Link data-testid='register-link' to='/register'>Register  </Link>
+					<div> guest</div>
 					
 				</div>
 			)
