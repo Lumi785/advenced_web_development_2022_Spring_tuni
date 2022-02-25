@@ -27,6 +27,7 @@ const App = () => {
 	return (
 		<div data-testid='app-component'>
 			<Home/>
+			<Navbar/>
 
 			<Register/>
 			<Login/>

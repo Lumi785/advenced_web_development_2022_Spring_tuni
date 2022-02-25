@@ -55,7 +55,7 @@ export const initAuth = () => {
 			//else{console.log('response err = ', res.err)};
 		})
 		.then(data => {
-			//console.log('data = ', data);
+			console.log('data from initAuth = ', data);
 			if (Object.keys(data).length === 0){
 				dispatch({type: INIT_AUTH})
 			} else {
@@ -254,11 +254,8 @@ export const register = (registerCreds) => {
 			});
 			return;
 		} 
-		console.log("password   rom auth = ", password);
-		console.log("confirmpassword   rom auth = ", passwordConfirmation);
 
 		if (password !== passwordConfirmation){
-			console.log("passowd not match ")
 			await dispatch({
 				type: NEW_NOTIFICATION,
 				payload: {message: invalidAuth.passwordMismatch, isSuccess: false}
@@ -291,7 +288,6 @@ export const register = (registerCreds) => {
 			}			
 		})
 		.then(data => {
-			console.log("data from register === ", data);
 			dispatch({
 						type: INIT_AUTH,
 						payload: data.user
