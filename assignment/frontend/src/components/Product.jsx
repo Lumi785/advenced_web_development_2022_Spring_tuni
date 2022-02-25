@@ -8,6 +8,22 @@ import {
 	incrementCartItem,
 } from '../redux/actionCreators/cartActions';
 
-const Product = ({ providedProduct }) => {};
+const Product = ({ providedProduct }) => {
+	console.log("providedProduct = ", providedProduct);
+
+	return(
+		<li data-testid='product-component'>
+			
+
+			<div data-testid='name-header'>{providedProduct.name}</div>
+			<div>{providedProduct.id}</div>
+			
+			
+		</li>
+	)
+
+
+
+};
 
 export default Product;
