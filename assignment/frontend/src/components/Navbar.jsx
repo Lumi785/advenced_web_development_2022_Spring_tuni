@@ -85,46 +85,7 @@ const Navbar = () => {
 			)
 	}
 	
-	
-
-		
-	
-	
 }
-/** 
-	return(
-		<div data-testid='navbar-component'>
 
-			{role === 'guest' &&
-			<>
-				<Link data-testid='home-link' to='/'>Home  </Link>
-				<Link data-testid='products-link' to='/products'>Product  </Link>
-				<Link data-testid='cart-link' to='/cart'>Cart  </Link>
-				<Link data-testid='login-link' to='/login'>Log In  </Link>
-				<Link data-testid='register-link' to='/register'>Register  </Link>
-			</>}
-
-			{role === 'customer' && 
-			<>
-				<Link data-testid='home-link' to='/'>Home  </Link>
-				<Link data-testid='products-link' to='/products'>Product  </Link>
-				<Link data-testid='orders-link' to='/orders'>Orders  </Link>
-				<Link data-testid='cart-link' to='/cart'>Cart  </Link>
-				<Link data-testid='logout-link' to='/logout' onClick={handleLogout}>Log Out</Link>
-			</>}
-
-			{role === 'admin' &&
-			<>
-				<Link data-testid='home-link' to='/'>Home  </Link>
-				<Link data-testid='products-link' to='/products'>Product  </Link>
-				<Link data-testid='orders-link' to='/orders'>Orders  </Link>
-				<Link data-testid='users-link' to='/users'>Users  </Link>
-				<Link data-testid='logout-link' to='/logout' onClick={handleLogout}>Log Out</Link>
-			</>}
-
-		</div>
-	)
-	**/
-// };
 
 export default Navbar;
