@@ -30,9 +30,9 @@ const App = () => {
 
 			<Register/>
 			<Login/>
-			<Users>
-				<User/>
-			</Users>
+			<Users/>
+				
+			
 			<Products/>
 		
 			

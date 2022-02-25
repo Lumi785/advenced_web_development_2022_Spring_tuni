@@ -26,7 +26,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "docs": "jsdoc -c jsdoc.conf.json",
-    "test00": "jest -t 'expected actions should be dispatched on successful requestslogin'"
+    "test00": "jest -t 'Displays correct number of user-component'"
   },
   "eslintConfig": {
     "extends": [

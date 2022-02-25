@@ -23,6 +23,12 @@ const Products = () => {
     }
     let aa = onOrOff();
 
+    function openHandler(){
+        if (adderCondition === true){
+            console.log("ProductAdder should be closed")
+        }
+    }
+
     const dispatch = useDispatch();
     const products = useSelector(selectProducts);
     console.log("products == ", products);
@@ -45,6 +51,8 @@ const Products = () => {
             }}
             >{aa}
             </button>
+
+            <ProductAdder open={adderCondition} openHandler={openHandler}/>
 
             <ul data-testid='products-container'>
 
