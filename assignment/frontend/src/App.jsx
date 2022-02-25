@@ -30,8 +30,12 @@ const App = () => {
 
 			<Register/>
 			<Login/>
+			<Users>
+				<User/>
+			</Users>
+			<Products/>
 		
-			{/* <User/> */}
+			
 
 			<footer>
 				<p>Copyright &copy; 2022</p>
