@@ -19,20 +19,21 @@ const selectAuth = state => state.auth;
 
 
 const Navbar = () => {
-	// const [auth, setAuth] = useState(null);
+	//const [auth, setAuth] = useState(null);
 
 	// useEffect(() => {
 	// 	console.log("apple ...")
 	// 	const reqOptions = {
 	// 		method: 'GET',
 	// 		headers: {
-	// 		  'Accept': 'application/json',
+	// 		  'Accept': 'application/json'
 	// 		},
 	// 	};
 
-	// 	fetch('api/check-status/', reqOptions)
+	// 	fetch('/api/check-status', reqOptions)
 	// 	.then(res => res.json)
 	// 	.then(data => {
+	// 		setAuth(data);
 	// 		console.log("data from navbar = ", data);
 	// 	}).catch(err => console.log(err))
 
