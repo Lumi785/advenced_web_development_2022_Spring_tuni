@@ -100,7 +100,7 @@ export const getUsers = () => {
  */
 export const updateUser = (updatedUser) => {
 
-	// console.log("updatedUser = ", updatedUser);
+	console.log("updatedUser from updateUser thunk= ", updatedUser);
 
 	return async(dispatch) => {
 		const url = '/api/users/' + updatedUser.id;
@@ -139,6 +139,8 @@ export const updateUser = (updatedUser) => {
  * @returns {Function} - For the thunk to then dispatch as an object (ie the action).
  */
 export const removeUser = (userId) => {
+	//console.log("remove user function called ...")
+	//console.log("user id from remove user function = ", userId)
 	return async(dispatch) => {
 		const url = '/api/users/' + userId;
 		const reqOptions = {
@@ -147,12 +149,14 @@ export const removeUser = (userId) => {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json'
 			},
-			body: JSON.stringify(userId)
+	
 		};
 
 		await fetch(url, reqOptions)
-			.then(res => res.json()
-			)
+			.then(res => {
+				
+				return res.json();
+			})
 			.then(data => {
 				if (data.error){
 					dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
