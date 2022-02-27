@@ -7,74 +7,77 @@ import { removeUser} from '../redux/actionCreators/usersActions';
 
 const selectAuth = state => state.auth;
 
+const selectUsers = state => state.users;
+
 
 const User = ({ providedUser}) => {
 
-
     const dispatch = useDispatch();
-    const auth = useSelector(selectAuth);
 
-    console.log("auth from User.jsx = ", auth);
+    const auth = useSelector(selectAuth);
+    const users = useSelector(selectUsers);
     
     let navigate = useNavigate();
+    let {userId: userId_param} = useParams();
 
-    let {userId} = useParams();
-    console.log("aa == ", userId);
+    
+    //console.log("aa == ", userId_param);
+
+    
+    const userFromPath = userId_param ? 
+        users.filter(user => user.id === userId_param)[0] :  null;
 
 
-
-    function handleDelete(i){
-        e.preventDefault();
+    const userToUse = providedUser ? providedUser : userFromPath;
+    
+    
+    function handleDelete(userid){
         
-        const id = providedUser.id;
-        dispatch(removeUser(i));
-        
-        console.log("delete user button clicked");
-
+        dispatch(removeUser(userid));
     }
+
+    const modifyPath = providedUser ? `${userToUse.id}/modify` : 'modify';
 
 
     return (
-
-        providedUser?(
-
         <li data-testid='user-component'>
-            <h3 data-testid='name-heading'>{providedUser.name}</h3>
+            <h3 data-testid='name-heading'>{userToUse.name}</h3>
 
-        {/* This is how to use dynamic url in Link(different than in route) */}
-        <Link to={`/${providedUser.id}`} data-testid='inspect-link' 
-        >Inspect</Link>
-      
-      
+            {
+                providedUser && 
+            
+            (<Link to={`/${providedUser.id}`} data-testid='inspect-link' 
+            >Inspect</Link>)
+            }
 
-        <div data-testid='email-element'>Email: {providedUser.email}</div>
-        <div data-testid='role-element'>Role: {providedUser.role}</div>
+            
+            <div data-testid='email-element'>Email: {userToUse.email}</div>
+            <div data-testid='role-element'>Role: {userToUse.role}</div>
+
+            {(providedUser || (!providedUser && auth.id !== userId_param)) && 
+            
+                <>
+                    <button 
+                    data-testid={'modify-button-' + userToUse.id} 
+                    onClick={() => navigate(modifyPath)}
+                    >Modify</button>
+                    <button 
+                    data-testid={'delete-button-' + userToUse.id} 
+                    onClick={(e) => {
+                        e.preventDefault();
+                        handleDelete(userId_param);
+                    }}
+                    >Delete</button>
+                </>
         
-        {
-            auth.id !== providedUser.id && 
-
-            <>
-                <button 
-                data-testid={'modify-button-' + providedUser.id} 
-                onClick={() => navigate(`/users/${providedUser.id}/modify`)}
-                >Modify</button>
-                <button 
-                data-testid={'delete-button-' + providedUser.id} 
-                onClick={(e) => {
-                    e.preventDefault();
-                    handleDelete(userId);
-                }}
-                >Delete</button>
-            </>
-        }
-        
-    </li>) : (
-            <></>
-        )
-
-    )
-    
+            }
+       
+    </li>) 
 
 };
 
 export default User;
+
+
+ {/* Note: 1.This is how to use dynamic url in Link(different than in route)
+                2. here to= '/id' is not the same as document '/users/id'  */}
