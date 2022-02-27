@@ -23,11 +23,11 @@ const User = ({ providedUser}) => {
 
 
 
-    function handleDelete(e){
+    function handleDelete(i){
         e.preventDefault();
         
         const id = providedUser.id;
-        dispatch(removeUser(id));
+        dispatch(removeUser(i));
         
         console.log("delete user button clicked");
 
@@ -41,14 +41,11 @@ const User = ({ providedUser}) => {
         <li data-testid='user-component'>
             <h3 data-testid='name-heading'>{providedUser.name}</h3>
 
-        <Link to='/:userId' data-testid='inspect-link' 
+        {/* This is how to use dynamic url in Link(different than in route) */}
+        <Link to={`/${providedUser.id}`} data-testid='inspect-link' 
         >Inspect</Link>
       
-        {/* <Link to='/users' data-testid='inspect-link' 
-        onClick={()=>navigate(`/users/${providedUser.id}`)}>Inspect</Link>
-       */}
-        
-        
+      
 
         <div data-testid='email-element'>Email: {providedUser.email}</div>
         <div data-testid='role-element'>Role: {providedUser.role}</div>
@@ -61,7 +58,13 @@ const User = ({ providedUser}) => {
                 data-testid={'modify-button-' + providedUser.id} 
                 onClick={() => navigate(`/users/${providedUser.id}/modify`)}
                 >Modify</button>
-                <button data-testid={'delete-button-' + providedUser.id} onClick={handleDelete}>Delete</button>
+                <button 
+                data-testid={'delete-button-' + providedUser.id} 
+                onClick={(e) => {
+                    e.preventDefault();
+                    handleDelete(userId);
+                }}
+                >Delete</button>
             </>
         }
         
