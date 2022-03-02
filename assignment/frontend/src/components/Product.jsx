@@ -26,25 +26,22 @@ const Product = ({ providedProduct }) => {
 	const auth = useSelector(selectAuth);
 	const produts = useSelector(selectProducts);
 
-	const cartItems = useSelector(selectCart);
-	console.log("cartItems = ", cartItems);
+	const cart = useSelector(selectCart);
 
 	const {productId} = useParams();
-	console.log("productId = ", productId);
 
 	function handleDelete(providedProduct){
 		dispatch(deleteProduct(providedProduct));
 	}
 
 	function handleIncrementCartItem(productId){
-		console.log(" handleIncrementCartItem called ...");
 		dispatch(incrementCartItem(productId));
 	}
 
 	function handleAddCartItem(product){
-		console.log(" handleAddCart item fun is called ...");
 		dispatch(addCartItem(providedProduct))
 	}
+
 	const productFromPath = productId ? 
 		produts.filter(prd => prd.id === productId)[0] :  null;
 
@@ -62,9 +59,22 @@ const Product = ({ providedProduct }) => {
 	 * @returns bool, true if product in cart, else return false
 	 */
 	function isProductInCart(product){
-		console.log("isproductIn cart function called ...");
-		console.log("cartItems.includes(product) =====  ", cartItems.includes(product));
-		return cartItems.includes(product);
+		const productArray = cart.filter(item => item.product.id === product.id);
+		return productArray.length > 0;
+	}
+	
+
+	/**
+	 * 
+	 * @param {*} product 
+	 */
+	function addProductToCart(product){
+		if (isProductInCart(product)){
+			handleIncrementCartItem(product.id);
+		} else {
+			handleAddCartItem(product);
+
+		}
 	}
 	
 
@@ -78,7 +88,7 @@ const Product = ({ providedProduct }) => {
 			<div data-testid='price-element'>{productToUse.price}</div>
 	
 
-			{auth.role === 'admin' && 
+			{auth.role === 'admin' && productToUse &&
 				<>
 					<button 
 						data-testid={'delete-button-' + idToUse}
@@ -103,10 +113,7 @@ const Product = ({ providedProduct }) => {
 					data-testid={'add-cart-button-'+ idToUse}
 					onClick={e => {
 						e.preventDefault();
-						if (isProductInCart(productToUse)){
-							handleIncrementCartItem(idToUse);
-						}
-						handleAddCartItem(productToUse);
+						addProductToCart(productToUse);
 
 					}}
 					>Add to cart
