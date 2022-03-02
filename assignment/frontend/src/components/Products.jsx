@@ -7,31 +7,31 @@ import Product from './Product';
 import ProductAdder from './ProductAdder';
 
 const selectProducts = state => state.products;
+const selectAuth = state => state.auth;
 
 const Products = () => {
-    const [adderCondition, setAdderCondition] = useState(false);
+    const [open, setOpen] = useState(false);
+    const dispatch = useDispatch();
+    const auth = useSelector(selectAuth);
 
-    function onOrOff(){
-        if (adderCondition === true){
-            return 'On';
+    function buttonText(){
+        if (open === true){
+            return 'Close';
         } else {
-            return 'Off';
+            return 'Open';
         }
     }
-    function toggleAdderCondition(){
-        return setAdderCondition(!adderCondition);
-    }
-    let aa = onOrOff();
+
+    let btnText = buttonText();
 
     function openHandler(){
-        if (adderCondition === true){
-            console.log("ProductAdder should be closed")
-        }
+        setOpen(false);
     }
+    
 
-    const dispatch = useDispatch();
+
+    
     const products = useSelector(selectProducts);
-    console.log("products == ", products);
 
     useEffect(() => {
         
@@ -47,12 +47,14 @@ const Products = () => {
             data-testid='open-adder-button' 
             onClick={(e) => {
                 e.preventDefault();
-                toggleAdderCondition();
+                setOpen(!open);
             }}
-            >{aa}
+            >{btnText}
             </button>
 
-            <ProductAdder open={adderCondition} openHandler={openHandler}/>
+            {(auth.role === 'admin' && open === true) && 
+            <ProductAdder open={open} openHandler={openHandler} />
+            }
 
             <ul data-testid='products-container'>
 
