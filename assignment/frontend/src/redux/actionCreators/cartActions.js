@@ -20,7 +20,7 @@ const cartMsg = {
  */
 export const initCart = () => {
 	const cartItems = localStorage.getItem("cart");
-	// console.log("cartItems = ", cartItems);
+	//console.log("cartItems = ", cartItems);
 	return ({
 		type: INIT_CART,
 		payload: cartItems
@@ -38,11 +38,12 @@ export const addCartItem = (product) => {
 	
 	return async(dispatch) => {
 
-		const oldCartItems = localStorage.getItem('cart');
-		const newCartItems = [...oldCartItems].push(product);
+		const jsonOldCartItems = localStorage.getItem('cart');
+		let objOldCartItems = JSON.parse(jsonOldCartItems);
+		const newObjOldCartItems = [...objOldCartItems, product];
 
 		//this directly add to loacalStorage
-		localStorage.setItem('cart', newCartItems);
+		localStorage.setItem('cart', newObjOldCartItems);
 
 		//this is for reducer to add to store state
 		dispatch({type: ADD_CART_ITEM, payload: product});
@@ -84,15 +85,25 @@ export const removeCartItem = (product) => {
  * @return {Function} thunk
  */
 export const incrementCartItem = (productId) => {
+	console.log("increment Car Item functon from cartActions called .....");
+
 	return async(dispatch) => {
 		const oldCartItems = localStorage.getItem('cart');
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
+		//console.log("oldCartItemsObjects = ", oldCartItemsObjects);
 
-		const newnewCartItemsObjects = oldCartItemsObjects.map(item => 
-			item.product.id === productId ? item.product.amout += 1: item.product.ammount);
+
+		const newCartItemsObjects = oldCartItemsObjects.map(item => 
+			item.product.id === productId 
+			? {...item, quantity: item.quantity += 1}: item
+		);
+
+		//console.log("newCartItemsObjects = ", newCartItemsObjects);
+
+
 
 		//update localStorage
-		localStorage.setItem('cart', newnewCartItemsObjects);
+		localStorage.setItem('cart', newCartItemsObjects);
 
 		//send action to reducer to update store state
 		dispatch({type: UPDATE_CART_ITEM_AMOUNT, payload: {productId, amount: 1 }});
@@ -114,7 +125,7 @@ export const decrementCartItem = (productId) => {
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
 
 		const newnewCartItemsObjects = oldCartItemsObjects.map(item => 
-			item.product.id === productId ? item.product.amout -= 1: item.product.ammount);
+			item.product.id === productId ? item.quantity -= 1: item.quantity);
 
 		//update localStorage
 		localStorage.setItem('cart', newnewCartItemsObjects);
