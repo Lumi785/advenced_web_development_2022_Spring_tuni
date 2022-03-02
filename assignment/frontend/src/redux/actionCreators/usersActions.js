@@ -140,7 +140,7 @@ export const updateUser = (updatedUser) => {
  */
 export const removeUser = (userId) => {
 	//console.log("remove user function called ...")
-	//console.log("user id from remove user function = ", userId)
+	console.log("user id from remove user function = ", userId)
 	return async(dispatch) => {
 		const url = '/api/users/' + userId;
 		const reqOptions = {

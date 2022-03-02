@@ -38,6 +38,9 @@ const User = ({ providedUser}) => {
 
     const modifyPath = providedUser ? `${userToUse.id}/modify` : 'modify';
 
+    const idToUse = userId_param ? userId_param : providedUser.id;
+
+
 
     return (
         <li data-testid='user-component'>
@@ -54,7 +57,7 @@ const User = ({ providedUser}) => {
             <div data-testid='email-element'>Email: {userToUse.email}</div>
             <div data-testid='role-element'>Role: {userToUse.role}</div>
 
-            {(providedUser || (!providedUser && auth.id !== userId_param)) && 
+            {(providedUser || (!providedUser && auth.id !== idToUse)) && 
             
                 <>
                     <button 
@@ -65,7 +68,8 @@ const User = ({ providedUser}) => {
                     data-testid={'delete-button-' + userToUse.id} 
                     onClick={(e) => {
                         e.preventDefault();
-                        handleDelete(userId_param);
+                        handleDelete(idToUse);
+                        console.log("user id = ", idToUse);
                     }}
                     >Delete</button>
                 </>
