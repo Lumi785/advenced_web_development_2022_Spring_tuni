@@ -30,8 +30,8 @@ const Product = ({ providedProduct }) => {
 
 	const {productId} = useParams();
 
-	function handleDelete(providedProduct){
-		dispatch(deleteProduct(providedProduct));
+	function handleDelete(id){
+		dispatch(deleteProduct(id));
 	}
 
 	function handleIncrementCartItem(productId){
@@ -94,7 +94,7 @@ const Product = ({ providedProduct }) => {
 						data-testid={'delete-button-' + idToUse}
 						onClick={
 							(e) => {e.preventDefault();
-							handleDelete(productToUse);
+							handleDelete(idToUse);
 							}
 						}
 						>Delete
