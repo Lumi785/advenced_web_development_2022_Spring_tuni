@@ -190,8 +190,8 @@ export const deleteProduct = (productId) => {
 			headers: {
 			  'Accept': 'application/json',
 			  'Content-Type': 'application/json'
-			},
-			body: JSON.stringify(productId)
+			}
+
 		};
 
 		await fetch(url, reqOptions)
