@@ -4,36 +4,86 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link, useParams } from 'react-router-dom';
 
+
+const selectAuth = state => state.auth;
+const selectOrders = state => state.orders;
+
 const Order = ({ providedOrder }) => {
-    console.log("rpdodedorder = ", providedOrder.items);
-    const orderItems = providedOrder.items;
+    const auth = useSelector(selectAuth);
+    // console.log(" auth =  ", auth);
 
-    function switchLink(){
-        console.log("apple");
+    const orders = useSelector(selectOrders);
+    // console.log("orders === ", orders);
 
+    const {orderId} = useParams();
+    // console.log("orderId ===== ", orderId);
+
+
+    // console.log("provided order = ", providedOrder);
+   
+
+    const workingOrder = orders.find(order => order.id === orderId);
+    // console.log("working order === ", workingOrder);
+    let orderToUse;
+    if (providedOrder){
+        orderToUse = providedOrder;
+    } else if (!providedOrder && workingOrder){
+        orderToUse = workingOrder;
+    } else {
+        orderToUse = null;
     }
+
+    const orderItems = orderToUse.items;
+    // console.log("order  Items = ", orderItems);
+
+   
+
+    const idToUse = orderId ? orderId : providedOrder.id;
+
+
+
+
 
 
     return(
-        <div data-testid='order-component'>
-            <div data-testid='order-id'>{providedOrder.id}</div>
-            <div data-testid='order-customer-id'>{providedOrder.customerId}</div>
-            <a href="" data-testid='inspect-link' onClick={switchLink}></a>
-            {/* <Link to={} data-testid='inspect-link'></Link> */}
-            <div>
 
-            {
-             orderItems.map(item => 
-             <ol data-testid='order-listitem' key={item.id}>{item.name}</ol>
-             
-             
-             )
-          }
+        orderToUse ?  (
+
+            <div data-testid='order-component'>
+                <h2 data-testid='orderId-heading'>{orderToUse.id}</h2>
+                {!orderId && 
+                <Link to={`/${orderToUse.id}`} data-testid='inspect-link' />
+                }
+                
+                    
+                
+                <ol data-testid='order-list' >
+                    { 
+                        orderItems.map(item => {
+
+                            return (
+
+                                <li data-testid='order-listitem' key={item.product.id}>
+                                    <h3 data-testid='name-heading'>{item.product.name}</h3>
+                                    <div data-testid='price-element'>{item.product.price}</div>
+                                    <div data-testid='description-element'>{item.product.description}</div>
+                                    <div data-testid='quantity-element'>{item.quantity}</div>
+                                </li>
+                            )
+
+                        })
+                    }
+                </ol>
+                <h2 data-testid='customerId-heading'>{orderToUse.customerId}</h2>
+                
+                
             </div>
-
-
-        </div>
+        ) : <></>
     )
 };
 
 export default Order;
+
+
+//Note: array.map(item => {return ....})  //use return if use {}
+// array.map(item => ....)
