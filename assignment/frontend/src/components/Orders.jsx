@@ -21,7 +21,7 @@ const Orders = () => {
     return(
 
         <div data-testid='orders-component'>
-            <ul>
+            <ul data-testid='orders-container'>
                 {orders.map(order => <Order providedOrder={order} key={order.id}></Order>)}
             </ul>
         </div>
