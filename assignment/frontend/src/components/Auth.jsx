@@ -6,8 +6,27 @@ import { useNavigate } from 'react-router';
 import { Outlet } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 
+const selectAuth = state => state.auth;
+
 const Auth = ({ authRoles }) => {
+    const [auth, setAuth] = useState('');
+    setAuth(useSelector(selectAuth));
+
     console.log("authorolss = ", authRoles);
+
+
+    useEffect(() => {
+        if (authRoles[0] === 'admin'){
+            console.log("i am admin");
+        } else if (authRoles[0] === 'guest'){
+            console.log("im am guest");
+        }
+
+
+
+    }, [auth])
+
+    
 
 
 

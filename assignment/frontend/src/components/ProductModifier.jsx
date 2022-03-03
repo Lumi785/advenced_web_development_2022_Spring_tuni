@@ -11,23 +11,34 @@ const selectProducts = state => state.products;
 const ProductModifier = () => {
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [inputName, setInputName] = useState('');
-    const [inputPrice, setInputPrice] = useState('');
-    const [inputDescription, setInputDescription] = useState('');
-
-    const {productId} = useParams();
 
     const products = useSelector(selectProducts);
+    const {productId} = useParams();
 
     const product = products.find(prd => prd.id === productId);
     console.log("product == ", product);
+
+    const [inputName, setInputName] = useState(product.name);
+    const [inputPrice, setInputPrice] = useState(product.price);
+    const [inputDescription, setInputDescription] = useState(product.description);
+    const [inputImage, setInputImage] = useState(product.image);
+
+
+    
+
+    console.log("input name = ", inputName);
+    console.log("input price = ", inputPrice);
+    console.log("input description = ", inputDescription);
    
     function handleUpdate(){
         const newObj = {
+            id: productId,
             name: inputName,
             price: inputPrice,
-            description: inputDescription
+           
+            description: inputDescription,
         }
+        console.log("newObj = ", newObj);
 
         dispatch(updateProduct(newObj));
         navigate('/products');
@@ -44,7 +55,7 @@ const ProductModifier = () => {
                 <input 
                     type="text" 
                     data-testid='id-input' 
-                    value={product.id} 
+                    value={productId} 
                     disabled
                 />
                 <input 
@@ -62,6 +73,14 @@ const ProductModifier = () => {
                     name='inputPrice'
                     onChange={e => setInputPrice(e.target.value)}
                     required
+                />
+                <input 
+                    type="text" 
+                    data-testid='image-input'
+                    value={inputImage} 
+                    name='inputImage'
+                    onChange={e => setInputImage(e.target.value)}
+                    
                 />
                 <input 
                     type="text" 

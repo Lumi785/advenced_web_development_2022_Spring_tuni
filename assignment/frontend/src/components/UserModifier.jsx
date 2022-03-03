@@ -37,19 +37,22 @@ const UserModifier = () => {
             setWorkingRole(workingRole);
             
             dispatch(updateUser(p));
+            // navigate('/users');
         } else {
             setBtnCondition(true);
-            navigate('/users');
+            
         }
     }
 
-    // function handleClick(){
+    function handleClick(){
       
-    //     if (workingRole === user.role){
-    //         setBtnCondition(true);
-    //         navigate('/users');
-    //     }
-    // }
+        if (workingRole === user.role){
+            setBtnCondition(true);
+            navigate('/users');
+        } else {
+            setBtnCondition(false);
+        }
+    }
   
 
     
