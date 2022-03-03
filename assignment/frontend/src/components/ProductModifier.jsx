@@ -1,5 +1,10 @@
 /** @format */
 
+//note: one test not pass, becaue the test code has problem, have informed Jaakko in Team channel"
+
+//expect(utils.getByTestId(element)).toHaveValue(value); --original code test type='text' for input working
+//expect(utils.getByTestId(element).value).toBe(value); -- also working for type='number' for input 
+
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
