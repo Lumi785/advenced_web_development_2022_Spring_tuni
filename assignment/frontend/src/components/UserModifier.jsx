@@ -6,50 +6,89 @@ import { updateUser } from '../redux/actionCreators/usersActions';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-const selectAuth = state => state.auth;
+// const selectAuth = state => state.auth;
+const selectUsers = state => state.users;
 
 const UserModifier = () => {
-    const auth = useSelector(selectAuth);
-    const [role, setRole] = useState('');
-    
+    const navigate = useNavigate();
     const dispatch = useDispatch();
-    const [name, setName] = useState('');
-    const [updateBtnCondition, setUpdateBtnCondition] = useState(false);
 
-    function handleModify(e){
-        e.preventDefault();
-        dispatch(updateUser())
+    // const auth = useSelector(selectAuth);
+
+    //Important !!! Use below two line find out what useParams return!!!
+    // const aa = useParams();
+    // console.log("aa == ", aa);
+    const {userId} = useParams();
+    const [btnCondition, setBtnCondition] = useState(true);
+    
+    const users = useSelector(selectUsers);
+    const user = users.find(user => user.id === userId);
+    console.log("user === ", user);
+    const [workingRole, setWorkingRole] = useState(user.role);
+    console.log("rose == ", workingRole);
+
+    
+
+    function handleModify(){
+        if (user.role !== workingRole){
+            setBtnCondition(false);
+            const p = {role: workingRole};
+            console.log("pppppp = ", p);
+            setWorkingRole(workingRole);
+            
+            dispatch(updateUser(p));
+        } else {
+            setBtnCondition(true);
+            navigate('/users');
+        }
     }
 
-    function handleChangeRole(e){
-        e.preventDefault();
-        setRole({value: e.target.value})
-    }
+    // function handleClick(){
+      
+    //     if (workingRole === user.role){
+    //         setBtnCondition(true);
+    //         navigate('/users');
+    //     }
+    // }
+  
 
-    function activateUpdateBtn(e){
-        e.preventDefault();
-        setUpdateBtnCondition(true);
-    }
+    
+        
+        
+
+    
 
 
     return(
-        <form data-testid='user-modifier-component' onSubmit={handleModify}>
+        <form 
+            data-testid='user-modifier-component' 
+            onSubmit={(e) => {
+                e.preventDefault();
+                handleModify();
+            }}>
 
-            <h3 data-testid='name-heading'>{name}</h3>
+            <h3 data-testid='name-heading'>{user.name}</h3>
 
-            <select name="" data-testid="role-select" value={role} onChange={handleChangeRole}>
-                <option value="customer">Customer</option>
-                <option value="admin">Admin</option>
+                <select name="" data-testid="role-select" value={workingRole} onChange={
+                    (e) => {
+                        e.preventDefault();
+                        setWorkingRole(e.target.value);
+                    }}>
+                <option value="customer">customer</option>
+                <option value="admin">admin</option>
             </select>
 
             <button 
                 data-testid='update-button' 
                 type='submit'
-                onClick={handleModify, activateUpdateBtn}
-                disabled={updateBtnCondition}
-
-            >
-                Update
+                
+                disabled={btnCondition}
+                onClick={
+                    e => {
+                        e.preventDefault();
+                        handleClick();
+                    }}
+                >Update
             </button>
 
 
