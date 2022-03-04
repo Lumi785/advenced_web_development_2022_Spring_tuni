@@ -17,6 +17,10 @@ const CartItem = ({ item }) => {
 	}
 
 	function handleDecrement(){
+		if (item.quantity === 1){
+			dispatch(removeCartItem(item.product));
+		}
+	
 		dispatch(decrementCartItem());
 	}
 
@@ -26,7 +30,7 @@ const CartItem = ({ item }) => {
 			<div data-testid='item-price'>{item.product.price}</div>
 			<div data-testid='item-amount'>{item.quantity}</div>
 			<button 
-				data-testid={`plus-btn-{item.product.id`}
+				data-testid={`plus-btn-${item.product.id}`}
 				onClick={
 					(e) => {
 						e.preventDefault();
@@ -38,7 +42,7 @@ const CartItem = ({ item }) => {
 			</button>
 
 			<button 
-				data-testid={`minus-btn-{item.product.id`}
+				data-testid={`minus-btn-${item.product.id}`}
 				onClick={
 					(e) => {
 						e.preventDefault();

@@ -7,12 +7,35 @@ import { addOrder } from '../redux/actionCreators/ordersActions';
 import CartItem from './CartItem';
 
 const selectCart = state => state.cart;
+const selectAuth = state => state.auth;
 
 const Cart = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const cart = useSelector(selectCart);
+    const auth = useSelector(selectAuth);
     console.log("cart === ", cart);
+    console.log("auth === ", auth);
+
+    function handleOrder(){
+        
+        if (auth.role === 'customer'){
+
+            const newOrder = {
+                customerId: auth.id,
+                items : cart
+            }
+            dispatch(addOrder(newOrder));
+        }
+        if (auth.role === 'guest'){
+            const notification = {
+                message: 'Login please',
+                isSuccess: false
+            }
+            navigate('/login');
+            dispatch(createNotification(notification));
+        }
+    }
 
     return(
         <div data-testid='cart-component'>
@@ -30,14 +53,21 @@ const Cart = () => {
                             cart.map(item => 
                                 <CartItem 
                                     item={item} 
-                                    
                                     key={item.product.id}
-                            
                                 />)
                         }
                         
                     </div>
-                    <button data-testid='order-button'>Order</button>
+                    <button 
+                        data-testid='order-button'
+                        onClick={
+                            e => {
+                                e.preventDefault();
+                                handleOrder();
+                            }
+                        }
+                        >Order
+                    </button>
                 </>
             }
 
