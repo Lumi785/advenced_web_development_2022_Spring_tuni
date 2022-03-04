@@ -125,7 +125,12 @@ export const decrementCartItem = (productId) => {
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
 
 		const newnewCartItemsObjects = oldCartItemsObjects.map(item => 
-			item.product.id === productId ? item.quantity -= 1: item.quantity);
+			
+
+			item.product.id === productId ? 
+				(item.quantity > 0 ? item.quantity -= 1 : item.quantity += 1)
+				: item.quantity
+		)
 
 		//update localStorage
 		localStorage.setItem('cart', newnewCartItemsObjects);
