@@ -53,7 +53,7 @@ const Orders = () => {
                 </div>)
         } else {
 
-            return (<div data-testid='no-order-component'></div>)
+            return (<div data-testid='no-order-component'>You have no orders !</div>)
         }
     } else {
         return <></>
