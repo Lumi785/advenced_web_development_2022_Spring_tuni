@@ -18,41 +18,45 @@ const CartItem = ({ item }) => {
 
 	function handleDecrement(){
 		if (item.quantity === 1){
+			
 			dispatch(removeCartItem(item.product));
+			return;
 		}
 	
-		dispatch(decrementCartItem());
+		dispatch(decrementCartItem(item.product.id));
 	}
 
 	return(
-		<ul data-testid={item.product.id}>
-			<div data-testid='item-name'>{item.product.name}</div>
-			<div data-testid='item-price'>{item.product.price}</div>
-			<div data-testid='item-amount'>{item.quantity}</div>
-			<button 
-				data-testid={`plus-btn-${item.product.id}`}
-				onClick={
-					(e) => {
-						e.preventDefault();
-						handleIncrement();
+		<ol data-testid='cart-item-component'>
+			<ul data-testid={item.product.id}>
+				<div data-testid='item-name'>{item.product.name}</div>
+				<div data-testid='item-price'>{item.product.price}</div>
+				<div data-testid='item-amount'>{item.quantity}</div>
+				<button 
+					data-testid={`plus-btn-${item.product.id}`}
+					onClick={
+						(e) => {
+							e.preventDefault();
+							handleIncrement();
+						}
+
 					}
+					>+
+				</button>
 
-				}
-				>+
-			</button>
+				<button 
+					data-testid={`minus-btn-${item.product.id}`}
+					onClick={
+						(e) => {
+							e.preventDefault();
+							handleDecrement();
+						}
 
-			<button 
-				data-testid={`minus-btn-${item.product.id}`}
-				onClick={
-					(e) => {
-						e.preventDefault();
-						handleDecrement();
 					}
-
-				}
-				>-
-			</button>
-		</ul>
+					>-
+				</button>
+			</ul>
+		</ol>
 	)
 };
 

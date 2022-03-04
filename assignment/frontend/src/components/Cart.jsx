@@ -14,8 +14,8 @@ const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector(selectCart);
     const auth = useSelector(selectAuth);
-    console.log("cart === ", cart);
-    console.log("auth === ", auth);
+    // console.log("cart === ", cart);
+    // console.log("auth === ", auth);
 
     function handleOrder(){
         
@@ -38,6 +38,7 @@ const Cart = () => {
     }
 
     return(
+        
         <div data-testid='cart-component'>
             {
                 cart.length === 0 && 
@@ -49,13 +50,16 @@ const Cart = () => {
                 <>
                     <div data-testid='cart-item-container'>
                         
-                        {
-                            cart.map(item => 
-                                <CartItem 
-                                    item={item} 
-                                    key={item.product.id}
-                                />)
-                        }
+
+                            {
+                                cart.map(item => 
+                                    <CartItem 
+                                        item={item} 
+                                        key={item.product.id}
+                                        
+                                    />)
+                            }
+                        
                         
                     </div>
                     <button 
