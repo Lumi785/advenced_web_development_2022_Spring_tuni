@@ -5,6 +5,9 @@
 //expect(utils.getByTestId(element)).toHaveValue(value); --original code test type='text' for input working
 //expect(utils.getByTestId(element).value).toBe(value); -- also working for type='number' for input 
 
+//Jaakko replied above question, and he says that price type='text', the ducumentation (type='number') is wrong. 
+//Now all tests pass.
+
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -21,7 +24,7 @@ const ProductModifier = () => {
     const {productId} = useParams();
 
     const product = products.find(prd => prd.id === productId);
-    console.log("product == ", product);
+    // console.log("product == ", product);
 
     const [inputName, setInputName] = useState(product.name);
     const [inputPrice, setInputPrice] = useState(product.price);
@@ -31,9 +34,9 @@ const ProductModifier = () => {
 
     
 
-    console.log("input name = ", inputName);
-    console.log("input price = ", inputPrice);
-    console.log("input description = ", inputDescription);
+    // console.log("input name = ", inputName);
+    // console.log("input price = ", inputPrice);
+    // console.log("input description = ", inputDescription);
    
     function handleUpdate(){
         const newObj = {
@@ -43,7 +46,7 @@ const ProductModifier = () => {
            
             description: inputDescription,
         }
-        console.log("newObj = ", newObj);
+        // console.log("newObj = ", newObj);
 
         dispatch(updateProduct(newObj));
         navigate('/products');
@@ -72,7 +75,7 @@ const ProductModifier = () => {
                     required
                 />
                 <input 
-                    type="number" 
+                    type="text" 
                     data-testid='price-input'
                     value={inputPrice} 
                     name='inputPrice'
