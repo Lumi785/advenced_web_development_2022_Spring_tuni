@@ -38,8 +38,10 @@ const ProductAdder = ({ open, openHandler}) => {
                 onChange={e => setProductName(e.target.value)}
                 required
             />
+
+{/* Jaakko said on 5th-march-2022 that in this file type of price also should be text, even though number not affect the test.  */}
             <input 
-                type="number" 
+                type="text"   
                 data-testid='price-input' 
                 value={productPrice}
                 name='productPrice'
