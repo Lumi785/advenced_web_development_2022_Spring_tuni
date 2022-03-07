@@ -20,12 +20,14 @@ const Notification = () => {
 
         setTimeout(() => {
             dispatch(removeNotification());
-        }, 20000);
+        }, 5000);
     
     }, [notification])
 
     
-
+    function isEmpty(obj) {
+        return Object.keys(obj).length === 0;
+    }
 
 
 
@@ -34,11 +36,11 @@ const Notification = () => {
         
         <>
         {
-            notification === undefined && 
+            isEmpty(notification) && 
             <div data-testid='no-notification-component'></div>
         }
 
-        {notification !== undefined && 
+        {!isEmpty(notification) && 
         
             <div 
             data-testid='notification-component'
