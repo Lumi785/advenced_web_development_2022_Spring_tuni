@@ -9,31 +9,55 @@ import { useParams } from 'react-router-dom';
 const selectAuth = state => state.auth;
 
 const Auth = ({ authRoles }) => {
-    const [auth, setAuth] = useState('');
-    setAuth(useSelector(selectAuth));
+    const navigate = useNavigate();
 
-    console.log("authorolss = ", authRoles);
+    const [authState, setAuthState] = useState(false);
+    
+    const auth = useSelector(selectAuth);
+
+   useEffect(() => {
+
+    if (authRoles.includes(auth.role)){
+        
+        setAuthState(true);
+        console.log("autSthate == ", authState);
+        if (auth.role === 'guest'){
+            navigate('/login');
+        } 
+
+    } else {
+        setAuthState(false);
+        console.log("autSthate == ", authState);
+        navigate('/');
+    }
+       
+   }, [auth]);
 
 
-    useEffect(() => {
-        if (authRoles[0] === 'admin'){
-            console.log("i am admin");
-        } else if (authRoles[0] === 'guest'){
-            console.log("im am guest");
-        }
+ 
 
 
+    const aa = useParams();
+    console.log("aa = ", aa);
 
-    }, [auth])
+
 
     
 
 
 
     return(
-        <div data-testid='auth-success-component'>
-            hello
-        </div>
+        <>
+            {
+                authState && 
+                (
+                    <div data-testid='auth-success-component'>
+                        <Outlet/>
+                    </div>
+                )
+            }
+
+        </>
 
     )
 };
