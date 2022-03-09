@@ -15,14 +15,25 @@ const Notification = () => {
     const notification = useSelector(selectNotification);
 
     console.log("notification = ", notification);
+
+
     
     useEffect(() => {
+        console.log("use effect notification = ", notification);
 
-        setTimeout(() => {
-            dispatch(removeNotification());
-        }, 5000);
-    
+            console.log("apple");
+            setTimeout(() => {
+                console.log("ppppppp");
+
+                dispatch(removeNotification());
+            }, 5000);
+
+           
+        
+
     }, [notification])
+    
+        
 
     
     function isEmpty(obj) {

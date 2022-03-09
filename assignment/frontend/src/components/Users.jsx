@@ -6,7 +6,6 @@ import { getUsers } from '../redux/actionCreators/usersActions';
 import User from './User';
 
 
-
 const selectUsers = state => state.users;
 
 const Users = () => {

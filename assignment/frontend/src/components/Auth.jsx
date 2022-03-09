@@ -10,7 +10,8 @@ const selectAuth = state => state.auth;
 
 const Auth = ({ authRoles }) => {
 
-    
+   
+
     const aa = useParams();
     console.log("aa = ", aa);
     const navigate = useNavigate();
@@ -19,9 +20,13 @@ const Auth = ({ authRoles }) => {
     
     const auth = useSelector(selectAuth);
 
+    const rolesToUse = authRoles ? authRoles : null;
+
    useEffect(() => {
 
-        if (!authRoles.includes(auth.role)){
+        
+
+        if (!rolesToUse.includes(auth.role)){
             
             setAuthState(false);
             navigate('/');

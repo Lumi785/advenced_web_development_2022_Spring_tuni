@@ -23,21 +23,55 @@ import { getOrder } from './redux/actionCreators/ordersActions';
 import { getProduct } from './redux/actionCreators/productsActions';
 import { getUser } from './redux/actionCreators/usersActions';
 import { initApp } from './redux/actionCreators/appActions';
+
+
 const App = () => {
+	const dispatch = useDispatch();
+
+	useEffect(() => {
+		dispatch(initApp());
+	}, []);
+
+	const searchUsers = Finder('user', getUser);
+	const searchProducts = Finder('product', getProduct);
+	const searchOrders = Finder('order', getOrder);
+
+	const authAdminComponent = Auth(['admin']);
+	const authCustomerComponent = Auth(['customer']);
+	const authGuestComponent = Auth(['guest']);
+	
+
+
 	return (
 		<div data-testid='app-component'>
-			<Home/>
-			<Navbar/>
+			<nav>
+				<Navbar/>
+			</nav>
+			<Routes>
+				<Route path='/' element={<Home/>} />
+				<Route element={<Notification/>}/>
+				<Route element={searchUsers}/>
+				<Route element={searchProducts}/>
+				<Route element={searchOrders}/>
+				<Route element={authGuestComponent}/>
 
-			<Register/>
-			<Login/>
-			<Users/>
+
 				
-			
-			<Products/>
-		
-			
 
+				<Route path='/users' element={<Users/>} />
+				<Route path='/users/:userId' element={<User/>} />
+				<Route path='/users/:userId/modify' element={<UserModifier/>} />
+				<Route path='/products' element={<Products/>} />
+				<Route path='/products/:productId' element={<Product/>} />
+				<Route path='/products/:productId/modify' element={<ProductModifier/>} />
+				<Route path='/cart' element={<Cart/>} />
+				<Route path='/orders' element={<Orders/>} />
+				<Route path='/orders/:orderId' element={<Order/>} />
+				<Route path='/register' element={<Register/>} />
+				<Route path='/login' element={<Login/>} />
+				<Route path='*' element={<NotFound/>} />
+
+			</Routes>
 			<footer>
 				<p>Copyright &copy; 2022</p>
 			</footer>

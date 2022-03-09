@@ -79,7 +79,7 @@ export const initAuth = () => {
  * 1) INIT_AUTH with user as payload
  * 2) succesfull notification with validAuth.welcomeBack as message.
  * If the response is not ok, it only dispatches a NEW_NOTIFICATION-type action to the frontends notification state along with the error message from db as an unsuccessfull notification.
- * @param {Object} logInCreds - The credentials used to login, contains username and password
+ * @param {object} logInCreds - The credentials used to login, contains username and password
  * @returns {Function} action
  */
 export const logIn = (logInCreds) => {
@@ -168,7 +168,7 @@ export const logIn = (logInCreds) => {
  * 2) CLEAR_ORDERS and
  * 3) CLEAR_USERS as well as
  * 4) NEW_NOTIFICATION with succesfull message from the backend as payload to the reducers.
- * @returns {Function}
+ * @returns {Function} action
  */
 export const logOut = () => {
 
