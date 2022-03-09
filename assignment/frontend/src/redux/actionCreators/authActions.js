@@ -213,7 +213,7 @@ export const logOut = () => {
  * 2) a successful NEW_NOTIFICATION-type action to reducers with validAuth.welcome(name) as message.
  * If the response is not ok, it only dispatches a NEW_NOTIFICATION-type action to the frontends notification state along with the error message from db as an unsuccessfull notification. If the error itself is an object, then it should pass whatever is inside the object.
  * @param registerCreds - The data of the user
- * @returns {Function}
+ * @returns {Function} action
  */
 export const register = (registerCreds) => {
 
