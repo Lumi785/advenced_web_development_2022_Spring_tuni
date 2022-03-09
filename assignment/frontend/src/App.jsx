@@ -38,7 +38,7 @@ const App = () => {
 
 	const authAdminComponent = Auth(['admin']);
 	const authCustomerComponent = Auth(['customer']);
-	const authGuestComponent = Auth(['guest']);
+	const authComponent = Auth(['guest']);
 	
 
 
@@ -53,7 +53,6 @@ const App = () => {
 				<Route element={searchUsers}/>
 				<Route element={searchProducts}/>
 				<Route element={searchOrders}/>
-				<Route element={authGuestComponent}/>
 
 
 				
@@ -69,7 +68,7 @@ const App = () => {
 				<Route path='/orders/:orderId' element={<Order/>} />
 				<Route path='/register' element={<Register/>} />
 				<Route path='/login' element={<Login/>} />
-				<Route path='*' element={<NotFound/>} />
+				<Route path='/*' element={<NotFound/>} />
 
 			</Routes>
 			<footer>

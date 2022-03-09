@@ -26,7 +26,7 @@ const Auth = ({ authRoles }) => {
 
         
 
-        if (!rolesToUse.includes(auth.role)){
+        if ((rolesToUse && !rolesToUse.includes(auth.role)) || !rolesToUse){
             
             setAuthState(false);
             navigate('/');
