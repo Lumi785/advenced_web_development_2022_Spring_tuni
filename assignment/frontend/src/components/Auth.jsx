@@ -13,7 +13,7 @@ const Auth = ({ authRoles }) => {
    
 
     const aa = useParams();
-    console.log("aa = ", aa);
+   
     const navigate = useNavigate();
 
     const [authState, setAuthState] = useState(false);
