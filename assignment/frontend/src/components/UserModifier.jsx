@@ -19,48 +19,38 @@ const UserModifier = () => {
     // const aa = useParams();
     // console.log("aa == ", aa);
     const {userId} = useParams();
-    const [btnCondition, setBtnCondition] = useState(true);
+    const [btnCondition, setBtnCondition] = useState(false);
     
     const users = useSelector(selectUsers);
+
     const user = users.find(user => user.id === userId);
-    console.log("user === ", user);
+
     const [workingRole, setWorkingRole] = useState(user.role);
-    console.log("rose == ", workingRole);
 
     
 
     function handleModify(){
+
         if (user.role !== workingRole){
-            setBtnCondition(false);
-            const p = {role: workingRole};
-            console.log("pppppp = ", p);
+            
+            setBtnCondition(true);
+
+            const updatedUser = {...user, role: workingRole};
+
+
+            dispatch(updateUser(updatedUser));
             setWorkingRole(workingRole);
             
-            dispatch(updateUser(p));
-            // navigate('/users');
-        } else {
-            setBtnCondition(true);
-            
-        }
-    }
-
-    function handleClick(){
-      
-        if (workingRole === user.role){
-            setBtnCondition(true);
+            dispatch(updateUser(updatedUser));
             navigate('/users');
         } else {
             setBtnCondition(false);
+            
         }
     }
-  
 
+   
     
-        
-        
-
-    
-
 
     return(
         <form 
@@ -86,11 +76,7 @@ const UserModifier = () => {
                 type='submit'
                 
                 disabled={btnCondition}
-                onClick={
-                    e => {
-                        e.preventDefault();
-                        handleClick();
-                    }}
+              
                 >Update
             </button>
 

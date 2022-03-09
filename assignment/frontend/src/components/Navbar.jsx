@@ -42,7 +42,7 @@ const Navbar = () => {
 
 	
 	const auth = useSelector(selectAuth);
-	console.log("auth from navbar = ", auth);
+	//console.log("auth from navbar = ", auth);
 
 	const dispatch = useDispatch();
 
@@ -60,7 +60,7 @@ const Navbar = () => {
 					
 				
 					<Link data-testid='home-link' to='/'>Home  </Link>
-					<Link data-testid='products-link' to='/products'>Product  </Link>
+					<Link data-testid='products-link' to='/products'>Products  </Link>
 					<Link data-testid='orders-link' to='/orders'>Orders  </Link>
 					<Link data-testid='cart-link' to='/cart'>Cart  </Link>
 					<Link data-testid='logout-link' to='/logout' onClick={handleLogout}>Log Out</Link>
