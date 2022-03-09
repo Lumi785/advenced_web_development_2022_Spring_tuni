@@ -47,7 +47,10 @@ const Product = ({ providedProduct }) => {
 
 	const productToUse = providedProduct ? providedProduct : productFromPath;
 
-	const idToUse = productId ? productId : providedProduct.id;
+	const idToUse = productToUse ? productToUse.id : null;
+	const nameToUse = productToUse ? productToUse.name : null;
+	const descriptonToUse = productToUse ? productToUse.description : null;
+	const priceToUse = productToUse ? productToUse.price : null;
 
 
 	//note: here must use providedProduct? Not productToUse?
@@ -83,9 +86,9 @@ const Product = ({ providedProduct }) => {
 			
 		
 		
-			<div data-testid='name-header'>{productToUse.name}</div>
-			<div data-testid='description-element'>{productToUse.description}</div>
-			<div data-testid='price-element'>{productToUse.price}</div>
+			<div data-testid='name-header'>{nameToUse}</div>
+			<div data-testid='description-element'>{descriptonToUse}</div>
+			<div data-testid='price-element'>{priceToUse}</div>
 	
 
 			{auth.role === 'admin' && productToUse &&
