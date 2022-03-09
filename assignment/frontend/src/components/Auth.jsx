@@ -9,6 +9,10 @@ import { useParams } from 'react-router-dom';
 const selectAuth = state => state.auth;
 
 const Auth = ({ authRoles }) => {
+
+    
+    const aa = useParams();
+    console.log("aa = ", aa);
     const navigate = useNavigate();
 
     const [authState, setAuthState] = useState(false);
@@ -17,19 +21,20 @@ const Auth = ({ authRoles }) => {
 
    useEffect(() => {
 
-    if (authRoles.includes(auth.role)){
-        
-        setAuthState(true);
-        console.log("autSthate == ", authState);
-        if (auth.role === 'guest'){
-            navigate('/login');
-        } 
+        if (!authRoles.includes(auth.role)){
+            
+            setAuthState(false);
+            navigate('/');
 
-    } else {
-        setAuthState(false);
-        console.log("autSthate == ", authState);
-        navigate('/');
-    }
+        } else {
+            if (auth.role === 'guest'){
+                navigate('/login');
+                setAuthState(false);
+            } 
+            setAuthState(true);
+           
+            
+        }
        
    }, [auth]);
 
@@ -37,8 +42,6 @@ const Auth = ({ authRoles }) => {
  
 
 
-    const aa = useParams();
-    console.log("aa = ", aa);
 
 
 
