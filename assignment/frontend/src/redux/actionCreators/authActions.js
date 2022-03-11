@@ -55,7 +55,7 @@ export const initAuth = () => {
 			//else{console.log('response err = ', res.err)};
 		})
 		.then(data => {
-			console.log('data from initAuth = ', data);
+			
 			if (Object.keys(data).length === 0){
 				dispatch({type: INIT_AUTH})
 			} else {
