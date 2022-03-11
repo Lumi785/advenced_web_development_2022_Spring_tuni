@@ -35,12 +35,20 @@ export const initCart = () => {
  * @@return {Function} thunk
  */
 export const addCartItem = (product) => {
+
+	console.log("product from addCartItem == ", product);
 	
 	return async(dispatch) => {
 
 		const jsonOldCartItems = localStorage.getItem('cart');
 		let objOldCartItems = JSON.parse(jsonOldCartItems);
-		const newObjOldCartItems = [...objOldCartItems, product];
+
+		console.log("objOldCartItems = ", objOldCartItems);
+
+
+		const newObjOldCartItems = objOldCartItems? [...objOldCartItems, product] : [product];
+
+		console.log("newObjOldCartItems == ", newObjOldCartItems);
 
 		//this directly add to loacalStorage
 		localStorage.setItem('cart', newObjOldCartItems);
