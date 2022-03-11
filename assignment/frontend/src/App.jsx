@@ -32,43 +32,70 @@ const App = () => {
 		dispatch(initApp());
 	}, []);
 
-	const searchUsers = Finder('user', getUser);
-	const searchProducts = Finder('product', getProduct);
-	const searchOrders = Finder('order', getOrder);
 
-	const authAdminComponent = Auth(['admin']);
-	const authCustomerComponent = Auth(['customer']);
-	const authComponent = Auth(['guest']);
-	
+
 
 
 	return (
 		<div data-testid='app-component'>
-			<nav>
-				<Navbar/>
-			</nav>
+			
+			<Navbar/>
 			<Routes>
-				<Route path='/' element={<Home/>} />
-				<Route element={<Notification/>}/>
-				<Route element={searchUsers}/>
-				<Route element={searchProducts}/>
-				<Route element={searchOrders}/>
 
+				{/* <Route element={<Finder/>} /> */}
+				<Route element={<Notification/>}/>
+
+				
+				<Route path='/' element={<Home/>} />
+				
+				
+				<Route path='/*' element={<NotFound/>} />
+				<Route path='/products' element={<Products/>} />
+				<Route path='/products/:productId' element={<Product/>} />
+
+					
+				
+			
+				
+				<Route element={<Auth authRoles={['admin']}/>}>
+					<Route path='/login' element={<Login/>} />
+
+					<Route path='/users' element={<Users/>} />
+					<Route path='/users/:userId' element={<User/>} />
+					<Route path='/users/:userId/modify' element={<UserModifier/>} />
+					<Route element={<Finder type={'user'} getUser={getUser}/>}/>
+					<Route path='/products/:productId/modify' element={<ProductModifier/>} />
+					
+					<Route path='/orders' element={<Orders/>} />
+					<Route path='/orders/:orderId' element={<Order/>} />
+					<Route element={<Finder type={'product'} getUser={getProduct}/>}/>
+					<Route element={<Finder type={'order'} getUser={getOrder}/>}/>
+					
+				</Route>
+
+				<Route element={<Auth authRoles={'customer'}/>}>
+					
+					
+					<Route path='/products/:productId' element={<Product/>} />
+					
+					<Route path='/orders' element={<Orders/>} />
+					<Route path='/orders/:orderId' element={<Order/>} />
+					<Route path='/cart' element={<Cart/>} />
+					<Route element={<Finder type={'product'} getUser={getProduct}/>}/>
+					<Route element={<Finder type={'order'} getUser={getOrder}/>}/>
+				</Route>
 
 				
 
-				<Route path='/users' element={<Users/>} />
-				<Route path='/users/:userId' element={<User/>} />
-				<Route path='/users/:userId/modify' element={<UserModifier/>} />
-				<Route path='/products' element={<Products/>} />
-				<Route path='/products/:productId' element={<Product/>} />
-				<Route path='/products/:productId/modify' element={<ProductModifier/>} />
-				<Route path='/cart' element={<Cart/>} />
-				<Route path='/orders' element={<Orders/>} />
-				<Route path='/orders/:orderId' element={<Order/>} />
-				<Route path='/register' element={<Register/>} />
-				<Route path='/login' element={<Login/>} />
-				<Route path='/*' element={<NotFound/>} />
+				<Route element={<Auth authRoles={'guest'}/>}>
+					<Route path='/cart' element={<Cart/>} />
+					<Route path='/register' element={<Register/>} />
+					<Route element={<Finder type={'product'} getUser={getProduct}/>}/>
+
+				</Route>
+
+
+
 
 			</Routes>
 			<footer>
