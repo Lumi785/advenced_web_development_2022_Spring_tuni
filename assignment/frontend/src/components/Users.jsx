@@ -45,7 +45,9 @@ const Users = () => {
 
         </div>
         ) : (
-            <></>
+            <div data-testid='users-component'>
+                </div>
+
         )
     )
 };
