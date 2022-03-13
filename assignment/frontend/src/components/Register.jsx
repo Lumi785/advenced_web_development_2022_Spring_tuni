@@ -30,7 +30,7 @@ const Register = () => {
 
     return(
 
-        <div data-testid='register-componen'>
+        <div data-testid='register-component'>
             <h2>Register</h2>
             <form action="" data-testid='register-form' onSubmit={handleSubmit}>
                 <label htmlFor='name-input'>Name</label>

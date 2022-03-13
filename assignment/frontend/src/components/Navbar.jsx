@@ -83,16 +83,16 @@ const Navbar = () => {
 			)
 
 		case 'guest':
-			case 'admin':
-				return (
-					<div data-testid='navbar-component'>
-						<Link data-testid='home-link' to='/'>Home  </Link>
-						<Link data-testid='products-link' to='/products'>Products  </Link>
-						<Link data-testid='cart-link' to='/cart'>Cart  </Link>
-						<Link data-testid='login-link' to='/login'>LogIn  </Link>
-						<Link data-testid='register-link' to='/register'>Register  </Link>
-						<div> guest</div>
-					</div>
+			
+			return (
+				<div data-testid='navbar-component'>
+					<Link data-testid='home-link' to='/'>Home  </Link>
+					<Link data-testid='products-link' to='/products'>Products  </Link>
+					<Link data-testid='cart-link' to='/cart'>Cart  </Link>
+					<Link data-testid='login-link' to='/login'>LogIn  </Link>
+					<Link data-testid='register-link' to='/register'>Register  </Link>
+					<div> guest</div>
+				</div>
 
 				)
 		default:

@@ -58,7 +58,8 @@ const Finder = ({ type, findHandler }) => {
   
 
     return(
-        <>
+        <>  
+            
             {
                 term === undefined && 
                 <div data-testid={`no-${type}-found-component`}>

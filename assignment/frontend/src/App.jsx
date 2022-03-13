@@ -42,23 +42,69 @@ const App = () => {
 			<Navbar/>
 			<Routes>
 
-				{/* <Route element={<Finder/>} /> */}
 				<Route element={<Notification/>}/>
 
-				
 				<Route path='/' element={<Home/>} />
-				
-				
 				<Route path='/*' element={<NotFound/>} />
 				<Route path='/products' element={<Products/>} />
 				<Route path='/products/:productId' element={<Product/>} />
+				<Route element={<Finder type={'product'} getProduct={getProduct}/>}/>
+				{/* <Route path='/register' element={<Register/>} /> */}
 
-					
+
+				
+
+				
+				
+				{/* <Route path="/private-outlet" element={<PrivateOutlet />}>
+          			<Route element={<Private />} />
+       		    </Route> */}
+				
+				<Route path="/cart" element={<Auth authRoles={['guest']}/>}>
+          			<Route element={<Cart />} />
+       		    </Route>
+
+				{/* <Route path="/register" element={
+					<Auth authRoles={['guest']}>
+						<div> this is children</div>
+				   		<Register />
+					</Auth>
+					}>
+       		    </Route> */}
+
+				   {/* guest */}
+				<Route path="/register" element={<Auth authRoles={['guest']} />}>
+					<Route path='' element={<Register/>} />
+       		    </Route>
+				<Route path="/login" element={<Auth authRoles={['guest']} />}>
+					<Route path='' element={<Login/>} />
+       		    </Route>
+				<Route path="/cart" element={<Auth authRoles={['guest', 'customer']} />}>
+					<Route path='' element={<Cart/>} />
+       		    </Route>
+
+				   {/* cutomer */}
+				<Route path="/orders" element={<Auth authRoles={['customer', 'admin']} />}>
+					<Route path='' element={<Orders/>} />
+       		    </Route>
+				<Route path="/orders/:orderId" element={<Auth authRoles={['customer', 'admin']} />}>
+					<Route path='' element={<Order/>} />
+       		    </Route>
+
+				   {/* admin */}
+				<Route path="/users" element={<Auth authRoles={['admin']} />}>
+					<Route path='' element={<Users/>} />
+       		    </Route>
+				<Route path="/users/:userId" element={<Auth authRoles={['admin']} />}>
+					<Route path='' element={<User/>} />
+       		    </Route>
+				
+
+				
 				
 			
 				
-				<Route element={<Auth authRoles={['admin']}/>}>
-					<Route path='/login' element={<Login/>} />
+				{/* <Route element={<Auth authRoles={['admin']}/>}>
 
 					<Route path='/users' element={<Users/>} />
 					<Route path='/users/:userId' element={<User/>} />
@@ -66,33 +112,25 @@ const App = () => {
 					<Route element={<Finder type={'user'} getUser={getUser}/>}/>
 					<Route path='/products/:productId/modify' element={<ProductModifier/>} />
 					
-					<Route path='/orders' element={<Orders/>} />
-					<Route path='/orders/:orderId' element={<Order/>} />
-					<Route element={<Finder type={'product'} getUser={getProduct}/>}/>
-					<Route element={<Finder type={'order'} getUser={getOrder}/>}/>
 					
 				</Route>
 
-				<Route element={<Auth authRoles={'customer'}/>}>
+				<Route element={<Auth authRoles={['customer', 'admin']}/>}>
 					
 					
-					<Route path='/products/:productId' element={<Product/>} />
-					
+					<Route element={<Finder type={'order'} getUser={getOrder}/>}/>
+
 					<Route path='/orders' element={<Orders/>} />
 					<Route path='/orders/:orderId' element={<Order/>} />
+
 					<Route path='/cart' element={<Cart/>} />
 					<Route element={<Finder type={'product'} getUser={getProduct}/>}/>
 					<Route element={<Finder type={'order'} getUser={getOrder}/>}/>
 				</Route>
+
+				 */}
 
 				
-
-				<Route element={<Auth authRoles={'guest'}/>}>
-					<Route path='/cart' element={<Cart/>} />
-					<Route path='/register' element={<Register/>} />
-					<Route element={<Finder type={'product'} getUser={getProduct}/>}/>
-
-				</Route>
 
 
 

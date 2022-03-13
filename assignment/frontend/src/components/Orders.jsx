@@ -31,10 +31,14 @@ const Orders = () => {
 
 
     const customerOrder = orders.find(order => order.customerId === auth.id);
-    console.log("customer order  === ", customerOrder);
+    console.log("customer order  === ", customerOrder, auth.id);
 
     if (auth.role === 'admin'){
+        if (orders.length === 0){
+            return (<div data-testid='no-order-component'>You have no orders !</div>)
+        } 
         return(
+           
             <div data-testid='orders-component'>
                 <ul data-testid='orders-container'>
                     {orders.map(order => <Order providedOrder={order} key={order.id}></Order>)}

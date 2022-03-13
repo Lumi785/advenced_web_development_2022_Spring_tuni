@@ -62,7 +62,7 @@ const Product = ({ providedProduct }) => {
 	 * @returns bool, true if product in cart, else return false
 	 */
 	function isProductInCart(product){
-		const productArray = cart.filter(item => item.product.id === product.id);
+		const productArray = cart === undefined? [] : cart.filter(item => item.product.id === product.id);
 		return productArray.length > 0;
 	}
 	
