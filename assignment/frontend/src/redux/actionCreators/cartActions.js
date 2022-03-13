@@ -19,11 +19,14 @@ const cartMsg = {
  * @return {object} action
  */
 export const initCart = () => {
+	
 	const cartItems = localStorage.getItem("cart");
-	//console.log("cartItems = ", cartItems);
+	
+	const objCartItems = JSON.parse(cartItems);
+
 	return ({
 		type: INIT_CART,
-		payload: cartItems
+		payload: objCartItems? objCartItems : []
 	})
 };
 
@@ -45,16 +48,20 @@ export const addCartItem = (product) => {
 
 		console.log("objOldCartItems = ", objOldCartItems);
 
+		const newCartItem = {
+			product: product,
+			quantity: 1
+		}
 
-		const newObjOldCartItems = objOldCartItems? [...objOldCartItems, product] : [product];
+		const newObjOldCartItems = objOldCartItems? [...objOldCartItems, newCartItem] : [newCartItem];
 
-		console.log("newObjOldCartItems == ", newObjOldCartItems);
+		//console.log("newObjOldCartItems == ", newObjOldCartItems);
 
 		//this directly add to loacalStorage
-		localStorage.setItem('cart', newObjOldCartItems);
+		localStorage.setItem('cart', JSON.stringify(newObjOldCartItems));
 
 		//this is for reducer to add to store state
-		dispatch({type: ADD_CART_ITEM, payload: product});
+		dispatch({type: ADD_CART_ITEM, payload: newCartItem});
 		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.add, isSuccess: true}})
 	}
 	
@@ -75,10 +82,10 @@ export const removeCartItem = (product) => {
 		//oldCartItems is an array of jsons, convert it to an array of objects
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
 
-		const newnewCartItemsObjects = oldCartItemsObjects.filter(item => item.product.id !== product.id);
+		const newCartItemsObjects = oldCartItemsObjects.filter(item => item.product.id !== product.id);
 		
 		// update localStorage
-		localStorage.setItem('cart', newnewCartItemsObjects);
+		localStorage.setItem('cart', JSON.stringify(newCartItemsObjects));
 		
 		// send action to reducer to update store state
 		dispatch({type: REMOVE_CART_ITEM, payload: product});
@@ -98,7 +105,8 @@ export const incrementCartItem = (productId) => {
 	return async(dispatch) => {
 		const oldCartItems = localStorage.getItem('cart');
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
-		//console.log("oldCartItemsObjects = ", oldCartItemsObjects);
+		//console.log("oldCartItemsObjects = ", oldCartItemsObjects, productId);
+
 
 
 		const newCartItemsObjects = oldCartItemsObjects.map(item => 
@@ -111,7 +119,7 @@ export const incrementCartItem = (productId) => {
 
 
 		//update localStorage
-		localStorage.setItem('cart', newCartItemsObjects);
+		localStorage.setItem('cart', JSON.stringify(newCartItemsObjects));
 
 		//send action to reducer to update store state
 		dispatch({type: UPDATE_CART_ITEM_AMOUNT, payload: {productId, amount: 1 }});
@@ -132,16 +140,17 @@ export const decrementCartItem = (productId) => {
 		const oldCartItems = localStorage.getItem('cart');
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
 
-		const newnewCartItemsObjects = oldCartItemsObjects.map(item => 
+		const newCartItemsObjects = oldCartItemsObjects.map(item => 
 			
 
 			item.product.id === productId ? 
-				(item.quantity > 0 ? item.quantity -= 1 : item.quantity += 1)
-				: item.quantity
-		)
+				(item.quantity > 0 ? {...item, quantity : item.quantity -= 1 } : item)
+				: item
+				
+		);
 
 		//update localStorage
-		localStorage.setItem('cart', newnewCartItemsObjects);
+		localStorage.setItem('cart', JSON.stringify(newCartItemsObjects));
 
 		//send action to reducer to update store state
 		dispatch({type: UPDATE_CART_ITEM_AMOUNT, payload: {productId, amount: -1 }});

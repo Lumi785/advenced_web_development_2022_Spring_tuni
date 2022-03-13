@@ -62,7 +62,9 @@ const Product = ({ providedProduct }) => {
 	 * @returns bool, true if product in cart, else return false
 	 */
 	function isProductInCart(product){
-		const productArray = cart === undefined? [] : cart.filter(item => item.product.id === product.id);
+		console.log("cart ttt = ", cart);
+		//cart.map(iii => console.log("iiiiiiiii = ", iii));
+		const productArray = cart.length > 0? cart.filter(item => item.product.id === product.id) : [];
 		return productArray.length > 0;
 	}
 	
@@ -111,7 +113,7 @@ const Product = ({ providedProduct }) => {
 				</>
 			}
 
-			{auth.role === 'guest' && 
+			{auth.role !== 'admin' && 
 				<button 
 					data-testid={'add-cart-button-'+ idToUse}
 					onClick={e => {

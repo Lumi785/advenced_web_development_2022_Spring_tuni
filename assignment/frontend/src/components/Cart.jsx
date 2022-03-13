@@ -14,7 +14,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector(selectCart);
     const auth = useSelector(selectAuth);
-    // console.log("cart === ", cart);
+    console.log("cart === ", cart);
     // console.log("auth === ", auth);
 
     function handleOrder(){

@@ -13,7 +13,7 @@ const CartItem = ({ item }) => {
 	const dispatch = useDispatch();
 
 	function handleIncrement(){
-		dispatch(incrementCartItem());
+		dispatch(incrementCartItem(item.product.id));
 	}
 
 	function handleDecrement(){
