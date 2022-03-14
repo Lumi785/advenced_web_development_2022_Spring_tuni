@@ -19,7 +19,7 @@ const Auth = ({ authRoles }) => {
 
 
     const rolesToUse = authRoles ? authRoles : null;
-    console.log("Auth compoenent use effect: ", authRoles, auth.role);
+    //console.log("Auth compoenent : ", authRoles, auth.role);
     if (rolesToUse && rolesToUse.includes(auth.role)){
                 console.log("correct auth role, render children");
                 return  <div data-testid='auth-success-component'>
