@@ -49,6 +49,7 @@ const Navbar = () => {
 	function handleLogout(e){
 		e.preventDefault();
 		dispatch(logOut());
+		localStorage.clear();
 
 	}
 
@@ -73,7 +74,7 @@ const Navbar = () => {
 			return (
 				<div data-testid='navbar-component'>
 					<Link data-testid='home-link' to='/'>Home  </Link>
-					<Link data-testid='products-link' to='/products'>Product  </Link>
+					<Link data-testid='products-link' to='/products'>Products  </Link>
 					<Link data-testid='orders-link' to='/orders'>Orders  </Link>
 					<Link data-testid='users-link' to='/users'>Users  </Link>
 					<Link data-testid='logout-link' to='/logout' onClick={handleLogout}>Log Out</Link>
