@@ -47,14 +47,13 @@ const App = () => {
 				<Route path='/' element={<Home/>} />
 				<Route path='/*' element={<NotFound/>} />
 				<Route path='/products' element={<Products/>} />
-				<Route path='/products/:productId' element={<Product/>} />
 				<Route path='/register' element={<Register/>} />
 
 
 
-				{/* <Route path="/products/:productId" element={<Finder type={'product'} findHandler={getProduct} />}>
+				<Route path="/products/:productId" element={<Finder type={'product'} findHandler={getProduct} />}>
 					<Route path='' element={<Product/>} />
-       		    </Route> */}
+       		    </Route>
 
 				
 

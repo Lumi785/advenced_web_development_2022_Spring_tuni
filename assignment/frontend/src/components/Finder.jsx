@@ -12,7 +12,7 @@ const selectOrders = state => state.orders;
 
 const Finder = ({ type, findHandler }) => {
     console.log("finder called ...");
-    const [term, setTerm] = useState('');
+    //const [term, setTerm] = useState('');
 
 
     const dispatch = useDispatch();
@@ -25,61 +25,76 @@ const Finder = ({ type, findHandler }) => {
     const incomeIdObj = useParams();
 
 
-    useEffect(() => {
+    // useEffect(() => {
+    let displayItem = null;
+
         if (type === 'product'){
             const id = incomeIdObj.productId;
-            const disPlayItem = products.find(product => product.id === id);
-            console.log("found product is = ", disPlayItem);
-            if (!disPlayItem){
+            displayItem = products.find(product => product.id === id);
+            console.log("found product is = ", displayItem);
+            if (!displayItem){
                 dispatch(findHandler(id));
             };
-            setTerm(disPlayItem);
+            //setTerm(displayItem);
         };
         if (type === 'user'){
             const id = incomeIdObj.userId;
-            const disPlayItem = users.find(user => user.id === id);
+            displayItem = users.find(user => user.id === id);
     
            
-            if (!disPlayItem){
+            if (!displayItem){
                 dispatch(findHandler(id));
             };
-            setTerm(disPlayItem);
+            //setTerm(displayItem);
 
             
         };
         if (type === 'order'){
             const id = incomeIdObj.orderId;
-            const disPlayItem = orders.find(order => order.id === id);
+            displayItem = orders.find(order => order.id === id);
             
-            if (!disPlayItem){
+            if (!displayItem){
                 dispatch(findHandler(id));
             };
-            setTerm(disPlayItem);
+            //setTerm(displayItem);
 
         };
 
-    }, []);
+    // }, []);
 
   
+    if (displayItem){
+        return <div data-testid={`${type}-found-component`}>
+        {<Outlet/>}
+    </div>
+    } else {
+        return <div data-testid={`no-${type}-found-component`}>
+        {type} not found.
+    </div>
+    }
 
-    return(
-        <>  
+    // return(
+    //     <>  
             
-            {
-                term === undefined && 
-                <div data-testid={`no-${type}-found-component`}>
-                    {type} not found.
-                </div>
-            }
+    //         {
+    //             {displayItem} === undefined && 
+    //             <div data-testid={`no-${type}-found-component`}>
+    //                 {type} not found.
+    //             </div>
+    //         }
 
-            {
-                term !== undefined && 
-                <div data-testid={`${type}-found-component`}>
-                    {<Outlet/>}
-                </div>
-            }
-        </>
-    )
+    //         {
+    //             {displayItem} && 
+    //             <div data-testid={`${type}-found-component`}>
+    //                 {<Outlet/>}
+    //             </div>
+    //         }
+    //     </>
+    // )
+    
 };
 
 export default Finder;
+
+
+//commented out codes not working

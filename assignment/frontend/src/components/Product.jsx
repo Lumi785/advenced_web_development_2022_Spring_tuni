@@ -26,6 +26,7 @@ const Product = ({ providedProduct }) => {
 	const auth = useSelector(selectAuth);
 	const products = useSelector(selectProducts);
 
+
 	const cart = useSelector(selectCart);
 
 	const productIdFromUrl = useParams().productId;
@@ -63,7 +64,6 @@ const Product = ({ providedProduct }) => {
 	 */
 	function isProductInCart(product){
 		console.log("cart ttt = ", cart);
-		//cart.map(iii => console.log("iiiiiiiii = ", iii));
 		const productArray = cart.length > 0? cart.filter(item => item.product.id === product.id) : [];
 		return productArray.length > 0;
 	}
@@ -80,6 +80,11 @@ const Product = ({ providedProduct }) => {
 			handleAddCartItem(product);
 
 		}
+	}
+
+	if (!productToUse) {
+		return <h1> No product found!</h1>
+
 	}
 	
 
