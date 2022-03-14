@@ -28,23 +28,22 @@ const Product = ({ providedProduct }) => {
 
 	const cart = useSelector(selectCart);
 
-	const {productId} = useParams();
+	const productIdFromUrl = useParams().productId;
 
-	function handleDelete(){
-		
-		dispatch(deleteProduct(productId));
+	function handleDelete(id){
+		dispatch(deleteProduct(id));
 	}
 
-	function handleIncrementCartItem(){
-		dispatch(incrementCartItem(productId));
+	function handleIncrementCartItem(id){
+		dispatch(incrementCartItem(id));
 	}
 
-	function handleAddCartItem(){
-		dispatch(addCartItem(providedProduct))
+	function handleAddCartItem(product){
+		dispatch(addCartItem(product))
 	}
 
-	const productFromPath = productId ? 
-		products.filter(prd => prd.id === productId)[0] :  null;
+	const productFromPath = productIdFromUrl ? 
+		products.filter(prd => prd.id === productIdFromUrl)[0] :  null;
 
 	const productToUse = providedProduct ? providedProduct : productFromPath;
 
@@ -78,7 +77,7 @@ const Product = ({ providedProduct }) => {
 		if (isProductInCart(product)){
 			handleIncrementCartItem(product.id);
 		} else {
-			handleAddCartItem();
+			handleAddCartItem(product);
 
 		}
 	}
