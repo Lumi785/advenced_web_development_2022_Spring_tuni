@@ -12,6 +12,7 @@ import { NEW_NOTIFICATION, REMOVE_NOTIFICATION } from '../constants';
  * @return {object} action
  */
 export const createNotification = (newNotification = { message: '', isSuccess: false }) => {
+	console.log("new notification = ", newNotification);
 	return async(dispatch) => {
 		dispatch({
 			type: NEW_NOTIFICATION, 

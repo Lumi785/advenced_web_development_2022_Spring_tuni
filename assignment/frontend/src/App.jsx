@@ -53,12 +53,15 @@ const App = () => {
 
 
 				
+
+				
+				
 				
 				<Route path="/cart" element={<Auth authRoles={['guest']}/>}>
           			<Route element={<Cart />} />
        		    </Route>
 
-			
+				
 
 				   {/* guest */}
 				<Route path="/register" element={<Auth authRoles={['guest']} />}>
@@ -67,6 +70,12 @@ const App = () => {
 				<Route path="/login" element={<Auth authRoles={['guest']} />}>
 					<Route path='' element={<Login/>} />
        		    </Route>
+				<Route path="/orders" element={<Auth authRoles={['customer', 'admin']} />}>
+					<Route path='' element={<Orders/>} />
+       		    </Route>
+
+
+
 				<Route path="/cart" element={<Auth authRoles={['guest', 'customer']} />}>
 					<Route path='' element={<Cart/>} />
        		    </Route>
