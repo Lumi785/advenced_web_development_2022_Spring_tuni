@@ -53,24 +53,12 @@ const App = () => {
 
 
 				
-
-				
-				
-				{/* <Route path="/private-outlet" element={<PrivateOutlet />}>
-          			<Route element={<Private />} />
-       		    </Route> */}
 				
 				<Route path="/cart" element={<Auth authRoles={['guest']}/>}>
           			<Route element={<Cart />} />
        		    </Route>
 
-				{/* <Route path="/register" element={
-					<Auth authRoles={['guest']}>
-						<div> this is children</div>
-				   		<Register />
-					</Auth>
-					}>
-       		    </Route> */}
+			
 
 				   {/* guest */}
 				<Route path="/register" element={<Auth authRoles={['guest']} />}>
