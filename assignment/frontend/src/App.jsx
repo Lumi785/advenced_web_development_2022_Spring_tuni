@@ -48,18 +48,20 @@ const App = () => {
 				<Route path='/*' element={<NotFound/>} />
 				<Route path='/products' element={<Products/>} />
 				<Route path='/products/:productId' element={<Product/>} />
-				<Route element={<Finder type={'product'} getProduct={getProduct}/>}/>
-				{/* <Route path='/register' element={<Register/>} /> */}
+				<Route path='/register' element={<Register/>} />
 
 
+
+				{/* <Route path="/products/:productId" element={<Finder type={'product'} findHandler={getProduct} />}>
+					<Route path='' element={<Product/>} />
+       		    </Route> */}
+
 				
 
 				
 				
 				
-				<Route path="/cart" element={<Auth authRoles={['guest']}/>}>
-          			<Route element={<Cart />} />
-       		    </Route>
+				
 
 				
 

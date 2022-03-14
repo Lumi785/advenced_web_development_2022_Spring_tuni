@@ -25,6 +25,7 @@ export const productMsg = {
  * @return {Function} - Thunk -> action
  */
 export const getProduct = (productId) => {
+	console.log("product id = ", productId);
 	return async(dispatch) => {
 		const reqOptions = {
 			method: 'GET',

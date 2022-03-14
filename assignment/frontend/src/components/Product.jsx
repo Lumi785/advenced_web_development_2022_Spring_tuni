@@ -24,26 +24,27 @@ const Product = ({ providedProduct }) => {
 	const navigate = useNavigate();
 
 	const auth = useSelector(selectAuth);
-	const produts = useSelector(selectProducts);
+	const products = useSelector(selectProducts);
 
 	const cart = useSelector(selectCart);
 
 	const {productId} = useParams();
 
-	function handleDelete(id){
-		dispatch(deleteProduct(id));
+	function handleDelete(){
+		
+		dispatch(deleteProduct(productId));
 	}
 
-	function handleIncrementCartItem(productId){
+	function handleIncrementCartItem(){
 		dispatch(incrementCartItem(productId));
 	}
 
-	function handleAddCartItem(product){
+	function handleAddCartItem(){
 		dispatch(addCartItem(providedProduct))
 	}
 
 	const productFromPath = productId ? 
-		produts.filter(prd => prd.id === productId)[0] :  null;
+		products.filter(prd => prd.id === productId)[0] :  null;
 
 	const productToUse = providedProduct ? providedProduct : productFromPath;
 
@@ -77,7 +78,7 @@ const Product = ({ providedProduct }) => {
 		if (isProductInCart(product)){
 			handleIncrementCartItem(product.id);
 		} else {
-			handleAddCartItem(product);
+			handleAddCartItem();
 
 		}
 	}

@@ -9,13 +9,17 @@ const selectUsers = state => state.users;
 const selectProducts = state => state.products;
 const selectOrders = state => state.orders;
 
+
 const Finder = ({ type, findHandler }) => {
+    console.log("finder called ...");
     const [term, setTerm] = useState('');
+
 
     const dispatch = useDispatch();
 
     const users = useSelector(selectUsers);
     const products = useSelector(selectProducts);
+    console.log("products = ", products);
     const orders = useSelector(selectOrders);
 
     const incomeIdObj = useParams();
@@ -25,6 +29,7 @@ const Finder = ({ type, findHandler }) => {
         if (type === 'product'){
             const id = incomeIdObj.productId;
             const disPlayItem = products.find(product => product.id === id);
+            console.log("found product is = ", disPlayItem);
             if (!disPlayItem){
                 dispatch(findHandler(id));
             };
@@ -70,7 +75,7 @@ const Finder = ({ type, findHandler }) => {
             {
                 term !== undefined && 
                 <div data-testid={`${type}-found-component`}>
-                    <Outlet/>
+                    {<Outlet/>}
                 </div>
             }
         </>

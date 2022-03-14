@@ -29,54 +29,62 @@ const Cart = () => {
             dispatch(addOrder(newOrder));
         }
         if (auth.role === 'guest'){
-            const notification = {
+            const newNotification = {
                 message: 'Login please',
                 isSuccess: false
             }
             navigate('/login');
-            dispatch(createNotification(notification));
+            dispatch(createNotification(newNotification));
         }
     }
 
     return(
+        <>
+            {auth.role !== 'admin' && 
+            
+                <div data-testid='cart-component'>
+                    {
+                        cart.length === 0 && 
+                        <div data-testid='empty-cart'>Cart is empty !</div>
+                    }
+
+                    {
+                        cart.length > 0 &&
+                        <>
+                            <div data-testid='cart-item-container'>
+                                
+
+                                    {
+                                        cart.map(item => 
+                                            <CartItem 
+                                                item={item} 
+                                                key={item.product.id}
+                                                
+                                            />)
+                                    }
+                                
+                                
+                            </div>
+                            <button 
+                                data-testid='order-button'
+                                onClick={
+                                    e => {
+                                        e.preventDefault();
+                                        handleOrder();
+                                    }
+                                }
+                                >Order
+                            </button>
+                        </>
+                    }
+
+                </div>
+            }
         
-        <div data-testid='cart-component'>
-            {
-                cart.length === 0 && 
-                <div data-testid='empty-cart'>Cart is empty !</div>
-            }
-
-            {
-                cart.length > 0 &&
-                <>
-                    <div data-testid='cart-item-container'>
-                        
-
-                            {
-                                cart.map(item => 
-                                    <CartItem 
-                                        item={item} 
-                                        key={item.product.id}
-                                        
-                                    />)
-                            }
-                        
-                        
-                    </div>
-                    <button 
-                        data-testid='order-button'
-                        onClick={
-                            e => {
-                                e.preventDefault();
-                                handleOrder();
-                            }
-                        }
-                        >Order
-                    </button>
-                </>
-            }
-
-        </div>
+        
+        
+        </>
+        
     )
 
 };
