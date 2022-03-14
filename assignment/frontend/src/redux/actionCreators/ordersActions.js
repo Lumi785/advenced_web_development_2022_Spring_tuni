@@ -113,7 +113,6 @@ export const addOrder = (newOrder) => {
 		await fetch(url, reqOptions)
 			.then(res => res.json())
 			.then(data => {
-				console.log("data === ", data);
 				
 				if(data.error){
 					if (isObject(data.error)){

@@ -14,7 +14,7 @@ const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector(selectCart);
     const auth = useSelector(selectAuth);
-    console.log("cart === ", cart);
+    console.log("cart from handleOrder === ", cart);
     // console.log("auth === ", auth);
 
     function handleOrder(){
@@ -25,6 +25,7 @@ const Cart = () => {
                 customerId: auth.id,
                 items : cart
             }
+            console.log("new order = ", newOrder);
             dispatch(addOrder(newOrder));
         }
         if (auth.role === 'guest'){

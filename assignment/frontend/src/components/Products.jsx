@@ -43,14 +43,19 @@ const Products = () => {
 
     return(
         <div data-testid='products-component'>
-            <button 
-            data-testid='open-adder-button' 
-            onClick={(e) => {
-                e.preventDefault();
-                setOpen(!open);
-            }}
-            >{btnText}
-            </button>
+
+            {
+                auth.role === 'admin' && 
+
+                <button 
+                    data-testid='open-adder-button' 
+                    onClick={(e) => {
+                        e.preventDefault();
+                        setOpen(!open);
+                    }}
+                    >{btnText}
+                </button>
+            }
 
             {(auth.role === 'admin' && open === true) && 
             <ProductAdder open={open} openHandler={openHandler} />
