@@ -27,7 +27,7 @@ export const initCart = () => {
 	return ({
 		type: INIT_CART,
 		payload: objCartItems? objCartItems : []
-	})
+	});
 };
 
 
@@ -44,14 +44,14 @@ export const addCartItem = (product) => {
 	return async(dispatch) => {
 
 		const jsonOldCartItems = localStorage.getItem('cart');
-		let objOldCartItems = JSON.parse(jsonOldCartItems);
+		const objOldCartItems = JSON.parse(jsonOldCartItems);
 
 		console.log("objOldCartItems = ", objOldCartItems);
 
 		const newCartItem = {
 			product: product,
 			quantity: 1
-		}
+		};
 
 		const newObjOldCartItems = objOldCartItems? [...objOldCartItems, newCartItem] : [newCartItem];
 
@@ -62,8 +62,8 @@ export const addCartItem = (product) => {
 
 		//this is for reducer to add to store state
 		dispatch({type: ADD_CART_ITEM, payload: newCartItem});
-		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.add, isSuccess: true}})
-	}
+		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.add, isSuccess: true}});
+	};
 	
 };
 
@@ -89,7 +89,7 @@ export const removeCartItem = (product) => {
 		
 		// send action to reducer to update store state
 		dispatch({type: REMOVE_CART_ITEM, payload: product});
-	}
+	};
 };
 
 
@@ -124,7 +124,7 @@ export const incrementCartItem = (productId) => {
 		//send action to reducer to update store state
 		dispatch({type: UPDATE_CART_ITEM_AMOUNT, payload: {productId, amount: 1 }});
 		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.update, isSuccess: true}});
-	}
+	};
 };
 
 
@@ -155,7 +155,7 @@ export const decrementCartItem = (productId) => {
 		//send action to reducer to update store state
 		dispatch({type: UPDATE_CART_ITEM_AMOUNT, payload: {productId, amount: -1 }});
 		dispatch({type: NEW_NOTIFICATION, payload: {message: cartMsg.update, isSuccess: true}});
-	}
+	};
 };
 
 
@@ -167,5 +167,5 @@ export const decrementCartItem = (productId) => {
 export const emptyCart = () => {
 	return({
 		type: EMPTY_CART
-	})
+	});
 };

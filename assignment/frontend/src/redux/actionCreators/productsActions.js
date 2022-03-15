@@ -25,14 +25,14 @@ export const productMsg = {
  * @return {Function} - Thunk -> action
  */
 export const getProduct = (productId) => {
-	console.log("product id = ", productId);
+	//console.log("product id = ", productId);
 	return async(dispatch) => {
 		const reqOptions = {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json'
 			}
-		}
+		};
 
 		await fetch('/api/products/'+ productId, reqOptions)
 			.then(res => res.json())
@@ -45,8 +45,8 @@ export const getProduct = (productId) => {
 			})
 			.catch(err =>{
 				console.log(err);
-			})
-	}
+			});
+	};
 };
 
 
@@ -61,8 +61,8 @@ export const getProducts = () => {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json'
-			  },
-		}
+			},
+		};
 
 		await fetch('/api/products', reqOptions)
 		.then(res => res.json())
@@ -75,8 +75,8 @@ export const getProducts = () => {
 		})
 		.catch(err => {
 			console.log(err);
-		})
-	}
+		});
+	};
 };
 
 
@@ -97,7 +97,7 @@ export const addProduct = (productToAdd) => {
 	function isObject(item){
 		return (typeof item === 'object' &&
 				!Array.isArray(item) &&
-				item !== null)
+				item !== null);
 	}
 	
 	return async(dispatch) => {
@@ -105,8 +105,8 @@ export const addProduct = (productToAdd) => {
 		const reqOptions = {
 			method: 'POST',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(productToAdd)
 		};
@@ -129,13 +129,13 @@ export const addProduct = (productToAdd) => {
 
 				} else {
 					dispatch({type: ADD_PRODUCT, payload: data});
-					dispatch({type: NEW_NOTIFICATION, payload: {message: productMsg.added, isSuccess: true}})
+					dispatch({type: NEW_NOTIFICATION, payload: {message: productMsg.added, isSuccess: true}});
 				}
 			})
 			.catch(err => {
 				console.log(err);
-			})
-	}
+			});
+	};
 	
 };
 
@@ -153,8 +153,8 @@ export const updateProduct = (productToUpdate) => {
 		const reqOptions = {
 			method: 'PUT',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(productToUpdate)
 		};
@@ -166,13 +166,13 @@ export const updateProduct = (productToUpdate) => {
 					dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
 				} else {
 					dispatch({type: UPDATE_PRODUCT, payload: data});
-					dispatch({type: NEW_NOTIFICATION, payload: {message: productMsg.updated, isSuccess: true}})
+					dispatch({type: NEW_NOTIFICATION, payload: {message: productMsg.updated, isSuccess: true}});
 				}
 			})
 			.catch(err => {
 				console.log(err);
-			})
-	}
+			});
+	};
 };
 
 
@@ -189,8 +189,8 @@ export const deleteProduct = (productId) => {
 		const reqOptions = {
 			method: 'DELETE',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			}
 
 		};
@@ -207,5 +207,5 @@ export const deleteProduct = (productId) => {
 				}
 			})
 			.catch(err => console.log(err));
-	}	
+	};	
 };

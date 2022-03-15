@@ -44,25 +44,25 @@ export const initAuth = () => {
 		const reqOptions = {
 			method: 'GET',
 			headers: {
-			  'Accept': 'application/json'
+				'Accept': 'application/json'
 			},
 		};
 
 		//send to backends /api/check-status path to check whether or not there is the correct browser-cookie and whether or not that browser-cookie is valid. 
 		await fetch('/api/check-status', reqOptions)
 		.then(res => {
-			if(res.ok){return res.json()}
+			if(res.ok){return res.json()};
 			//else{console.log('response err = ', res.err)};
 		})
 		.then(data => {
 			
 			if (Object.keys(data).length === 0){
-				dispatch({type: INIT_AUTH})
+				dispatch({type: INIT_AUTH});
 			} else {
 				dispatch({
 						type: INIT_AUTH,
 						payload: data.user,
-					})
+					});
 			}
 		})
 		.catch(err => {
@@ -70,9 +70,9 @@ export const initAuth = () => {
 			dispatch({
 				type: NEW_NOTIFICATION,
 				payload: {message: 'test-error', isSuccess: false}
-			})
-		})	
-	}
+			});
+		});	
+	};
 };
 /**
  * @description Asynchronous thunk that handles validation for logInCreds (check Login and Registration validation from assignment instructions). Expects for a successful login-response from server, before dispatches
@@ -122,8 +122,8 @@ export const logIn = (logInCreds) => {
 		const reqOptions = {
 			method: 'POST',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(logInCreds)
 		};
@@ -140,7 +140,7 @@ export const logIn = (logInCreds) => {
 				dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: 'test-error', isSuccess: false },
-				})
+				});
 			}			
 		})
 		.then(data => {
@@ -152,13 +152,13 @@ export const logIn = (logInCreds) => {
 			dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: validAuth.welcomeBack, isSuccess: true },
-				})
+				});
 		})
 		.catch(error => {
 			console.log("response error = ", error);
 			
-		})
-	}
+		});
+	};
 };
 
 /**
@@ -177,14 +177,14 @@ export const logOut = () => {
 		const reqOptions = {
 			method: 'GET',
 			headers: {
-			  'Accept': 'application/json',
+				'Accept': 'application/json',
 			}
 		};
 
 		await fetch('/api/logout', reqOptions)
 		.then(res => {
 			if(res.ok){ 
-				return res.json()
+				return res.json();
 			} else{
 				console.log("response error = ", res.error);
 			}
@@ -202,7 +202,7 @@ export const logOut = () => {
 			}
 		)
 		.catch(error => console.log(error));
-	}
+	};
 
 
 };
@@ -259,7 +259,7 @@ export const register = (registerCreds) => {
 			await dispatch({
 				type: NEW_NOTIFICATION,
 				payload: {message: invalidAuth.passwordMismatch, isSuccess: false}
-			})
+			});
 			return;
 		}
 
@@ -267,8 +267,8 @@ export const register = (registerCreds) => {
 		const reqOptions = {
 			method: 'POST',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify({name, email, password})
 		};
@@ -284,7 +284,7 @@ export const register = (registerCreds) => {
 				dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: 'test-error', isSuccess: false },
-				})
+				});
 			}			
 		})
 		.then(data => {
@@ -297,10 +297,10 @@ export const register = (registerCreds) => {
 			dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: validAuth.welcome(name), isSuccess: true },
-				})
+				});
 		})
 		.catch(error => {
 			console.log("response error = ", error);
-		})
-	}
+		});
+	};
 };

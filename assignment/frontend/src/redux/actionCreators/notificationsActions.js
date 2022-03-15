@@ -18,7 +18,7 @@ export const createNotification = (newNotification = { message: '', isSuccess: f
 			type: NEW_NOTIFICATION, 
 			payload: {message: newNotification.message, isSuccess: newNotification.isSuccess
 		}});
-	}
+	};
 };
 
 
@@ -30,5 +30,5 @@ export const createNotification = (newNotification = { message: '', isSuccess: f
 export const removeNotification = () => {
 	return async(dispatch) => {
 		dispatch({type: REMOVE_NOTIFICATION});
-	}
+	};
 };

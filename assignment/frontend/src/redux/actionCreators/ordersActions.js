@@ -27,7 +27,7 @@ export const getOrder = (orderId) => {
 			headers: {
 				'Accept': 'application/json'
 			}
-		}
+		};
 
 		await fetch('/api/orders/'+ orderId, reqOptions)
 			.then(res => res.json())
@@ -40,8 +40,8 @@ export const getOrder = (orderId) => {
 			})
 			.catch(err =>{
 				console.log(err);
-			})
-	}
+			});
+	};
 };
 
 
@@ -57,8 +57,8 @@ export const getOrders = () => {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json'
-			  },
-		}
+			},
+		};
 
 		await fetch('/api/orders', reqOptions)
 		.then(res => res.json())
@@ -71,8 +71,8 @@ export const getOrders = () => {
 		})
 		.catch(err => {
 			console.log(err);
-		})
-	}
+		});
+	};
 };
 
 
@@ -93,10 +93,10 @@ export const addOrder = (newOrder) => {
 	 * @param {*} item to be checked whether it is an object(but not array, not null) or not
 	 * @returns true if item is an object other than array or null
 	 */
-	 function isObject(item){
+	function isObject(item){
 		return (typeof item === 'object' &&
 				!Array.isArray(item) &&
-				item !== null)
+				item !== null);
 	}
 	
 	return async(dispatch) => {
@@ -104,8 +104,8 @@ export const addOrder = (newOrder) => {
 		const reqOptions = {
 			method: 'POST',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(newOrder)
 		};
@@ -129,12 +129,12 @@ export const addOrder = (newOrder) => {
 				} else {
 					dispatch({type: EMPTY_CART});
 					dispatch({type: ADD_ORDER, payload: data});
-					dispatch({type: NEW_NOTIFICATION, payload: {message: orderMsg.newOrder, isSuccess: true}})
+					dispatch({type: NEW_NOTIFICATION, payload: {message: orderMsg.newOrder, isSuccess: true}});
 					
 				}
 			})
 			.catch(err => {
 				console.log(err);
-			})
-	}
+			});
+	};
 };

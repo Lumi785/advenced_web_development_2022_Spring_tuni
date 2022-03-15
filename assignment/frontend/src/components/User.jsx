@@ -17,15 +17,15 @@ const User = ({ providedUser}) => {
     const auth = useSelector(selectAuth);
     const users = useSelector(selectUsers);
     
-    let navigate = useNavigate();
-    let {userId: userId_param} = useParams();
+    const navigate = useNavigate();
+    const {userId: userIdparam} = useParams();
 
     
     //console.log("aa == ", userId_param);
 
     
-    const userFromPath = userId_param ? 
-        users.filter(user => user.id === userId_param)[0] :  null;
+    const userFromPath = userIdparam ? 
+        users.filter(user => user.id === userIdparam)[0] :  null;
 
 
     const userToUse = providedUser ? providedUser : userFromPath;
@@ -38,7 +38,7 @@ const User = ({ providedUser}) => {
 
     const modifyPath = providedUser ? `${userToUse.id}/modify` : 'modify';
 
-    const idToUse = userId_param ? userId_param : providedUser.id;
+    const idToUse = userIdparam ? userIdparam : providedUser.id;
 
 
 
@@ -76,7 +76,7 @@ const User = ({ providedUser}) => {
         
             }
        
-    </li>) 
+    </li>);
 
 };
 

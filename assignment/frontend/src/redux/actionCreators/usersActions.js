@@ -34,7 +34,7 @@ export const getUser = (userId) => {
 			headers: {
 				'Accept': 'application/json'
 			}
-		}
+		};
 
 		await fetch('/api/users/'+ userId, reqOptions)
 			.then(res => res.json())
@@ -45,8 +45,8 @@ export const getUser = (userId) => {
 					dispatch({type: GET_USER, payload: data});
 				}
 			})
-			.catch(err =>{console.log(err);})
-	}
+			.catch(err =>{console.log(err);});
+	};
 };
 
 
@@ -58,20 +58,20 @@ export const getUser = (userId) => {
  * @returns {Function} - For the thunk to then dispatch as an object (ie the action).
  */
 export const getUsers = () => {
-	console.log("getUsers called ...")
+	// console.log("getUsers called ...");
 
 	return async(dispatch) => {
-		console.log("kkkk")
+		
 		const reqOptions = {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json'
 			  },
-		}
+		};
 
 		await fetch('/api/users', reqOptions)
 		.then(res => {
-			console.log("00000")
+
 			return res.json();
 		})
 		.then(data => {
@@ -85,8 +85,8 @@ export const getUsers = () => {
 		})
 		.catch(err => {
 			console.log("err ======= ", err);
-		})
-	}
+		});
+	};
 };
 
 
@@ -107,8 +107,8 @@ export const updateUser = (updatedUser) => {
 		const reqOptions = {
 			method: 'PUT',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(updatedUser)
 		};
@@ -120,13 +120,13 @@ export const updateUser = (updatedUser) => {
 					dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
 				} else {
 					dispatch({type: UPDATE_USER, payload: data});
-					dispatch({type: NEW_NOTIFICATION, payload: {message: userMsg.updateUser, isSuccess: true}})
+					dispatch({type: NEW_NOTIFICATION, payload: {message: userMsg.updateUser, isSuccess: true}});
 				}
 			})
 			.catch(err => {
 				console.log(err);
-			})
-	}
+			});
+	};
 };
 
 
@@ -140,14 +140,14 @@ export const updateUser = (updatedUser) => {
  */
 export const removeUser = (userId) => {
 	//console.log("remove user function called ...")
-	console.log("user id from remove user function = ", userId)
+	//console.log("user id from remove user function = ", userId)
 	return async(dispatch) => {
 		const url = '/api/users/' + userId;
 		const reqOptions = {
 			method: 'DELETE',
 			headers: {
-			  'Accept': 'application/json',
-			  'Content-Type': 'application/json'
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
 			},
 	
 		};
@@ -167,5 +167,5 @@ export const removeUser = (userId) => {
 				}
 			})
 			.catch(err => console.log(err));
-	}	
+	};	
 };

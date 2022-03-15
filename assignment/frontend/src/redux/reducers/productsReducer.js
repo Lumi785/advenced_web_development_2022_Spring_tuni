@@ -25,8 +25,8 @@ const productsReducer = (state = [], action) => {
 	
 	switch(action.type){
 		case ADD_PRODUCT:
-			console.log("action = ", action.payload)
-			console.log("state = ", state);
+			// console.log("action = ", action.payload)
+			// console.log("state = ", state);
 
 			//this way add the new product in front, so in UI new product will be shown the top 
 			// return [...state, action.payload] will add to the end of the array

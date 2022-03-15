@@ -82,7 +82,7 @@ const UserModifier = () => {
 
 
         </form>
-    )
+    );
 };
 
 export default UserModifier;

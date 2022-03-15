@@ -23,7 +23,7 @@ const cartReducer = (state = [], action) => {
 	switch(action.type){
 		case INIT_CART:
 			console.log("typeof intial cart == ",action.payload,typeof(action.payload));
-			return action.payload? action.payload : state
+			return action.payload? action.payload : state;
 
 		case ADD_CART_ITEM:
 			

@@ -18,7 +18,7 @@ const authReducer = (state = {}, action) => {
             return action.payload;
 
         case REMOVE_AUTH:
-            return {role: 'guest'}
+            return {role: 'guest'};
 
         default:
             return state;
