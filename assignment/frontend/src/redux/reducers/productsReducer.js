@@ -21,6 +21,7 @@ import {
  * @returns {Array} new state for products
  */
 const productsReducer = (state = [], action) => {
+	console.log("products reducer called ... action.type = ", action.type);
 	
 	switch(action.type){
 		case ADD_PRODUCT:
@@ -29,13 +30,19 @@ const productsReducer = (state = [], action) => {
 
 			//this way add the new product in front, so in UI new product will be shown the top 
 			// return [...state, action.payload] will add to the end of the array
+			
+			if ([...state].find(prod => prod.id === action.payload.id)){
+				console.log("product already in state", action.payload.id);
+				return state;
+			} 
 			return [action.payload, ...state];
 			
 			
 		case DELETE_PRODUCT:
 			return state.filter(product => product.id !== action.payload.id);
 		case GET_PRODUCT:
-			return [...state, action.payload]
+			
+			return [action.payload];
 		case GET_PRODUCTS:
 			return state = action.payload;
 		case UPDATE_PRODUCT:
