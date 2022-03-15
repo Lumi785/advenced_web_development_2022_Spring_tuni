@@ -24,7 +24,7 @@ const Cart = () => {
             const newOrder = {
                 customerId: auth.id,
                 items : cart
-            }
+            };
             console.log("new order = ", newOrder);
             dispatch(addOrder(newOrder));
         }
@@ -32,7 +32,7 @@ const Cart = () => {
             const newNotification = {
                 message: 'Login please',
                 isSuccess: false
-            }
+            };
             navigate('/login');
             dispatch(createNotification(newNotification));
         }
@@ -85,7 +85,7 @@ const Cart = () => {
         
         </>
         
-    )
+    );
 
 };
 

@@ -51,7 +51,7 @@ export const initAuth = () => {
 		//send to backends /api/check-status path to check whether or not there is the correct browser-cookie and whether or not that browser-cookie is valid. 
 		await fetch('/api/check-status', reqOptions)
 		.then(res => {
-			if(res.ok){return res.json()};
+			if(res.ok){return res.json();}
 			//else{console.log('response err = ', res.err)};
 		})
 		.then(data => {

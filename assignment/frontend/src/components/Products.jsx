@@ -22,7 +22,7 @@ const Products = () => {
         }
     }
 
-    let btnText = buttonText();
+    const btnText = buttonText();
 
     function openHandler(){
         setOpen(false);
@@ -68,7 +68,7 @@ const Products = () => {
                     
             </ul> 
         </div>
-    )
+    );
 
 };
 

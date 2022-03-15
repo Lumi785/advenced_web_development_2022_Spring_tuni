@@ -66,7 +66,7 @@ export const getUsers = () => {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json'
-			  },
+			},
 		};
 
 		await fetch('/api/users', reqOptions)

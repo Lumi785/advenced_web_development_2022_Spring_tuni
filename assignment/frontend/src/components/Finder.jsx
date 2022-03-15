@@ -34,9 +34,9 @@ const Finder = ({ type, findHandler }) => {
             console.log("found product is = ", displayItem);
             if (!displayItem){
                 dispatch(findHandler(id));
-            };
+            }
             //setTerm(displayItem);
-        };
+        }
         if (type === 'user'){
             const id = incomeIdObj.userId;
             displayItem = users.find(user => user.id === id);
@@ -44,21 +44,21 @@ const Finder = ({ type, findHandler }) => {
            
             if (!displayItem){
                 dispatch(findHandler(id));
-            };
+            }
             //setTerm(displayItem);
 
             
-        };
+        }
         if (type === 'order'){
             const id = incomeIdObj.orderId;
             displayItem = orders.find(order => order.id === id);
             
             if (!displayItem){
                 dispatch(findHandler(id));
-            };
+            }
             //setTerm(displayItem);
 
-        };
+        }
 
     // }, []);
 
@@ -66,11 +66,11 @@ const Finder = ({ type, findHandler }) => {
     if (displayItem){
         return <div data-testid={`${type}-found-component`}>
         {<Outlet/>}
-    </div>
+        </div>;
     } else {
         return <div data-testid={`no-${type}-found-component`}>
         {type} not found.
-    </div>
+        </div>;
     }
 
     // return(

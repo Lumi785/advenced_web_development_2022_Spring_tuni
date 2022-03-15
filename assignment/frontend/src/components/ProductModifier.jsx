@@ -45,7 +45,7 @@ const ProductModifier = () => {
             price: inputPrice,
            
             description: inputDescription,
-        }
+        };
         // console.log("newObj = ", newObj);
 
         dispatch(updateProduct(newObj));
@@ -124,7 +124,7 @@ const ProductModifier = () => {
 
 
 
-    )
+    );
 };
 
 export default ProductModifier;

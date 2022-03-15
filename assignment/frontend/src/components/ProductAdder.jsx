@@ -26,7 +26,7 @@ const ProductAdder = ({ open, openHandler}) => {
         setProductName('');
         setProductPrice('');
         setProductDescription('');
-    }
+    };
 
     const formElement = 
         <form action="" data-testid='product-adder-component' onSubmit={handleSubmit}>
@@ -65,7 +65,7 @@ const ProductAdder = ({ open, openHandler}) => {
             />
         <button data-testid='add-button' type='submit' onClick={openHandler}>Add product</button>
         <button data-testid='cancel-button' type='button' onClick={openHandler}>Cancel</button>
-        </form>
+        </form>;
 
 
 
@@ -73,7 +73,7 @@ const ProductAdder = ({ open, openHandler}) => {
         <>
         {open && formElement}
         </>
-    )
+    );
 };
 
 
@@ -81,7 +81,7 @@ ProductAdder.prototypes = {
     open: PropTypes.bool,
     openHandler: PropTypes.func,
     
-}    
+};    
 
 
 export default ProductAdder;

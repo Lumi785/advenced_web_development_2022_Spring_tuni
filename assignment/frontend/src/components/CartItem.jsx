@@ -58,7 +58,7 @@ const CartItem = ({ item }) => {
 				</button>
 			</ul>
 		</ol>
-	)
+	);
 };
 
 export default CartItem;

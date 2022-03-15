@@ -31,7 +31,7 @@ const Notification = () => {
            
         
 
-    }, [notification])
+    }, [notification]);
     
         
 
@@ -74,7 +74,7 @@ const Notification = () => {
                 
         </>
         
-    )
+    );
 };
 
 export default Notification;

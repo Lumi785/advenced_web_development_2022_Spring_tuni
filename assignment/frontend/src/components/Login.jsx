@@ -20,7 +20,7 @@ const Login = () => {
         dispatch(logIn(credential));
         setEmail('');
         setPassword('');
-    }
+    };
     
     return(
         <div data-testid='login-component'>
@@ -54,7 +54,7 @@ const Login = () => {
             </form>
         </div>
 
-    )
+    );
 };
 
 export default Login;

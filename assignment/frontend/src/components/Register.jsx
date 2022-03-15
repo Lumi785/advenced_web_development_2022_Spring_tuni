@@ -26,7 +26,7 @@ const Register = () => {
         setEmail('');
         setPassword('');
         setConfirmPassword('');
-    }
+    };
 
     return(
 
@@ -85,7 +85,7 @@ const Register = () => {
                 />
             </form>
         </div>
-    )
+    );
 };
 
 export default Register;

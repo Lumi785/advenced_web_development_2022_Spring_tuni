@@ -40,7 +40,7 @@ const Product = ({ providedProduct }) => {
 	}
 
 	function handleAddCartItem(product){
-		dispatch(addCartItem(product))
+		dispatch(addCartItem(product));
 	}
 
 	const productFromPath = productIdFromUrl ? 
@@ -83,7 +83,7 @@ const Product = ({ providedProduct }) => {
 	}
 
 	if (!productToUse) {
-		return <h1> No product found!</h1>
+		return <h1> No product found!</h1>;
 
 	}
 	
@@ -131,7 +131,7 @@ const Product = ({ providedProduct }) => {
 			}
 			
 		</li>
-	)
+	);
 };
 
 export default Product;

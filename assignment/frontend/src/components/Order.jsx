@@ -69,7 +69,7 @@ const Order = ({ providedOrder }) => {
                                     <div data-testid='description-element'>{item.product.description}</div>
                                     <div data-testid='quantity-element'>{item.quantity}</div>
                                 </li>
-                            )
+                            );
 
                         })
                     }
@@ -79,7 +79,7 @@ const Order = ({ providedOrder }) => {
                 
             </div>
         ) : <></>
-    )
+    );
 };
 
 export default Order;

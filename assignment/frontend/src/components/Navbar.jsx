@@ -68,7 +68,7 @@ const Navbar = () => {
 					<div> customer</div>
 					
 				</div>
-			)
+			);
 			
 		case 'admin':
 			return (
@@ -81,7 +81,7 @@ const Navbar = () => {
 					<div> admin</div>
 				</div>
 
-			)
+			);
 
 		case 'guest':
 			
@@ -95,7 +95,7 @@ const Navbar = () => {
 					<div> guest</div>
 				</div>
 
-				)
+				);
 		default:
 			return (
 
@@ -110,10 +110,10 @@ const Navbar = () => {
 					<div> guest</div>
 					
 				</div>
-			)
+			);
 	}
 	
-}
+};
 
 
 export default Navbar;

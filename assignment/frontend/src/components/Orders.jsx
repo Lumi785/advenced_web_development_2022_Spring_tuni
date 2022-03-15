@@ -35,7 +35,7 @@ const Orders = () => {
 
     if (auth.role === 'admin'){
         if (orders.length === 0){
-            return (<div data-testid='no-order-component'>You have no orders !</div>)
+            return (<div data-testid='no-order-component'>You have no orders !</div>);
         } 
         return(
            
@@ -44,7 +44,7 @@ const Orders = () => {
                     {orders.map(order => <Order providedOrder={order} key={order.id}></Order>)}
                 </ul>
             </div>
-        )
+        );
     } else if (auth.role === 'customer'){
 
         if ( customerOrder !== undefined ){
@@ -54,13 +54,13 @@ const Orders = () => {
                     <ul data-testid='orders-container'>
                       <Order providedOrder={customerOrder} key={customerOrder.id}/>
                     </ul>
-                </div>)
+                </div>);
         } else {
 
-            return (<div data-testid='no-order-component'>You have no orders !</div>)
+            return (<div data-testid='no-order-component'>You have no orders !</div>);
         }
     } else {
-        return <></>
+        return <></>;
     }
 
 };

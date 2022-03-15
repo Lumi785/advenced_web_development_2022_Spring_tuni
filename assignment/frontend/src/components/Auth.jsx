@@ -25,7 +25,7 @@ const Auth = ({ authRoles }) => {
                 return  <div data-testid='auth-success-component'>
                             <h1> authentication passed</h1>
                             <Outlet /> 
-                        </div>
+                        </div>;
                 
             } else {
                 if (auth.role === 'guest'){
