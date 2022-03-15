@@ -56,16 +56,17 @@ const App = () => {
 				</Route>
 
 	
-				
 				<Route path="/register" element={<Auth authRoles={['guest']} />}>
 					<Route path='' element={<Register/>} />
-       		    </Route>
+				</Route>
+				
+
 				<Route path="/login" element={<Auth authRoles={['guest']} />}>
 					<Route path='' element={<Login/>} />
-       		    </Route>
+				</Route>
 				<Route path="/orders" element={<Auth authRoles={['customer', 'admin']} />}>
 					<Route path='' element={<Orders/>} />
-       		    </Route>
+				</Route>
 
 
 
