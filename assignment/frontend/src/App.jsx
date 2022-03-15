@@ -52,19 +52,11 @@ const App = () => {
 
 
 				<Route path="/products/:productId" element={<Finder type={'product'} findHandler={getProduct} />}>
-					<Route path='' element={<Product/>} />
+					<Route path='' element={<Product/>}/>
        		    </Route>
 
 				
-
 				
-				
-				
-				
-
-				
-
-				   {/* guest */}
 				<Route path="/register" element={<Auth authRoles={['guest']} />}>
 					<Route path='' element={<Register/>} />
        		    </Route>
