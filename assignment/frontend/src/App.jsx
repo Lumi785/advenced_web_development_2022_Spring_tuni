@@ -83,7 +83,7 @@ const App = () => {
 			
 				<Route path="/users" element={<Auth authRoles={['admin']} />}>
 					<Route path='' element={<Users/>} />
-       		    </Route>
+				</Route>
 			
 				
 				<Route path="/users/:userId" element={<Auth authRoles={['admin']} />}>
