@@ -53,7 +53,8 @@ const App = () => {
 
 				<Route path="/products/:productId" element={<Finder type={'product'} 			findHandler={getProduct} />}>
 					<Route path='' element={<Product/>}/>
-       			</Route>
+				</Route>
+       			
 
 				
 				
