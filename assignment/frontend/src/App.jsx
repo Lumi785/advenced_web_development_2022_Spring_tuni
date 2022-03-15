@@ -51,9 +51,9 @@ const App = () => {
 
 
 
-				<Route path="/products/:productId" element={<Finder type={'product'} findHandler={getProduct} />}>
+				<Route path="/products/:productId" element={<Finder type={'product'} 			findHandler={getProduct} />}>
 					<Route path='' element={<Product/>}/>
-       		    </Route>
+       			</Route>
 
 				
 				
@@ -84,10 +84,10 @@ const App = () => {
 				   {/* admin */}
 				<Route path="/users" element={<Auth authRoles={['admin']} />}>
 					<Route path='' element={<Users/>} />
-       		    </Route>
+       		    </	Route>
 				<Route path="/users/:userId" element={<Auth authRoles={['admin']} />}>
 					<Route path='' element={<User/>} />
-       		    </Route>
+       		    </	Route>
 				
 
 				
