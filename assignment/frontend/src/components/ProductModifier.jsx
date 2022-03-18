@@ -112,7 +112,7 @@ const ProductModifier = () => {
                             navigate('/products');
                         }
                     }
-                    >Update
+                    >Cancel
 
                 </button>
 

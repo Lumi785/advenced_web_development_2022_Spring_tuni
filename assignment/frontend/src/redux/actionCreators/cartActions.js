@@ -139,6 +139,7 @@ export const decrementCartItem = (productId) => {
 	return async(dispatch) => {
 		const oldCartItems = localStorage.getItem('cart');
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
+		console.log("oldCartItemsObjects from decrementCartItem from cartActions =  ", oldCartItemsObjects);
 
 		const newCartItemsObjects = oldCartItemsObjects.map(item => 
 			

@@ -90,6 +90,9 @@ const App = () => {
 				<Route path="/users/:userId/modify" element={<Auth authRoles={['admin']} />}>
 					<Route path='' element={<UserModifier/>} />
 				</Route>
+				<Route path="/products/:productId/modify" element={<Auth authRoles={['admin']} />}>
+					<Route path='' element={<ProductModifier/>} />
+				</Route>
 
 
 			</Routes>
