@@ -19,7 +19,7 @@ const Register = () => {
         //NOTE in the html part there must be name attribute for each input, name value is the same as attribute value's value
         const formData = new FormData(e.target);
         console.log("formData = ", formData);
-        console.log("formData.get(email) = ", formData.get(email));
+        console.log("formData.get(email) = ", formData.get('email'));
         const credential = {name: formData.get('name'), email: formData.get('email'), 
                             password: formData.get('password'), passwordConfirmation: formData.get('confirmPassword')};
         dispatch(register(credential));
@@ -35,7 +35,7 @@ const Register = () => {
             <form action="" data-testid='register-form' onSubmit={handleSubmit}>
                 <label htmlFor='name-input'>Name</label>
                 <input 
-                    type="text" 
+                    type='text'
                     data-testid='name-input' 
                     value={name}
                     name='name'
@@ -46,7 +46,7 @@ const Register = () => {
                 <br />
                 <label htmlFor='email-input'>Email</label>
                 <input 
-                    type="email" 
+                    type='email'
                     data-testid='email-input' 
                     value={email}
                     name='email'
@@ -57,7 +57,7 @@ const Register = () => {
                 <br />
                 <label htmlFor='password-input'>Password</label>
                 <input 
-                    type="password" 
+                    type='password'
                     data-testid='password-input' 
                     value={password}
                     name='password'
@@ -68,7 +68,7 @@ const Register = () => {
                 <br />
                 <label htmlFor='passwordConfirmation-input'>Password confirmation</label>
                 <input 
-                    type="password" 
+                    type='password' 
                     data-testid='passwordConfirmation-input' 
                     value={confirmPassword}
                     name='confirmPassword'
@@ -78,7 +78,7 @@ const Register = () => {
                 />
                 <br />
                 <input 
-                    type="submit" 
+                    type='submit'
                     data-testid='register-button' 
                     value='Register' 
                     required

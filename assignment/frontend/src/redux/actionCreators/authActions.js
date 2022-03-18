@@ -217,7 +217,7 @@ export const logOut = () => {
  */
 export const register = (registerCreds) => {
 
-	console.log("register cred = ", registerCreds);
+	//console.log("register cred = ", registerCreds);
 
 	return async(dispatch) => {
 		
@@ -239,6 +239,9 @@ export const register = (registerCreds) => {
 			});
 			return;
 		}
+		//console.log(" apple ...111 ");
+
+
 		if (password && password.length < 10 ){
 			await dispatch({
 				type: NEW_NOTIFICATION,
@@ -246,6 +249,8 @@ export const register = (registerCreds) => {
 			});
 			return;
 		} 
+		//console.log(" apple ...222 ");
+
 	
 		if(name.length < 4){
 			await dispatch({
@@ -254,6 +259,8 @@ export const register = (registerCreds) => {
 			});
 			return;
 		} 
+		//console.log(" apple ... 333");
+
 
 		if (password !== passwordConfirmation){
 			await dispatch({
@@ -262,6 +269,7 @@ export const register = (registerCreds) => {
 			});
 			return;
 		}
+		//console.log(" apple ... 444");
 
 		//credential forfats are ok, now send credential to backend to register
 		const reqOptions = {
@@ -272,6 +280,8 @@ export const register = (registerCreds) => {
 			},
 			body: JSON.stringify({name, email, password})
 		};
+
+		//console.log(" apple ... 555");
 		await fetch('/api/register', reqOptions)
 		.then(res => {
 			if(res.ok){
@@ -280,7 +290,7 @@ export const register = (registerCreds) => {
 			
 			//dispatch error from backend.
 			else {
-				//console.log("res.statuscode = ", res.status);
+				console.log("res.statuscode = ", res.status);
 				dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: 'test-error', isSuccess: false },
