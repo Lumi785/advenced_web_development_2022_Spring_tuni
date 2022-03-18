@@ -21,7 +21,7 @@ import {
  * @returns {Array} new state for products
  */
 const productsReducer = (state = [], action) => {
-	console.log("products reducer called ... action.type = ", action.type);
+	//console.log("products reducer called ... action.type = ", action.type);
 	
 	switch(action.type){
 		case ADD_PRODUCT:

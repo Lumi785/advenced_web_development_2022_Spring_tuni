@@ -31,7 +31,7 @@ const Orders = () => {
 
 
     const customerOrder = orders.find(order => order.customerId === auth.id);
-    console.log("customer order  === ", customerOrder, auth.id);
+    //console.log("customer order  === ", customerOrder, auth.id);
 
     if (auth.role === 'admin'){
         if (orders.length === 0){

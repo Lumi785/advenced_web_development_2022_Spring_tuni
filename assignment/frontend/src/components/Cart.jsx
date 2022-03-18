@@ -14,14 +14,14 @@ const Cart = () => {
     const dispatch = useDispatch();
     const cart = useSelector(selectCart);
     const auth = useSelector(selectAuth);
-    console.log("cart from handleOrder === ", cart);
+   // console.log("cart from handleOrder === ", cart);
     // console.log("auth === ", auth);
 
     function handleOrder(){
         
         if (auth.role === 'customer'){
             const cartWithoutImage = cart.map(item => delete(item.product.image));
-            console.log("cartWithoutImage = ", cartWithoutImage);
+            //console.log("cartWithoutImage = ", cartWithoutImage);
 
             const newOrder = {
                 // customerId: auth.id,

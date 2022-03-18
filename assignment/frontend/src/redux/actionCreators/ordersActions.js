@@ -88,7 +88,7 @@ export const getOrders = () => {
  * @return {Function} - Thunk -> action
  */
 export const addOrder = (newOrder) => {
-	console.log("addOrder is called ... newOder is: ", newOrder);
+	//console.log("addOrder is called ... newOder is: ", newOrder);
 	
 	/**
 	 * helper function to check an object is an object
@@ -115,7 +115,7 @@ export const addOrder = (newOrder) => {
 		await fetch(url, reqOptions)
 			.then(res => res.json())
 			.then(data => {
-				console.log("data ===== sssss ", data);
+				//console.log("data ===== sssss ", data);
 				
 				if(data.error){
 					if (isObject(data.error)){
