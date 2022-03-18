@@ -52,6 +52,7 @@ const Product = ({ providedProduct }) => {
 	const nameToUse = productToUse ? productToUse.name : null;
 	const descriptonToUse = productToUse ? productToUse.description : null;
 	const priceToUse = productToUse ? productToUse.price : null;
+	const imageToUse = productToUse ? (productToUse.image ? productToUse.image : null) :null;
 
 
 	//note: here must use providedProduct? Not productToUse?
@@ -63,7 +64,7 @@ const Product = ({ providedProduct }) => {
 	 * @returns bool, true if product in cart, else return false
 	 */
 	function isProductInCart(product){
-		console.log("cart ttt = ", cart);
+		//console.log("cart ttt = ", cart);
 		const productArray = cart.length > 0? cart.filter(item => item.product.id === product.id) : [];
 		return productArray.length > 0;
 	}
@@ -96,6 +97,9 @@ const Product = ({ providedProduct }) => {
 			<div data-testid='name-header'>{nameToUse}</div>
 			<div data-testid='description-element'>{descriptonToUse}</div>
 			<div data-testid='price-element'>{priceToUse}</div>
+			{imageToUse && 
+				<div data-testid='image-element'>{imageToUse}</div>
+			}
 	
 
 			{auth.role === 'admin' && productToUse &&

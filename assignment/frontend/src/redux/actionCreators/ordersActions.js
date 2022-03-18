@@ -88,6 +88,8 @@ export const getOrders = () => {
  * @return {Function} - Thunk -> action
  */
 export const addOrder = (newOrder) => {
+	console.log("addOrder is called ... newOder is: ", newOrder);
+	
 	/**
 	 * helper function to check an object is an object
 	 * @param {*} item to be checked whether it is an object(but not array, not null) or not
@@ -113,6 +115,7 @@ export const addOrder = (newOrder) => {
 		await fetch(url, reqOptions)
 			.then(res => res.json())
 			.then(data => {
+				console.log("data ===== sssss ", data);
 				
 				if(data.error){
 					if (isObject(data.error)){

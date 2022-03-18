@@ -20,9 +20,11 @@ const Cart = () => {
     function handleOrder(){
         
         if (auth.role === 'customer'){
+            const cartWithoutImage = cart.map(item => delete(item.product.image));
+            console.log("cartWithoutImage = ", cartWithoutImage);
 
             const newOrder = {
-                customerId: auth.id,
+                // customerId: auth.id,
                 items : cart
             };
             console.log("new order = ", newOrder);

@@ -47,9 +47,7 @@ const App = () => {
 				<Route path='/' element={<Home/>} />
 				<Route path='/*' element={<NotFound/>} />
 				<Route path='/products' element={<Products/>} />
-				<Route path='/register' element={<Register/>} />
-
-
+				{/* <Route path='/register' element={<Register/>} /> */}
 
 				<Route path="/products/:productId" element={<Finder type={'product'} 			findHandler={getProduct} />}>
 					<Route path='' element={<Product/>}/>
@@ -89,39 +87,9 @@ const App = () => {
 				<Route path="/users/:userId" element={<Auth authRoles={['admin']} />}>
 					<Route path='' element={<User/>} />
 				</Route>
-				
-				
-			
-				
-				{/* <Route element={<Auth authRoles={['admin']}/>}>
-
-					<Route path='/users' element={<Users/>} />
-					<Route path='/users/:userId' element={<User/>} />
-					<Route path='/users/:userId/modify' element={<UserModifier/>} />
-					<Route element={<Finder type={'user'} getUser={getUser}/>}/>
-					<Route path='/products/:productId/modify' element={<ProductModifier/>} />
-					
-					
+				<Route path="/users/:userId/modify" element={<Auth authRoles={['admin']} />}>
+					<Route path='' element={<UserModifier/>} />
 				</Route>
-
-				<Route element={<Auth authRoles={['customer', 'admin']}/>}>
-					
-					
-					<Route element={<Finder type={'order'} getUser={getOrder}/>}/>
-
-					<Route path='/orders' element={<Orders/>} />
-					<Route path='/orders/:orderId' element={<Order/>} />
-
-					<Route path='/cart' element={<Cart/>} />
-					<Route element={<Finder type={'product'} getUser={getProduct}/>}/>
-					<Route element={<Finder type={'order'} getUser={getOrder}/>}/>
-				</Route>
-
-				 */}
-
-				
-
-
 
 
 			</Routes>
