@@ -46,6 +46,8 @@ const App = () => {
 				<Route path='/' element={<Home/>} />
 				<Route path='' element={<Notification/>}/>
 				<Route path='*' element={<NotFound/>} />
+				{/* <Route path='/cart' element={<Cart/>} /> */}
+
 
 				{/* <Route path='/products' element={<Products/>}>
 					<Route path=":productId" element={<Finder type={'product'} findHandler={getProduct} />}>

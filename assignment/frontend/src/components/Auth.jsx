@@ -13,14 +13,18 @@ const selectAuth = state => state.auth;
 const Auth = ({ authRoles }) => {
 
     const auth = useSelector(selectAuth);
+    console.log('current auth ===', auth);
     const navigate = useNavigate();
+
+    const currentRole = auth.role ? auth.role : 'guest';
+    console.log('currentnnnnnnn auth ===', currentRole);
 
 
 
 
     const rolesToUse = authRoles ? authRoles : null;
     //console.log("Auth compoenent : ", authRoles, auth.role);
-    if (rolesToUse && rolesToUse.includes(auth.role)){
+    if (rolesToUse && rolesToUse.includes(currentRole)){
                 console.log("correct auth role, render children");
                 return  <div data-testid='auth-success-component'>
                             <h1> authentication passed</h1>
@@ -28,7 +32,7 @@ const Auth = ({ authRoles }) => {
                         </div>;
                 
             } else {
-                if (auth.role === 'guest'){
+                if (currentRole === 'guest'){
                     return <Navigate to="/login" />;
                 } else {
                     return <Navigate to="/" />;
