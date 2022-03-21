@@ -41,21 +41,15 @@ const Order = ({ providedOrder }) => {
     const idToUse = orderId ? orderId : providedOrder.id;
 
 
-
-
-
-
     return(
 
         orderToUse ?  (
 
             <div data-testid='order-component'>
-                <h2 data-testid='orderId-heading'>{orderToUse.id}</h2>
+                <h2 data-testid='orderId-heading'>Order ID is: {orderToUse.id}</h2>
                 {!orderId && 
-                <Link to={`/${orderToUse.id}`} data-testid='inspect-link' />
+                <Link to={`./${orderToUse.id}`} data-testid='inspect-link'>Inspect</Link>
                 }
-                
-                    
                 
                 <ol data-testid='order-list' >
                     { 
@@ -74,7 +68,7 @@ const Order = ({ providedOrder }) => {
                         })
                     }
                 </ol>
-                <h2 data-testid='customerId-heading'>{orderToUse.customerId}</h2>
+                <h2 data-testid='customerId-heading'> Customer ID is: {orderToUse.customerId}</h2>
                 
                 
             </div>

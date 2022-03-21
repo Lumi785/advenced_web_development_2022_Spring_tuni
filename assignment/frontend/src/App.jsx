@@ -42,14 +42,20 @@ const App = () => {
 			<Navbar/>
 			<Routes>
 
-				<Route element={<Notification/>}/>
 
 				<Route path='/' element={<Home/>} />
-				<Route path='/*' element={<NotFound/>} />
-				<Route path='/products' element={<Products/>} />
-				{/* <Route path='/register' element={<Register/>} /> */}
+				<Route path='' element={<Notification/>}/>
+				<Route path='*' element={<NotFound/>} />
 
-				<Route path="/products/:productId" element={<Finder type={'product'} 			findHandler={getProduct} />}>
+				{/* <Route path='/products' element={<Products/>}>
+					<Route path=":productId" element={<Finder type={'product'} findHandler={getProduct} />}>
+						<Route path='' element={<Product/>}/>
+					</Route>
+				</Route> */}
+
+				<Route path='/products' element={<Products/>} />
+
+				<Route path="/products/:productId" element={<Finder type={'product'} findHandler={getProduct} />}>
 					<Route path='' element={<Product/>}/>
 				</Route>
 
@@ -57,19 +63,26 @@ const App = () => {
 				<Route path="/register" element={<Auth authRoles={['guest']} />}>
 					<Route path='' element={<Register/>} />
 				</Route>
-				
+			
 
 				<Route path="/login" element={<Auth authRoles={['guest']} />}>
 					<Route path='' element={<Login/>} />
 				</Route>
-				<Route path="/orders" element={<Auth authRoles={['customer', 'admin']} />}>
-					<Route path='' element={<Orders/>} />
-				</Route>
+
 
 				<Route path="/cart" element={<Auth authRoles={['guest', 'customer']} />}>
 					<Route path='' element={<Cart/>} />
 				</Route>
 
+
+
+				{/* <Route path="/orders" element={<Auth authRoles={['customer', 'admin']} />}>
+					<Route path='' element={<Orders/>} >
+						<Route path=":orderId" element={<Order/>} />	
+					</Route>
+				</Route> */}
+
+				
 				<Route path="/orders" element={<Auth authRoles={['customer', 'admin']} />}>
 					<Route path='' element={<Orders/>} />
 				</Route>
