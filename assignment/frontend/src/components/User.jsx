@@ -49,7 +49,7 @@ const User = ({ providedUser}) => {
             {
                 providedUser && 
             
-            (<Link to={`/${providedUser.id}`} data-testid='inspect-link' 
+            (<Link to={`./${providedUser.id}`} data-testid='inspect-link' 
             >Inspect</Link>)
             }
 
