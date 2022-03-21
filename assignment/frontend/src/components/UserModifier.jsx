@@ -6,20 +6,17 @@ import { updateUser } from '../redux/actionCreators/usersActions';
 import { useNavigate, useParams } from 'react-router-dom';
 
 
-// const selectAuth = state => state.auth;
 const selectUsers = state => state.users;
 
 const UserModifier = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
 
-    // const auth = useSelector(selectAuth);
-
     //Important !!! Use below two line find out what useParams return!!!
     // const aa = useParams();
     // console.log("aa == ", aa);
     const {userId} = useParams();
-    const [btnCondition, setBtnCondition] = useState(false);
+    const [btnCondition, setBtnCondition] = useState(null);
     
     const users = useSelector(selectUsers);
 
@@ -32,21 +29,22 @@ const UserModifier = () => {
     function handleModify(){
 
         if (user.role !== workingRole){
+            console.log("user.role == ", user.role);
+            console.log("working role === ", workingRole);
             
-            setBtnCondition(true);
+            setBtnCondition(false);
 
+            setWorkingRole(workingRole);
             const updatedUser = {...user, role: workingRole};
 
-
             dispatch(updateUser(updatedUser));
-            setWorkingRole(workingRole);
             
-            dispatch(updateUser(updatedUser));
-            navigate('/users');
+            
         } else {
-            setBtnCondition(false);
+            setBtnCondition(true);
             
         }
+        navigate('/users');
     }
 
    
