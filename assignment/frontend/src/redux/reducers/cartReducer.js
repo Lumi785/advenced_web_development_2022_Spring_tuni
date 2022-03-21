@@ -22,7 +22,7 @@ import {
 const cartReducer = (state = [], action) => {
 	switch(action.type){
 		case INIT_CART:
-			console.log("typeof intial cart == ",action.payload,typeof(action.payload));
+			//console.log("typeof intial cart == ",action.payload,typeof(action.payload));
 			return action.payload? action.payload : state;
 
 		case ADD_CART_ITEM:
@@ -34,8 +34,8 @@ const cartReducer = (state = [], action) => {
 			return state.filter(item => item.product.id !== action.payload.id);
 			
 		case UPDATE_CART_ITEM_AMOUNT:
-			console.log("state rv=", state);
-			console.log("action.payload rv= ", action.payload);
+			// console.log("state rv=", state);
+			// console.log("action.payload rv= ", action.payload);
 
 			//this way use of array.map, the old state also changed, why? but in this excercise, not check the old state changed or not
 			return state.map(item => item.product.id === action.payload.productId

@@ -11,7 +11,7 @@ const selectOrders = state => state.orders;
 
 
 const Finder = ({ type, findHandler }) => {
-    console.log("finder called ...");
+    //console.log("finder called ...");
     //const [term, setTerm] = useState('');
 
 
@@ -19,7 +19,7 @@ const Finder = ({ type, findHandler }) => {
 
     const users = useSelector(selectUsers);
     const products = useSelector(selectProducts);
-    console.log("products = ", products);
+    //console.log("products = ", products);
     const orders = useSelector(selectOrders);
 
     const incomeIdObj = useParams();
@@ -31,7 +31,7 @@ const Finder = ({ type, findHandler }) => {
         if (type === 'product'){
             const id = incomeIdObj.productId;
             displayItem = products.find(product => product.id === id);
-            console.log("found product is = ", displayItem);
+            //console.log("found product is = ", displayItem);
             if (!displayItem){
                 dispatch(findHandler(id));
             }

@@ -27,7 +27,7 @@ const Cart = () => {
                 // customerId: auth.id,
                 items : cart
             };
-            console.log("new order = ", newOrder);
+            //console.log("new order = ", newOrder);
             dispatch(addOrder(newOrder));
         }
         if (auth.role === 'guest'){

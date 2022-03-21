@@ -13,13 +13,13 @@ const Register = () => {
 
 
     const handleSubmit = e => {
-        console.log("handleSubmit called ...");
+        //console.log("handleSubmit called ...");
         e.preventDefault();
 
         //NOTE in the html part there must be name attribute for each input, name value is the same as attribute value's value
         const formData = new FormData(e.target);
-        console.log("formData = ", formData);
-        console.log("formData.get(email) = ", formData.get('email'));
+        //console.log("formData = ", formData);
+        //console.log("formData.get(email) = ", formData.get('email'));
         const credential = {name: formData.get('name'), email: formData.get('email'), 
                             password: formData.get('password'), passwordConfirmation: formData.get('confirmPassword')};
         dispatch(register(credential));

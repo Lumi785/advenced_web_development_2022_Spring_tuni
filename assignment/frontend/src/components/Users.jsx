@@ -22,7 +22,7 @@ const Users = () => {
     }, []);
 
     //Note here here cannot print out users if they are get by getUsers()
-    console.log("users = ", users);
+    //console.log("users = ", users);
 
     
     return(

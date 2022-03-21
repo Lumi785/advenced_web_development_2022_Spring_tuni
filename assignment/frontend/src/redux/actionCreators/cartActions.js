@@ -39,14 +39,14 @@ export const initCart = () => {
  */
 export const addCartItem = (product) => {
 
-	console.log("product from addCartItem == ", product);
+	//console.log("product from addCartItem == ", product);
 	
 	return async(dispatch) => {
 
 		const jsonOldCartItems = localStorage.getItem('cart');
 		const objOldCartItems = JSON.parse(jsonOldCartItems);
 
-		console.log("objOldCartItems = ", objOldCartItems);
+		//console.log("objOldCartItems = ", objOldCartItems);
 
 		const newCartItem = {
 			product: product,
@@ -100,7 +100,7 @@ export const removeCartItem = (product) => {
  * @return {Function} thunk
  */
 export const incrementCartItem = (productId) => {
-	console.log("increment Car Item functon from cartActions called .....");
+	//console.log("increment Car Item functon from cartActions called .....");
 
 	return async(dispatch) => {
 		const oldCartItems = localStorage.getItem('cart');
@@ -139,7 +139,7 @@ export const decrementCartItem = (productId) => {
 	return async(dispatch) => {
 		const oldCartItems = localStorage.getItem('cart');
 		const oldCartItemsObjects = JSON.parse(oldCartItems);
-		console.log("oldCartItemsObjects from decrementCartItem from cartActions =  ", oldCartItemsObjects);
+		//console.log("oldCartItemsObjects from decrementCartItem from cartActions =  ", oldCartItemsObjects);
 
 		const newCartItemsObjects = oldCartItemsObjects.map(item => 
 			

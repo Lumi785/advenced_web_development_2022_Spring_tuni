@@ -14,16 +14,15 @@ const Notification = () => {
 
     const notification = useSelector(selectNotification);
 
-    console.log("notification = ", notification);
+    //console.log("notification = ", notification);
 
 
     
     useEffect(() => {
-        console.log("use effect notification = ", notification);
+        //console.log("use effect notification = ", notification);
 
-            console.log("apple");
+            
             setTimeout(() => {
-                console.log("ppppppp");
 
                 dispatch(removeNotification());
             }, 5000);

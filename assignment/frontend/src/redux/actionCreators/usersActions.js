@@ -75,8 +75,8 @@ export const getUsers = () => {
 			return res.json();
 		})
 		.then(data => {
-			console.log("aaaaa");
-			console.log("data from usersACTIONS = ", data);
+			
+			//console.log("data from usersACTIONS = ", data);
 			if(data.error){
 				dispatch({type: NEW_NOTIFICATION, payload: {message: data.error, isSuccess: false}});
 			} else {
@@ -100,7 +100,7 @@ export const getUsers = () => {
  */
 export const updateUser = (updatedUser) => {
 
-	console.log("updatedUser from updateUser thunk= ", updatedUser);
+	//console.log("updatedUser from updateUser thunk= ", updatedUser);
 
 	return async(dispatch) => {
 		const url = '/api/users/' + updatedUser.id;

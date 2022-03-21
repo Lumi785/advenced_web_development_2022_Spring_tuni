@@ -144,7 +144,13 @@ export const logIn = (logInCreds) => {
 			}			
 		})
 		.then(data => {
-			console.log("data from login thunk === ", data);
+			//console.log("data from login thunk Login === ", data);
+			if (data === undefined){
+				dispatch({
+					type: NEW_NOTIFICATION,
+					payload: { message: 'login failed', isSuccess: false },
+				});
+			}
 			dispatch({
 						type: INIT_AUTH,
 						payload: data.user
@@ -191,7 +197,7 @@ export const logOut = () => {
 		})
 		.then(
 			data => {
-				console.log("data from logout = ", data);
+				//console.log("data from logout = ", data);
 				dispatch({type: REMOVE_AUTH});
 				dispatch({type: CLEAR_ORDERS});
 				dispatch({type: CLEAR_USERS});
@@ -290,7 +296,7 @@ export const register = (registerCreds) => {
 			
 			//dispatch error from backend.
 			else {
-				console.log("res.statuscode = ", res.status);
+				//console.log("res.statuscode = ", res.status);
 				dispatch({
 					type: NEW_NOTIFICATION,
 					payload: { message: 'test-error', isSuccess: false },
@@ -298,7 +304,7 @@ export const register = (registerCreds) => {
 			}			
 		})
 		.then(data => {
-			console.log("data from register thunk === ", data);
+			//("data from register thunk === ", data);
 
 			dispatch({
 						type: INIT_AUTH,
