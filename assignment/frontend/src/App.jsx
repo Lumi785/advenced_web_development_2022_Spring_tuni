@@ -40,11 +40,11 @@ const App = () => {
 		<div data-testid='app-component'>
 			
 			<Navbar/>
+			<Notification/>
 			<Routes>
 
 
 				<Route path='/' element={<Home/>} />
-				<Route path='' element={<Notification/>}/>
 				<Route path='*' element={<NotFound/>} />
 				{/* <Route path='/cart' element={<Cart/>} /> */}
 
