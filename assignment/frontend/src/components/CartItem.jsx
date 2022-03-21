@@ -32,7 +32,7 @@ const CartItem = ({ item }) => {
 			<ul data-testid={item.product.id}>
 				<div data-testid='item-name'>{item.product.name}</div>
 				<div data-testid='item-price'>{item.product.price}</div>
-				<div data-testid='item-amount'>{item.quantity}</div>
+				<div data-testid='item-amount'>quantity: {item.quantity}</div>
 				<button 
 					data-testid={`plus-btn-${item.product.id}`}
 					onClick={
