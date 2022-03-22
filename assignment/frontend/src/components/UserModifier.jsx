@@ -16,7 +16,7 @@ const UserModifier = () => {
     // const aa = useParams();
     // console.log("aa == ", aa);
     const {userId} = useParams();
-    const [btnCondition, setBtnCondition] = useState(null);
+    const [btnCondition, setBtnCondition] = useState(true);
     
     const users = useSelector(selectUsers);
 
@@ -24,26 +24,24 @@ const UserModifier = () => {
 
     const [workingRole, setWorkingRole] = useState(user.role);
 
+    // console.log("user.role == ", user.role);
+    // console.log("working role === ", workingRole);
+
     
+            
 
     function handleModify(){
 
         if (user.role !== workingRole){
-            console.log("user.role == ", user.role);
-            console.log("working role === ", workingRole);
             
-            setBtnCondition(false);
-
+            
             setWorkingRole(workingRole);
             const updatedUser = {...user, role: workingRole};
-
+            
             dispatch(updateUser(updatedUser));
-            
-            
-        } else {
-            setBtnCondition(true);
-            
-        }
+            setBtnCondition(false);
+        } 
+        
         navigate('/users');
     }
 
@@ -64,6 +62,12 @@ const UserModifier = () => {
                     (e) => {
                         e.preventDefault();
                         setWorkingRole(e.target.value);
+                        if (user.role === workingRole){
+                            setBtnCondition(false);
+                        } else {
+                            setBtnCondition(true);
+                        }
+
                     }}>
                 <option value="customer">customer</option>
                 <option value="admin">admin</option>
