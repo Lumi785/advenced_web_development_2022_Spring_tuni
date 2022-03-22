@@ -34,8 +34,6 @@ const UserModifier = () => {
 
         if (user.role !== workingRole){
             
-            
-            setWorkingRole(workingRole);
             const updatedUser = {...user, role: workingRole};
             
             dispatch(updateUser(updatedUser));
