@@ -39,6 +39,10 @@ export const initCart = () => {
  */
 export const addCartItem = (product) => {
 
+	if (product.quantity){
+		product = product.product;
+	}
+
 	//console.log("product from addCartItem == ", product);
 	
 	return async(dispatch) => {
