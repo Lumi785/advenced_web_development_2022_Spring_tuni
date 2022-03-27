@@ -16,14 +16,18 @@ const Notification = () => {
 
     //console.log("notification = ", notification);
 
-
+    let timer;
     
     useEffect(() => {
         //console.log("use effect notification = ", notification);
 
         if (notification.message) {
 
-            setTimeout(() => {
+            if (timer){
+                clearTimeout(timer);
+            }
+
+            timer = setTimeout(() => {
 
                 dispatch(removeNotification());
             }, 5000);
