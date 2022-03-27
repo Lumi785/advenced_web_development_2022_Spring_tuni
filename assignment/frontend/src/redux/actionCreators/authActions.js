@@ -128,17 +128,17 @@ export const logIn = (logInCreds) => {
 			body: JSON.stringify(logInCreds)
 		};
 
-		let res_ok;
+		let resOk;
 		await fetch('/api/login', reqOptions)
 		.then(res => {
 			
-			res_ok = res.ok;
-			return res.json()
+			resOk = res.ok;
+			return res.json();
 						
 		})
 		.then(data => {
 			//console.log("data from login thunk Login === ", res_ok, data.error);
-			if (!res_ok){
+			if (!resOk){
 				const msg = data.error;
 				dispatch({
 					type: NEW_NOTIFICATION,
