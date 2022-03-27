@@ -127,38 +127,35 @@ export const logIn = (logInCreds) => {
 			},
 			body: JSON.stringify(logInCreds)
 		};
+
+		let res_ok;
 		await fetch('/api/login', reqOptions)
 		.then(res => {
-			if(res.ok){
-				return res.json();
-			} 
 			
-			//dispatch error from backend. Note dispatch in catch also pass tests
-			//but I think for error from backend, here is better place
-			else {
-				//console.log("res.statuscode = ", res.status);
-				dispatch({
-					type: NEW_NOTIFICATION,
-					payload: { message: 'test-error', isSuccess: false },
-				});
-			}			
+			res_ok = res.ok;
+			return res.json()
+						
 		})
 		.then(data => {
-			//console.log("data from login thunk Login === ", data);
-			if (data === undefined){
+			//console.log("data from login thunk Login === ", res_ok, data.error);
+			if (!res_ok){
+				const msg = data.error;
 				dispatch({
 					type: NEW_NOTIFICATION,
-					payload: { message: 'login failed', isSuccess: false },
+					payload: { message: msg, isSuccess: false },
 				});
-			}
-			dispatch({
-						type: INIT_AUTH,
-						payload: data.user
+			} else {
+
+				dispatch({
+							type: INIT_AUTH,
+							payload: data.user
+						});
+				dispatch({
+						type: NEW_NOTIFICATION,
+						payload: { message: validAuth.welcomeBack, isSuccess: true },
 					});
-			dispatch({
-					type: NEW_NOTIFICATION,
-					payload: { message: validAuth.welcomeBack, isSuccess: true },
-				});
+			}
+			
 		})
 		.catch(error => {
 			console.log("response error = ", error);
