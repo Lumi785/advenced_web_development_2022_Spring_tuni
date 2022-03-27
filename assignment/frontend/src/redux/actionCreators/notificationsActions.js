@@ -28,7 +28,7 @@ export const createNotification = (newNotification = { message: '', isSuccess: f
  * @return {object} action
  */
 export const removeNotification = () => {
-	return async(dispatch) => {
-		dispatch({type: REMOVE_NOTIFICATION});
-	};
+	
+	return {type: REMOVE_NOTIFICATION};
+	
 };
