@@ -18,7 +18,8 @@ const CartItem = ({ item }) => {
 
 	function handleDecrement(){
 		if (item.quantity === 1){
-			dispatch(decrementCartItem(item.product.id));
+			//not need dispatch(decrementCartItem...)
+			//dispatch(decrementCartItem(item.product.id));
 			
 			dispatch(removeCartItem(item.product));
 			return;

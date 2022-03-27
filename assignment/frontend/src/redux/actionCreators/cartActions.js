@@ -75,7 +75,8 @@ export const addCartItem = (product) => {
  * @return {object} Action
  */
 export const removeCartItem = (product) => {
-	return async(dispatch) => {
+	//console.log("remove Cart Item func called ... ");
+	// return (dispatch) => {
 
 		const oldCartItems = localStorage.getItem('cart');
 
@@ -88,9 +89,12 @@ export const removeCartItem = (product) => {
 		localStorage.setItem('cart', JSON.stringify(newCartItemsObjects));
 		
 		// send action to reducer to update store state
-		dispatch({type: REMOVE_CART_ITEM, payload: product});
-	};
+		//dispatch({type: REMOVE_CART_ITEM, payload: product});
+		return ({type: REMOVE_CART_ITEM, payload: product});
+	// };
 };
+
+//Note, removeCartItem the commented out returns a function, 12/13 tests pass, now, return an object and now 13/13 tests pass
 
 
 
