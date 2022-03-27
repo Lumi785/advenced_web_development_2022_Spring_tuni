@@ -21,11 +21,13 @@ const Notification = () => {
     useEffect(() => {
         //console.log("use effect notification = ", notification);
 
-            
+        if (notification.message) {
+
             setTimeout(() => {
 
                 dispatch(removeNotification());
             }, 5000);
+    }
 
            
         
